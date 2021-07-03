@@ -66,6 +66,6 @@ class UserController extends Controller
 
         $request->session()->flash('updated-password', 'The password was updated successfully.');
 
-        return view('users.edit')->with('auth', $auth);
+        return redirect()->route('user.edit', $auth->id);
     }
 }
