@@ -16,20 +16,20 @@ class PostController extends Controller
 
     public function store(Request $request)
     {
-        $post = request()->validate([
+        $input = request()->validate([
             'title' => ['required', 'max:255'],
             'content' => ['required', 'max:2000'],
             'post_image' => ['file', 'image', 'max:1024'],
         ]);
 
-        if (request('post_image')) {
-            $post->post_image = $request->file('post_image')->store('images');
-        }
-
         $post = new Post();
         $post->user_id = Auth::user()->id;
         $post->title = $request->title;
         $post->content = $request->content;
+
+        if (request('post_image')) {
+            $post->post_image = $request->file('post_image')->store('images');
+        }
 
         $post->save();
 
