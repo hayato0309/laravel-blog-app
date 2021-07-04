@@ -19,8 +19,13 @@ Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
 
+// Routes for User
 Route::get('/edit/{id}', 'UserController@edit')->name('user.edit');
 Route::patch('/update/{id}', 'UserController@update')->name('user.update');
 
-Route::get('/edit_password/{id}', 'UserController@editPassword')->name('user.editPassword');
-Route::patch('/update_password/{id}', 'UserController@updatePassword')->name('user.updatePassword');
+Route::get('/edit-assword/{id}', 'UserController@editPassword')->name('user.editPassword');
+Route::patch('/update-password/{id}', 'UserController@updatePassword')->name('user.updatePassword');
+
+// Routes for Post
+Route::get('/post', 'PostController@create')->name('post.create');
+Route::post('/store', 'PostController@store')->name('post.store');
