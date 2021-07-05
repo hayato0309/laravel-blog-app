@@ -8,7 +8,7 @@ use App\User;
 use App\Post;
 
 class PostController extends Controller
-{
+{    
     public function create()
     {
         return view('posts.create');
@@ -32,7 +32,9 @@ class PostController extends Controller
         }
 
         $post->save();
+        
+        session()->flash('post-created-message', 'Post was created :' . $post['title']);
 
-        // return redirect()->route('user.edit', $auth->id);
+        return redirect()->route('home');
     }
 }
