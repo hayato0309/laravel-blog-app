@@ -52,7 +52,7 @@
                                 </li>
                             @endif
                         @else
-                            <a href="{{route('post.create')}}" class="d-flex align-items-center mr-3">Create post</a>
+                            <a href="{{route('post.create')}}" class="d-flex align-items-center mr-3 text-muted">Create a post</a>
                             <li class="nav-item dropdown">
                                 <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
                                     {{ Auth::user()->name }} <span class="caret"></span>
