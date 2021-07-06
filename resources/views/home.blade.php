@@ -10,7 +10,9 @@
             @foreach ($posts as $post)
                 <div class="card mb-2">
                     <div class="card-body">
-                        <h5 class="card-title">{{$post->title}}</h5>
+                        <a href="{{route('post.show', $post->id)}}" class="text-body">
+                            <h5 class="card-title">{{$post->title}}</h5>
+                        </a>
                         <div class="card-text">{{Str::limit($post->content, 200, '...')}}</div>
                         <div class="float-right">
                             <div class="d-inline mr-3">
