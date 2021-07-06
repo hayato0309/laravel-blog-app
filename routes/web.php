@@ -27,6 +27,7 @@ Route::get('/edit-assword/{id}', 'UserController@editPassword')->name('user.edit
 Route::patch('/update-password/{id}', 'UserController@updatePassword')->name('user.updatePassword');
 
 // Routes for Post
-Route::get('/{id}', 'PostController@show')->name('post.show');
+Route::get('/post/{id}', 'PostController@show')->name('post.show');
+Route::get('/post-list', 'PostController@list')->name('post.list');
 Route::get('/post', 'PostController@create')->name('post.create');
-Route::post('/store', 'PostController@store')->name('post.store');
+Route::post('/post/store', 'PostController@store')->name('post.store');
