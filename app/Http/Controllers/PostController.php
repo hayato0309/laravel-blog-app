@@ -15,6 +15,12 @@ class PostController extends Controller
         return view('posts.show', compact('post'));
     }
 
+    public function list()
+    {
+        $posts = Post::where('user_id', Auth::user()->id)->orderBy('created_at', 'desc')->simplePaginate(10);
+        return view('posts.list', compact('posts'));
+    }
+
     public function create()
     {
         return view('posts.create');
