@@ -20,12 +20,12 @@
                 <tbody>
                     @foreach ($posts as $post)
                         <tr>
-                            <th scope="row">{{$loop->index+1}}</th>
+                            <th scope="row">{{$loop->iteration}}</th>
                             <td>{{$post->title}}</td>
                             <td>{{Str::limit($post->content, 50, '...')}}</td>
                             <td>{{$post->created_at}}</td>
-                            <td><i class="fas fa-edit"></i></td>
-                            <td><i class="fas fa-trash-alt"></i></td>
+                            <td><a href="#" class="text-body"><i class="fas fa-edit"></i></a></td>
+                            <td><a href="#" class="text-body"><i class="fas fa-trash-alt"></i></a></td>
                         </tr>
                     @endforeach
                 </tbody>
