@@ -49,4 +49,14 @@ class PostController extends Controller
 
         return redirect()->route('home');
     }
+
+    public function destroy($id)
+    {
+        $post = Post::findOrFail($id);
+        $post->delete();
+
+        session()->flash('post-deleted-message', 'Post was deleted :' . $post->title);
+
+        return back();
+    }
 }
