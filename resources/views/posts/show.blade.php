@@ -5,12 +5,14 @@
 <div class="container">
     <div class="row justify-content-center">
         <div class="col-md-8">
+            {{-- Breadcrumb list --}}
             <div class="mb-4">
                 <a href="{{route('home')}}" class="text-body"><i class="fas fa-home"></i></a>
                 <i class="fas fa-caret-right"></i>
                 <a href="#" class="text-body">{{$post->title}}</a>
             </div>
-            <div class="">
+            
+            <div>
                 <h1 class="mb-4">{{$post->title}}</h1>
                 <div class="mb-4">{{$post->content}}</div>
                 <div class="text-right mb-4">

@@ -24,7 +24,7 @@
 </head>
 <body>
     <div id="app">
-        <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
+        <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm fixed-top">
             <div class="container">
                 <a class="navbar-brand" href="{{ route('home') }}">
                     {{ config('app.name', 'Laravel') }}
@@ -53,7 +53,7 @@
                             @endif
                         @else
                             <a href="{{route('post.create')}}" class="d-flex align-items-center mr-3 text-muted">Create a post</a>
-                            <a href="{{route('post.list')}}" class="d-flex align-items-center mr-3 text-muted">My posts</a>
+                            <a href="{{route('post.posts')}}" class="d-flex align-items-center mr-3 text-muted">My posts</a>
                             <li class="nav-item dropdown">
                                 <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
                                     {{ Auth::user()->name }} <span class="caret"></span>
@@ -80,7 +80,7 @@
             </div>
         </nav>
 
-        <main class="py-4">
+        <main class="py-4 mt-5">
             @yield('content')
         </main>
     </div>
