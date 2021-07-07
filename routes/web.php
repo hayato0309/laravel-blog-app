@@ -28,6 +28,7 @@ Route::patch('/update-password/{id}', 'UserController@updatePassword')->name('us
 
 // Routes for Post
 Route::get('/post/{id}', 'PostController@show')->name('post.show');
-Route::get('/post-list', 'PostController@list')->name('post.list');
+Route::get('/posts', 'PostController@list')->name('post.list');
 Route::get('/post', 'PostController@create')->name('post.create');
 Route::post('/post/store', 'PostController@store')->name('post.store');
+Route::delete('/posts/{id}/delete', 'PostController@destroy')->name('post.destroy');
