@@ -50,6 +50,33 @@ class PostController extends Controller
         return redirect()->route('home');
     }
 
+    public function edit($id)
+    {
+        $post = Post::findOrFail($id);
+        return view('posts.edit', compact('post'));
+    }
+
+    public function update(Request $request, $id)
+    {
+        $input = request()->validate([
+            'title' => ['required', 'max:255'],
+            'content' => ['required', 'max:2000'],
+            'post_image' => ['file', 'image', 'max:1024'],
+        ]);
+
+        $post = Post::findOrFail($id);
+
+        if (request('post_image')) {
+            $input['post_image'] = $request->file('post_image')->store('images');
+        }
+
+        $post->update($input);
+
+        session()->flash('post-updated-message', 'The post was updated successfully.');
+
+        return back();
+    }
+
     public function destroy($id)
     {
         $post = Post::findOrFail($id);

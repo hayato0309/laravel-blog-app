@@ -44,7 +44,7 @@ class UserController extends Controller
         return view('users.edit_password')->with('auth', $auth);
     }
 
-    public function updatePassword(Request $request, $id)
+    public function updatePassword(Request $request)
     {
         $auth = Auth::user();
 
