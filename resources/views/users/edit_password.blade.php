@@ -5,6 +5,13 @@
 <div class="container">
     <div class="row justify-content-center">
         <div class="col-md-8">
+            {{-- Breadcrumb list --}}
+            <div class="mb-4">
+                <a href="{{ route('user.edit', $auth->id) }}" class="text-body">Profile</a>
+                <i class="fas fa-caret-right"></i>
+                <a href="#" class="text-body">Update password</a>
+            </div>
+
             <h1>Update password</h1>
             <form action="{{route('user.updatePassword', $auth->id)}}" method="POST">
                 @csrf
