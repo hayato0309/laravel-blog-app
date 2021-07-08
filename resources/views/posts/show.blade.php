@@ -17,7 +17,7 @@
                 <a href="#" class="text-body">{{$post->title}}</a>
             </div>
             
-            <div>
+            <div class="mb-3">
                 <h1 class="mb-4">{{ $post->title }}</h1>
                 <div class="mb-4">{{ $post->content }}</div>
                 <div class="text-right mb-4">
@@ -27,17 +27,33 @@
                     </div>
                     <div class="d-inline text-muted">Posted by <a href="#" class="text-muted">{{ $post->user->name }}</a> {{ $post->created_at->diffForHumans() }}</div>
                 </div>
+                @if($post->post_image)
+                    <img class="rounded" src="{{ asset('storage/'.$post->post_image) }}" alt="avatar" style="width:30%">
+                @endif
             </div>
-            @if($post->post_image)
-                <img class="rounded mb-4" src="{{ asset('storage/'.$post->post_image) }}" alt="avatar" style="width:30%">
-            @endif
             
-            {{-- Comments --}}
+            {{-- Comments display area --}}
+            @foreach ($comments as $comment)
+                <div>
+                    <div class="rounded shadow-sm mb-3 p-3">
+                        <div class="mb-1">
+                            <img class="rounded-circle float-left mr-2" src="{{ asset('storage/'.$comment->user->avatar) }}" alt="comment-user-image" style="width:45px">
+                            <div class="d-inline">
+                                <div>{{ $comment->user->name }}</div>
+                                <div class="text-muted">{{ $comment->created_at->diffForHumans() }}</div>
+                            </div>
+                        </div>
+                        <div class="border-left px-3">{{ $comment->content }}</div>
+                    </div>
+                </div>
+            @endforeach
+
+            {{-- Comments Textarea --}}
             <div>
                 <form action="{{ route('comment.store', $post->id) }}" method="POST">
                     @csrf
                     @method('POST')
-                    <div class="text-right">
+                    <div class="text-muted text-right">
                         <i class="far fa-comment-alt"></i>
                         <span>Comment</span>
                     </div>
