@@ -36,11 +36,11 @@ class PostController extends Controller
 
         $post = new Post();
         $post->user_id = Auth::user()->id;
-        $post->title = $request->title;
-        $post->content = $request->content;
+        $post->title = $input['title'];
+        $post->content = $input['content'];
 
         if (request('post_image')) {
-            $post->post_image = $request->file('post_image')->store('images');
+            $post['post_image'] = request('post_image')->store('images');
         }
 
         $post->save();
