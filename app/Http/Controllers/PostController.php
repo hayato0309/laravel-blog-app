@@ -6,13 +6,17 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\User;
 use App\Post;
+use App\Comment;
 
 class PostController extends Controller
 {
     public function show($id)
     {
         $post = Post::findOrFail($id);
-        return view('posts.show', compact('post'));
+
+        $comments = Comment::where('post_id', $id)->orderBy('created_at', 'desc')->get();
+
+        return view('posts.show', compact('post', 'comments'));
     }
 
     public function list()
