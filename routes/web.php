@@ -37,3 +37,4 @@ Route::delete('/posts/{id}/delete', 'PostController@destroy')->name('post.destro
 
 // For Comment
 Route::post('/post/{id}/comment', 'CommentController@store')->name('comment.store');
+Route::delete('/comment/{id}/comment/delete', 'CommentController@destroy')->name('comment.destroy');

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Comment;
+use Illuminate\Support\Str;
 
 class CommentController extends Controller
 {
@@ -22,6 +23,16 @@ class CommentController extends Controller
         $comment->save();
 
         session()->flash('comment-posted-message', 'Your comment was posted successfully.');
+
+        return back();
+    }
+
+    public function destroy($id)
+    {
+        $comment = Comment::findOrFail($id);
+        $comment->delete();
+
+        session()->flash('comment-deleted-message', 'Comment was deleted: ' . Str::limit($comment->content, 50, '...'));
 
         return back();
     }

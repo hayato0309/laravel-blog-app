@@ -8,6 +8,8 @@
 
             @if(session('comment-posted-message'))
                 <div class="alert alert-success">{{ session('comment-posted-message') }}</div>
+            @elseif(session('comment-deleted-message'))
+                <div class="alert alert-danger">{{ session('comment-deleted-message') }}</div>
             @endif
 
             {{-- Breadcrumb list --}}
@@ -36,27 +38,63 @@
             @foreach ($comments as $comment)
                 <div>
                     <div class="rounded shadow-sm mb-3 p-3">
-                        <div class="mb-1">
+                        <div class="d-inline-block h-auto w-100 mb-1">
                             <img class="rounded-circle float-left mr-2" src="{{ asset('storage/'.$comment->user->avatar) }}" alt="comment-user-image" style="width:45px">
-                            <div class="d-inline">
+                            <div class="float-left">
                                 <div>{{ $comment->user->name }}</div>
                                 <div class="text-muted">{{ $comment->created_at->diffForHumans() }}</div>
                             </div>
+                            
+                            @if($comment->user_id == Auth::user()->id)
+                            <div class="text-right">
+                                <i class="far fa-edit mr-1"></i>
+                                <button type="button" class="btn btn-link p-0" data-toggle="modal" data-target="#modal-{{ $comment->id }}">
+                                    <i class="far fa-trash-alt text-body"></i>
+                                </button>
+                            </div>
+                            @endif
+                            
                         </div>
                         <div class="border-left px-3">{{ $comment->content }}</div>
                     </div>
                 </div>
+
+            {{-- Comment delete modal --}}
+            <div class="modal fade" id="modal-{{ $comment->id }}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLabel">Delete confirmation</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <p>Are you sure you want to delete this comment?</p>
+                            <p class="border-left px-3">{{ Str::limit($comment->content, 200, '...') }}</p>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                            <form action="{{ route('comment.destroy', $comment->id) }}" method="POST">
+                                @csrf
+                                @method('DELETE')
+                                <button type="submit" class="btn btn-danger">Delete</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
             @endforeach
 
-            {{-- Comments Textarea --}}
+            {{-- Comments textarea --}}
             <div>
+                <div class="text-muted text-right">
+                    <i class="far fa-comment-alt"></i>
+                    <span>Comment</span>
+                </div>
                 <form action="{{ route('comment.store', $post->id) }}" method="POST">
                     @csrf
                     @method('POST')
-                    <div class="text-muted text-right">
-                        <i class="far fa-comment-alt"></i>
-                        <span>Comment</span>
-                    </div>
                     <textarea type="text" class="form-control mb-2 {{ $errors->has('current_password')?'is-invalid':'' }}" name="content" cols="30" rows="3" placeholder="Please write your comment.">{{ old('content') }}</textarea>
                     @if($errors->has('content'))
                         <p class="text-danger">{{ $errors->first('content') }}</p>

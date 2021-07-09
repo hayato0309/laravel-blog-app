@@ -28,11 +28,11 @@
                             <td>{{ $post->title }}</td>
                             <td>{{ Str::limit($post->content, 50, '...') }}</td>
                             <td>{{ $post->created_at }}</td>
-                            <td><a href="{{ route('post.edit', $post->id) }}" class="text-body"><i class="fas fa-edit"></i></a></td>
+                            <td><a href="{{ route('post.edit', $post->id) }}"><i class="far fa-edit text-body"></i></a></td>
                             <td>
                                 <!-- Button trigger modal -->
                                 <button type="button" class="btn btn-link p-0" data-toggle="modal" data-target="#modal-{{ $post->id }}">
-                                    <i class="fas fa-trash-alt text-body"></i>
+                                        <i class="far fa-trash-alt text-body"></i>
                                 </button>
                                     
                                 <!-- Modal -->
