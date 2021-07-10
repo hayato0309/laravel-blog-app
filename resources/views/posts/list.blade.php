@@ -25,7 +25,7 @@
                     @foreach ($posts as $post)
                         <tr>
                             <th scope="row">{{ $loop->iteration }}</th>
-                            <td>{{ $post->title }}</td>
+                            <td><a href="{{ route('post.show', $post->id) }}">{{ $post->title }}</a></td>
                             <td>{{ Str::limit($post->content, 50, '...') }}</td>
                             <td>{{ $post->created_at }}</td>
                             <td><a href="{{ route('post.edit', $post->id) }}"><i class="far fa-edit text-body"></i></a></td>
