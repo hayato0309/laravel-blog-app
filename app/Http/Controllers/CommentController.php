@@ -27,6 +27,21 @@ class CommentController extends Controller
         return back();
     }
 
+    public function update($id)
+    {
+        $input = request()->validate([
+            'content' => ['required', 'max:2000'],
+        ]);
+
+        $comment = Comment::findOrFail($id);
+
+        $comment->update($input);
+
+        session()->flash('comment-updated-message', 'Your comment was updated successfully.');
+
+        return back();
+    }
+
     public function destroy($id)
     {
         $comment = Comment::findOrFail($id);
