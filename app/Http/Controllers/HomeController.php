@@ -3,8 +3,10 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use App\Post;
 use App\User;
+use App\Like;
 
 class HomeController extends Controller
 {
@@ -26,6 +28,22 @@ class HomeController extends Controller
     public function index()
     {
         $posts = Post::orderBy('created_at', 'desc')->simplePaginate(5);
+
+        foreach ($posts as $post) {
+            $post['likesCount'] = $post->loadCount('likes')->likes_count;
+
+            $like = new Like();
+            $user_id = Auth::user()->id;
+            $post_id = $post->id;
+            if ($like->likeExists($user_id, $post_id)) {
+                $post['isLiked'] = true;
+            } else {
+                $post['isLiked'] = false;
+            }
+        }
+
+        // dd($posts);
+
         return view('home', compact('posts'));
     }
 }

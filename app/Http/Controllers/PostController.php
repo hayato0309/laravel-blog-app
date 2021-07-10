@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Auth;
 use App\User;
 use App\Post;
 use App\Comment;
+use App\Like;
 
 class PostController extends Controller
 {
@@ -16,7 +17,19 @@ class PostController extends Controller
 
         $comments = Comment::where('post_id', $id)->orderBy('created_at', 'desc')->get();
 
-        return view('posts.show', compact('post', 'comments'));
+        $likesCount = $post->loadCount('likes')->likes_count;
+
+        // Checking if the post is already liked by the Auth user or not.
+        $like = new Like();
+        $user_id = Auth::user()->id;
+        $post_id = $id;
+        if ($like->likeExists($user_id, $post_id)) {
+            $isLiked = true;
+        } else {
+            $isLiked = false;
+        }
+
+        return view('posts.show', compact('post', 'comments', 'likesCount', 'isLiked'));
     }
 
     public function list()
@@ -87,6 +100,27 @@ class PostController extends Controller
         $post->delete();
 
         session()->flash('post-deleted-message', 'Post was deleted successfully.: ' . $post->title);
+
+        return back();
+    }
+
+    public function like($id)
+    {
+        $user_id = Auth::user()->id;
+        $post_id = $id;
+
+        $like = new Like();
+
+        if ($like->likeExists($user_id, $post_id)) {
+            // Already liked => Remove Like
+            $like = Like::where('user_id', '=', $user_id)->where('post_id', '=', $post_id)->delete();
+        } else {
+            // Not yet like => Add Like
+            $like = new Like();
+            $like->user_id = Auth::user()->id;
+            $like->post_id = $id;
+            $like->save();
+        }
 
         return back();
     }
