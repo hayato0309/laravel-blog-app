@@ -86,7 +86,7 @@ class PostController extends Controller
         $post = Post::findOrFail($id);
         $post->delete();
 
-        session()->flash('post-deleted-message', 'Post was deleted :' . $post->title);
+        session()->flash('post-deleted-message', 'Post was deleted successfully.: ' . $post->title);
 
         return back();
     }

@@ -38,30 +38,28 @@
             
             {{-- Comments display area --}}
             @foreach ($comments as $comment)
-                <div>
-                    <div class="rounded shadow-sm mb-3 p-3">
-                        <div class="d-inline-block h-auto w-100 mb-1">
-                            <img class="rounded-circle float-left mr-2" src="{{ asset('storage/'.$comment->user->avatar) }}" alt="comment-user-image" style="width:45px">
-                            <div class="float-left">
-                                <div>{{ $comment->user->name }}</div>
-                                <div class="text-muted">{{ $comment->created_at->diffForHumans() }}</div>
-                            </div>
-                            
-                            {{-- Edit and delete buttons --}}
-                            @if($comment->user_id == Auth::user()->id)
-                            <div class="text-right">
-                                <button type="button" class="btn btn-link p-0" data-toggle="modal" data-target="#edit-modal-{{ $comment->id }}">
-                                    <i class="far fa-edit mr-1 text-body"></i>
-                                </button>
-                                <button type="button" class="btn btn-link p-0" data-toggle="modal" data-target="#delete-modal-{{ $comment->id }}">
-                                    <i class="far fa-trash-alt text-body"></i>
-                                </button>
-                            </div>
-                            @endif
-                            
+                <div class="rounded shadow-sm mb-3 p-3">
+                    <div class="d-inline-block h-auto w-100 mb-1">
+                        <img class="rounded-circle float-left mr-2" src="{{ asset('storage/'.$comment->user->avatar) }}" alt="comment-user-image" style="width:45px">
+                        <div class="float-left">
+                            <div>{{ $comment->user->name }}</div>
+                            <div class="text-muted">{{ $comment->created_at->diffForHumans() }}</div>
                         </div>
-                        <div class="border-left px-3">{{ $comment->content }}</div>
+                        
+                        {{-- Edit and delete buttons --}}
+                        @if($comment->user_id == Auth::user()->id)
+                        <div class="text-right">
+                            <button type="button" class="btn btn-link p-0" data-toggle="modal" data-target="#edit-modal-{{ $comment->id }}">
+                                <i class="far fa-edit mr-1 text-body"></i>
+                            </button>
+                            <button type="button" class="btn btn-link p-0" data-toggle="modal" data-target="#delete-modal-{{ $comment->id }}">
+                                <i class="far fa-trash-alt text-body"></i>
+                            </button>
+                        </div>
+                        @endif
+                        
                     </div>
+                    <div class="border-left px-3">{{ $comment->content }}</div>
                 </div>
 
             {{-- Comment edit modal --}}
