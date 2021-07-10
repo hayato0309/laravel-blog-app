@@ -18,7 +18,7 @@
             <div class="mb-4">
                 <a href="{{ route('home') }}" class="text-body"><i class="fas fa-home"></i></a>
                 <i class="fas fa-caret-right"></i>
-                <a href="#" class="text-body">{{$post->title}}</a>
+                <a href="#" class="text-body">{{ $post->title }}</a>
             </div>
             
             <div class="mb-3">
@@ -26,8 +26,17 @@
                 <div class="mb-4">{{ $post->content }}</div>
                 <div class="text-right mb-4">
                     <div class="d-inline mr-3">
-                        <i class="far fa-heart text-muted"></i>
-                        <span class="text-muted">123</span>
+                        @if($isLiked)
+                            <a href="{{ route('post.like', $post->id) }}" class="text-decoration-none">
+                                <i class="fas fa-heart d-inline text-danger"></i>
+                            </a>
+                            <span class="text-danger">{{ $likesCount }}</span>
+                        @else
+                            <a href="{{ route('post.like', $post->id) }}" class="text-decoration-none">
+                                <i class="far fa-heart d-inline text-muted"></i>
+                            </a>
+                            <span class="text-muted">{{ $likesCount }}</span>
+                        @endif
                     </div>
                     <div class="d-inline text-muted">Posted by <a href="#" class="text-muted">{{ $post->user->name }}</a> {{ $post->created_at->diffForHumans() }}</div>
                 </div>
