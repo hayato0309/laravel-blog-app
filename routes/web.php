@@ -20,6 +20,7 @@ Auth::routes();
 Route::get('/home', 'HomeController@index')->name('home');
 
 // For User
+Route::get('user/{id}', 'UserController@show')->name('user.show');
 Route::get('/user/{id}/edit', 'UserController@edit')->name('user.edit');
 Route::patch('/user/{id}/update', 'UserController@update')->name('user.update');
 
