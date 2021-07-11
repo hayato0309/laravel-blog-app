@@ -4,16 +4,41 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use App\User;
-use Validator;
 use Illuminate\Support\Facades\Hash;
+use Validator;
+use App\User;
+use App\Post;
+use App\Like;
+
+
 
 class UserController extends Controller
 {
+    public function show($id)
+    {
+        $user = User::findOrFail($id);
+        $posts = Post::where('user_id', '=', $user->id)->orderBy('created_at', 'desc')->simplePaginate(5);
+
+        foreach ($posts as $post) {
+            $post['likesCount'] = $post->loadCount('likes')->likes_count;
+
+            $like = new Like();
+            $user_id = Auth::user()->id;
+            $post_id = $post->id;
+            if ($like->likeExists($user_id, $post_id)) {
+                $post['isLiked'] = true;
+            } else {
+                $post['isLiked'] = false;
+            }
+        }
+
+        return view('users.show', compact('user', 'posts'));
+    }
+
     public function edit()
     {
-        $auth = Auth::user();
-        return view('users.edit')->with('auth', $auth);
+        $user = Auth::user();
+        return view('users.edit', compact('user'));
     }
 
     public function update(Request $request, $id)

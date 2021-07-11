@@ -24,7 +24,9 @@
                                     <span class="text-muted">{{ $post->likesCount }}</span>
                                 @endif
                             </div>
-                            <div class="float-right text-muted">Posted by {{ $post->user->name }} {{ $post->created_at->diffForHumans() }}</div>
+                            <div class="float-right text-muted">Posted by 
+                                <a href="{{ route('user.show', $post->user->id) }}" class="text-muted">{{ $post->user->name }}</a>
+                                 {{ $post->created_at->diffForHumans() }}</div>
                         </div>
                     </div>
                 </div>
