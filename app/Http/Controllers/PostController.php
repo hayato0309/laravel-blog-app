@@ -116,7 +116,6 @@ class PostController extends Controller
             $like = Like::where('user_id', '=', $user_id)->where('post_id', '=', $post_id)->delete();
         } else {
             // Not yet like => Add Like
-            $like = new Like();
             $like->user_id = Auth::user()->id;
             $like->post_id = $id;
             $like->save();

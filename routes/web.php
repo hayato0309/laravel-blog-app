@@ -27,6 +27,9 @@ Route::patch('/user/{id}/update', 'UserController@update')->name('user.update');
 Route::get('/user/{id}/password/edit', 'UserController@editPassword')->name('user.editPassword');
 Route::patch('/user/password/{id}/update', 'UserController@updatePassword')->name('user.updatePassword');
 
+// Follow users
+Route::get('/user/{id}/follow', 'UserController@follow')->name('user.follow');
+
 // For Post
 Route::get('/post/{id}', 'PostController@show')->name('post.show');
 Route::get('/posts', 'PostController@list')->name('post.posts');

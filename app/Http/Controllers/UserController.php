@@ -9,6 +9,7 @@ use Validator;
 use App\User;
 use App\Post;
 use App\Like;
+use App\Follow;
 
 
 
@@ -19,6 +20,7 @@ class UserController extends Controller
         $user = User::findOrFail($id);
         $posts = Post::where('user_id', '=', $user->id)->orderBy('created_at', 'desc')->simplePaginate(5);
 
+        // Getting all posts of the user
         foreach ($posts as $post) {
             $post['likesCount'] = $post->loadCount('likes')->likes_count;
 
@@ -32,7 +34,17 @@ class UserController extends Controller
             }
         }
 
-        return view('users.show', compact('user', 'posts'));
+        // Checking if Auth user is already following the user
+        $follow = new Follow();
+        $following_user_id = Auth::user()->id;
+        $followed_user_id = $id;
+        if ($follow->followingExists($following_user_id, $followed_user_id)) {
+            $isFollowing = true;
+        } else {
+            $isFollowing = false;
+        }
+
+        return view('users.show', compact('user', 'posts', 'isFollowing'));
     }
 
     public function edit()
@@ -92,5 +104,26 @@ class UserController extends Controller
         $request->session()->flash('updated-password', 'The password was updated successfully.');
 
         return redirect()->route('user.edit', $auth->id);
+    }
+
+    public function follow($id)
+    {
+        $following_user_id = Auth::user()->id;
+        $followed_user_id = $id;
+
+        $follow = new Follow();
+
+        if ($follow->followingExists($following_user_id, $followed_user_id)) {
+            // Already following => Remove following
+            $follow = Follow::where('following_id', '=', $following_user_id)->where('followed_id', '=', $followed_user_id)->delete();
+        } else {
+            // No following yet => Record new following
+            $follow->following_id = $following_user_id;
+            $follow->followed_id = $followed_user_id;
+
+            $follow->save();
+        }
+
+        return back();
     }
 }

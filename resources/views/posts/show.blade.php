@@ -38,7 +38,7 @@
                             <span class="text-muted">{{ $likesCount }}</span>
                         @endif
                     </div>
-                    <div class="d-inline text-muted">Posted by <a href="#" class="text-muted">{{ $post->user->name }}</a> {{ $post->created_at->diffForHumans() }}</div>
+                    <div class="d-inline text-muted">Posted by <a href="{{ route('user.show', $post->user->id) }}" class="text-muted">{{ $post->user->name }}</a> {{ $post->created_at->diffForHumans() }}</div>
                 </div>
                 @if($post->post_image)
                     <img class="rounded" src="{{ asset('storage/'.$post->post_image) }}" alt="avatar" style="width:30%">
@@ -51,7 +51,7 @@
                     <div class="d-inline-block h-auto w-100 mb-1">
                         <img class="rounded-circle float-left mr-2" src="{{ asset('storage/'.$comment->user->avatar) }}" alt="comment-user-image" style="width:45px">
                         <div class="float-left">
-                            <div>{{ $comment->user->name }}</div>
+                            <div><a href="{{ route('user.show', $comment->user->id) }}" class="text-body">{{ $comment->user->name }}</a></div>
                             <div class="text-muted">{{ $comment->created_at->diffForHumans() }}</div>
                         </div>
                         
