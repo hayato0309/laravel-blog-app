@@ -93,13 +93,13 @@ class UserController extends Controller
 
     public function editPassword()
     {
-        $auth = Auth::user();
-        return view('users.edit_password')->with('auth', $auth);
+        $user = Auth::user();
+        return view('users.edit_password', compact('user'));
     }
 
     public function updatePassword(Request $request)
     {
-        $auth = Auth::user();
+        $user = Auth::user();
 
         $validator = Validator::make($request->all(), [
             'current_password' => ['required', 'string', 'min:8'],
@@ -109,17 +109,17 @@ class UserController extends Controller
         $validator->validate();
 
         // Check if the input password and current password match
-        if (!(Hash::check($request->current_password, $auth->password))) {
+        if (!(Hash::check($request->current_password, $user->password))) {
             $validator->errors()->add('current_password', "This password deosn't macth the current password.");
             return back()->withInput()->withErrors($validator);
         }
 
-        $auth->password = bcrypt($request->new_password);
-        $auth->save();
+        $user->password = bcrypt($request->new_password);
+        $user->save();
 
         $request->session()->flash('updated-password', 'The password was updated successfully.');
 
-        return redirect()->route('user.edit', $auth->id);
+        return view('users.edit', compact('user'));
     }
 
     public function follow($id)

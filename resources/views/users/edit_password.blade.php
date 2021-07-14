@@ -7,13 +7,17 @@
         <div class="col-md-8">
             {{-- Breadcrumb list --}}
             <div class="mb-4">
-                <a href="{{ route('user.edit', $auth->id) }}" class="text-body">Profile</a>
+                <a href="{{ route('home') }}" class="text-body"><i class="fas fa-home"></i></a>
                 <i class="fas fa-caret-right"></i>
-                <a href="#" class="text-body">Update password</a>
+                <a href="{{ route('user.show', $user->id) }}" class="text-body">{{ $user->name }}'s profile</a>
+                <i class="fas fa-caret-right"></i>
+                <a href="#" class="text-body">Edit profile</a>
+                <i class="fas fa-caret-right"></i>
+                <a href="#" class="text-body">Edit password</a>
             </div>
 
-            <h1>Update password</h1>
-            <form action="{{ route('user.updatePassword', $auth->id) }}" method="POST">
+            <h1>Edit password</h1>
+            <form action="{{ route('user.updatePassword', $user->id) }}" method="POST">
                 @csrf
                 @method('PATCH')
                 <div class="form-group">
@@ -37,7 +41,7 @@
                     <input type="password" class="form-control" name="new_password_confirmation">
                 </div>
                 <button type="submit" class="btn btn-primary">Submit</button>
-                <a href="{{ route('user.edit', $auth->id) }}" class="btn btn-secondary">Cancel</a>
+                <a href="{{ route('user.edit', $user->id) }}" class="btn btn-secondary">Cancel</a>
             </form>
         </div>
     </div>
