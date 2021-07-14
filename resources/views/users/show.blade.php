@@ -44,9 +44,9 @@
                             @endif
                         </div>
                         <div>
-                            <div class="mb-3 text-muted">Hello everyone! I'm new to here. Nice to meet you! Hello everyone! I'm new to here. Nice to meet you!</div>
+                            <div class="mb-3 text-muted text-break">{{ $user->greeting }}</div>
                             <h6><i class="fas fa-square"></i> Interests</h6>
-                            <div class="border-left px-3 mb-3">Interests will be here</div>
+                            <div class="border-left px-3 mb-3 text-break">{{ $user->interests }}</div>
                         </div>
                     </div>
                     <div>

@@ -71,9 +71,11 @@ class UserController extends Controller
     {
 
         $input = request()->validate([
-            'name' => ['required', 'string', 'max:225', 'alpha_dash'],
+            'name' => ['required', 'string', 'max:30', 'alpha_dash'],
             'avatar' => ['file', 'image', 'max:1024'],
-            'email' => ['required', 'email', 'max:225'],
+            'email' => ['required', 'email', 'max:50'],
+            'greeting' => ['required', 'string', 'max:130'],
+            'interests' => ['required', 'string', 'max:170'],
         ]);
 
         $user = User::findOrFail($id);
