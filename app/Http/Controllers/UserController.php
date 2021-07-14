@@ -36,15 +36,29 @@ class UserController extends Controller
 
         // Checking if Auth user is already following the user
         $follow = new Follow();
-        $following_user_id = Auth::user()->id;
-        $followed_user_id = $id;
-        if ($follow->followingExists($following_user_id, $followed_user_id)) {
+        $following_id = Auth::user()->id;
+        $follower_id = $id;
+        if ($follow->followingExists($following_id, $follower_id)) {
             $isFollowing = true;
         } else {
             $isFollowing = false;
         }
 
-        return view('users.show', compact('user', 'posts', 'isFollowing'));
+        // Get following users
+        $followings = $user->followings()->get();
+
+        foreach ($followings as $following) {
+            $following['followingInModal'] = $follow->followingExists($following_id, $following['id']);
+        }
+
+        // Get follower users
+        $followers = $user->followers()->get();
+
+        foreach ($followers as $follower) {
+            $follower['followerInModal'] = $follow->followingExists($following_id, $follower['id']);
+        }
+
+        return view('users.show', compact('user', 'posts', 'isFollowing', 'followings', 'followers'));
     }
 
     public function edit()
@@ -108,18 +122,18 @@ class UserController extends Controller
 
     public function follow($id)
     {
-        $following_user_id = Auth::user()->id;
-        $followed_user_id = $id;
+        $following_id = Auth::user()->id;
+        $follower_id = $id;
 
         $follow = new Follow();
 
-        if ($follow->followingExists($following_user_id, $followed_user_id)) {
+        if ($follow->followingExists($following_id, $follower_id)) {
             // Already following => Remove following
-            $follow = Follow::where('following_id', '=', $following_user_id)->where('followed_id', '=', $followed_user_id)->delete();
+            $follow = Follow::where('following_id', '=', $following_id)->where('follower_id', '=', $follower_id)->delete();
         } else {
             // No following yet => Record new following
-            $follow->following_id = $following_user_id;
-            $follow->followed_id = $followed_user_id;
+            $follow->following_id = $following_id;
+            $follow->follower_id = $follower_id;
 
             $follow->save();
         }

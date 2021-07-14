@@ -51,8 +51,8 @@
                     </div>
                     <div>
                         {{-- Links to trigger modal for following/follower user list --}}
-                        <span class="text-muted mr-1"><a href="#" data-toggle="modal" data-target="#followingModal">123</a> Following</span>
-                        <span class="text-muted"><a href="#" data-toggle="modal" data-target="#followerModal">123</a> Followers</span>
+                        <span class="text-muted mr-1"><a href="#" data-toggle="modal" data-target="#followingModal">{{ $followings->count() }}</a> Following</span>
+                        <span class="text-muted"><a href="#" data-toggle="modal" data-target="#followerModal">{{ $followers->count() }}</a> Followers</span>
                     </div>
                 </div>
             </div>
@@ -68,15 +68,26 @@
                         </button>
                     </div>
                     <div class="modal-body">
+
+                        @foreach($followings as $following)
                         <div class="row mb-2">
-                            <div class="col-sm-10 d-flex align-items-center">
-                                <img class="rounded-circle float-left mr-3" src="{{ asset('storage/'.$user->avatar) }}" alt="" style="width: 45px">
-                                <div class="float-left">Hayato</div>
+                            <div class="col-sm-9 d-flex align-items-center">
+                                <img class="rounded-circle float-left mr-3" src="{{ asset('storage/'.$following->avatar) }}" alt="" style="width: 45px">
+                                <div class="float-left"><a href="{{ route('user.show', $following->id) }}" class="text-body">{{ Str::limit($following->name, 40, '...') }}</a></div>
                             </div>
-                            <div class="col-sm-2 text-right d-flex align-items-center">
-                                <button class="btn btn-outline-primary btn-sm">Follow</button>
+                            <div class="col-sm-3 d-flex align-items-center justify-content-end">
+                                {{-- Follow button --}}
+                                @if($following->id != Auth::user()->id)
+                                    @if($following['followingInModal'])
+                                        <a href="{{ route('user.follow', $following->id) }}" class="btn btn-outline-primary btn-sm active">Following</a>
+                                    @else
+                                        <a href="{{ route('user.follow', $following->id) }}" class="btn btn-outline-primary btn-sm">Follow</a>
+                                    @endif
+                                @endif
                             </div>
                         </div>
+                        @endforeach
+
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -85,7 +96,7 @@
                 </div>
             </div>
 
-            {{-- Modals for following user list --}}
+            {{-- Modals for follower user list --}}
             <div class="modal fade" id="followerModal" tabindex="-1" role="dialog" aria-labelledby="followerModalTitle" aria-hidden="true">
                 <div class="modal-dialog" role="document">
                     <div class="modal-content">
@@ -96,15 +107,26 @@
                         </button>
                     </div>
                     <div class="modal-body">
+
+                        @foreach($followers as $follower)
                         <div class="row mb-2">
-                            <div class="col-sm-10 d-flex align-items-center">
-                                <img class="rounded-circle float-left mr-3" src="{{ asset('storage/'.$user->avatar) }}" alt="" style="width: 45px">
-                                <div class="float-left">Hayato</div>
+                            <div class="col-sm-9 d-flex align-items-center">
+                                <img class="rounded-circle float-left mr-3" src="{{ asset('storage/'.$follower->avatar) }}" alt="" style="width: 45px">
+                                <div class="float-left"><a href="{{ route('user.show', $follower->id) }}" class="text-body">{{ Str::limit($follower->name, 40, '...') }}</a></div>
                             </div>
-                            <div class="col-sm-2 text-right d-flex align-items-center">
-                                <button class="btn btn-outline-primary btn-sm">Follow</button>
+                            <div class="col-sm-3 d-flex align-items-center justify-content-end">
+                                {{-- Follow button --}}
+                                @if($follower->id != Auth::user()->id)
+                                    @if($follower['followerInModal'])
+                                        <a href="{{ route('user.follow', $follower->id) }}" class="btn btn-outline-primary btn-sm active">Following</a>
+                                    @else
+                                        <a href="{{ route('user.follow', $follower->id) }}" class="btn btn-outline-primary btn-sm">Follow</a>
+                                    @endif
+                                @endif
                             </div>
                         </div>
+                        @endforeach
+
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>

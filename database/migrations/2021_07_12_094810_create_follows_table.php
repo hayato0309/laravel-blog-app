@@ -16,20 +16,20 @@ class CreateFollowsTable extends Migration
         Schema::create('follows', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->unsignedBigInteger('following_id');
-            $table->unsignedBigInteger('followed_id');
+            $table->unsignedBigInteger('follower_id');
 
             $table->foreign('following_id')
                 ->references('id')
                 ->on('users')
                 ->onDelete('cascade');
 
-            $table->foreign('followed_id')
+            $table->foreign('follower_id')
                 ->references('id')
                 ->on('users')
                 ->onDelete('cascade');
 
             // Not allowing to have the same combination of these IDs.
-            $table->unique(['following_id', 'followed_id']);
+            $table->unique(['following_id', 'follower_id']);
 
             $table->timestamps();
         });
