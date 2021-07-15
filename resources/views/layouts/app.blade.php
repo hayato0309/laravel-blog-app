@@ -24,7 +24,7 @@
 </head>
 <body>
     <div id="app">
-        <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm fixed-top">
+        <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm fixed-top py-1">
             <div class="container">
                 <a class="navbar-brand" href="{{ route('home') }}">
                     {{ config('app.name', 'Laravel') }}
@@ -52,15 +52,15 @@
                                 </li>
                             @endif
                         @else
-                            <a href="{{route('post.create')}}" class="d-flex align-items-center mr-3 text-muted">Create a post</a>
-                            <a href="{{route('post.posts')}}" class="d-flex align-items-center mr-3 text-muted">My posts</a>
+                            <a href="{{ route('post.create') }}" class="d-flex align-items-center mr-3 text-muted">Create a post</a>
+                            <a href="{{ route('post.posts') }}" class="d-flex align-items-center mr-2 text-muted">My posts</a>
                             <li class="nav-item dropdown">
-                                <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
-                                    {{ Auth::user()->name }} <span class="caret"></span>
+                                <a id="navbarDropdown" class="nav-link" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
+                                    <img class="rounded-circle" src="{{ asset('storage/'.Auth::user()->avatar) }}" alt="avatar" style="width:35px">
                                 </a>
 
                                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
-                                    <a class="dropdown-item" href="{{route('user.show', Auth::user()->id)}}">
+                                    <a class="dropdown-item" href="{{ route('user.show', Auth::user()->id) }}">
                                         Profile
                                     </a>
                                     <a class="dropdown-item" href="{{ route('logout') }}"
