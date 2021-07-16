@@ -24,7 +24,7 @@
 </head>
 <body>
     <div id="app">
-        <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm fixed-top py-1">
+        <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm fixed-top py-2">
             <div class="container">
                 <a class="navbar-brand" href="{{ route('home') }}">
                     {{ config('app.name', 'Laravel') }}
@@ -56,7 +56,7 @@
                             <a href="{{ route('post.posts') }}" class="d-flex align-items-center mr-2 text-muted">My posts</a>
                             <li class="nav-item dropdown">
                                 <a id="navbarDropdown" class="nav-link" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
-                                    <img class="rounded-circle" src="{{ asset('storage/'.Auth::user()->avatar) }}" alt="avatar" style="width:35px">
+                                    <img class="rounded-circle" src="{{ asset('storage/'.Auth::user()->avatar) }}" alt="avatar" style="width:30px">
                                 </a>
 
                                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
