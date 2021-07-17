@@ -5,10 +5,10 @@ namespace App;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
-use App\Post;
-use App\Comment;
-use App\Like;
-use App\Follow;
+// use App\Post;
+// use App\Comment;
+// use App\Like;
+// use App\Follow;
 
 class User extends Authenticatable
 {
@@ -63,11 +63,21 @@ class User extends Authenticatable
 
     public function followings()
     {
-        return $this->belongsToMany(User::class, 'follows', 'following_id', 'follower_id');
+        return $this->belongsToMany(User::class, 'follows', 'following_id', 'follower_id'); // LaravelのNaming conventionに沿っていないため、第2~4の引数が必要。
     }
 
     public function followers()
     {
-        return $this->belongsToMany(User::class, 'follows', 'follower_id', 'following_id');
+        return $this->belongsToMany(User::class, 'follows', 'follower_id', 'following_id'); // LaravelのNaming conventionに沿っていないため、第2~4の引数が必要。
+    }
+
+    public function roles()
+    {
+        return $this->belongsToMany(Role::class);
+    }
+
+    public function permissions()
+    {
+        return $this->belongsToMany(Permission::class);
     }
 }
