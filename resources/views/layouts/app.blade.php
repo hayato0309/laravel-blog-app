@@ -56,7 +56,7 @@
                             <a href="{{ route('post.posts') }}" class="d-flex align-items-center mr-2 text-muted">My posts</a>
                             <li class="nav-item dropdown">
                                 <a id="navbarDropdown" class="nav-link" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
-                                    <img class="rounded-circle" src="{{ asset('storage/'.Auth::user()->avatar) }}" alt="avatar" style="width:30px">
+                                    <img class="rounded-circle" src="{{ asset('storage/'.Auth::user()->avatar) }}" alt="avatar" style="width:25px">
                                 </a>
 
                                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
