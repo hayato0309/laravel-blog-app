@@ -3,6 +3,7 @@
 namespace App\Providers;
 
 use Illuminate\Support\ServiceProvider;
+use Illuminate\Support\Facades\Gate;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -23,6 +24,14 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        //
+        // $this->registerPolicies();
+
+        Gate::define('isAdmin', function ($user) {
+            foreach ($user->roles->all() as $role) {
+                if ($role->slug == 'admin') {
+                    return true;
+                }
+            }
+        });
     }
 }

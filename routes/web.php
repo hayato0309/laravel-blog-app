@@ -28,7 +28,9 @@ Route::get('/user/{id}/password/edit', 'UserController@editPassword')->name('use
 Route::patch('/user/password/{id}/update', 'UserController@updatePassword')->name('user.updatePassword');
 
 // For Admin user
-Route::get('admin', 'AdminController@index')->name('admin.home');
+Route::group(['middleware' => 'can:isAdmin'], function () {
+    Route::get('admin', 'AdminController@index')->name('admin.home');
+});
 
 // Follow users
 Route::get('/user/{id}/follow', 'UserController@follow')->name('user.follow');
