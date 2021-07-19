@@ -32,7 +32,7 @@
                             <td>
                                 <!-- Button trigger modal -->
                                 <button type="button" class="btn btn-link p-0" data-toggle="modal" data-target="#modal-{{ $post->id }}">
-                                        <i class="far fa-trash-alt text-body"></i>
+                                    <i class="far fa-trash-alt text-body"></i>
                                 </button>
                                     
                                 <!-- Modal -->

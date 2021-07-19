@@ -31,7 +31,7 @@
 
                 <div class="form-group">
                     <label>Content</label>
-                    <textarea type="text" class="form-control {{$errors->has('content')?'is-invalid':''}}" name="content" cols="30" rows="10">{{ $post->content }}</textarea>
+                    <textarea type="text" class="form-control {{ $errors->has('content')?'is-invalid':'' }}" name="content" cols="30" rows="10">{{ $post->content }}</textarea>
                     
                     @if($errors->has('content'))
                         <p class="text-danger">{{ $errors->first('content') }}</p>
