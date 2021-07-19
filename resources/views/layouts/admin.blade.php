@@ -7,14 +7,14 @@
         <div class="col-sm-2">
             <div class="p-4 rounded bg-white">
                 <ul class="list-unstyled">
-                    <li class="h5 mb-3"><a href="#" class="text-muted">Top</a></li>
-                    <li class="h5 mb-3"><a href="#" class="text-muted">Users</a></li>
+                    <li class="h5 mb-3"><a href="{{ route('admin.home') }}" class="text-muted">Home</a></li>
+                    <li class="h5 mb-3"><a href="{{ route('admin.showUsers') }}" class="text-muted">Users</a></li>
                     <li class="h5 mb-3"><a href="#" class="text-muted">Posts</a></li>
                 </ul>
             </div>
         </div>
         <div class="col-md-10">
-            <div class="p-3 rounded bg-white">
+            <div class="p-4 rounded bg-white">
                 @yield('admin.content')
             </div>
         </div>

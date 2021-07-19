@@ -111,7 +111,7 @@
                         @foreach($followers as $follower)
                         <div class="row mb-2">
                             <div class="col-sm-9 d-flex align-items-center">
-                                <img class="rounded-circle float-left mr-3" src="{{ asset('storage/'.$follower->avatar) }}" alt="" style="width: 45px">
+                                <img class="rounded-circle float-left mr-3" src="{{ asset('storage/'.$follower->avatar) }}" alt="avatar" style="width: 45px">
                                 <div class="float-left"><a href="{{ route('user.show', $follower->id) }}" class="text-body">{{ Str::limit($follower->name, 40, '...') }}</a></div>
                             </div>
                             <div class="col-sm-3 d-flex align-items-center justify-content-end">

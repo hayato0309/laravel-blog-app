@@ -9,6 +9,7 @@ use Illuminate\Notifications\Notifiable;
 // use App\Comment;
 // use App\Like;
 // use App\Follow;
+use App\Role;
 
 class User extends Authenticatable
 {
@@ -43,7 +44,7 @@ class User extends Authenticatable
 
     public function posts()
     {
-        return $this->belongsToMany(Post::class);
+        return $this->hasMany(Post::class);
     }
 
     public function comments()
@@ -79,5 +80,17 @@ class User extends Authenticatable
     public function permissions()
     {
         return $this->belongsToMany(Permission::class);
+    }
+
+    public function getRoles($user)
+    {
+        $roles = $user->roles->all();
+        $roleNames = [];
+
+        foreach ($roles as $role) {
+            $roleNames[] = $role->name;
+        }
+
+        return $roleNames = collect($roleNames);
     }
 }

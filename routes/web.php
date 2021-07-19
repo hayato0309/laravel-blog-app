@@ -30,6 +30,7 @@ Route::patch('/user/password/{id}/update', 'UserController@updatePassword')->nam
 // For Admin user
 Route::group(['middleware' => 'can:isAdmin'], function () {
     Route::get('admin', 'AdminController@index')->name('admin.home');
+    Route::get('admin/users', 'AdminController@showUsers')->name('admin.showUsers');
 });
 
 // Follow users
