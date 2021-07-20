@@ -63,6 +63,15 @@
                                     <a class="dropdown-item" href="{{ route('user.show', Auth::user()->id) }}">
                                         Profile
                                     </a>
+
+                                    @foreach(Auth::user()->roles as $role)
+                                        @if($role->slug == 'admin')
+                                            <a class="dropdown-item" href="{{ route('admin.home', Auth::user()) }}">
+                                                Admin
+                                            </a>
+                                        @endif
+                                    @endforeach
+                                    
                                     <a class="dropdown-item" href="{{ route('logout') }}"
                                        onclick="event.preventDefault();
                                                      document.getElementById('logout-form').submit();">
