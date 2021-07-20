@@ -39,7 +39,7 @@
                             <div class="modal-dialog" role="document">
                                 <div class="modal-content">
                                     <div class="modal-header">
-                                        <h5 class="modal-title" id="exampleModalLabel">Delete confirmation</h5>
+                                        <h5 class="modal-title" id="exampleModalLabel">Deactivate confirmation</h5>
                                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                             <span aria-hidden="true">&times;</span>
                                         </button>
@@ -56,7 +56,7 @@
                                         <form action="" method="POST">
                                             @csrf
                                             @method('DELETE')
-                                            <button type="submit" class="btn btn-danger">Deactivate</button>
+                                            <button type="submit" class="btn btn-danger-custamized">Deactivate</button>
                                         </form>
                                     </div>
                                 </div>

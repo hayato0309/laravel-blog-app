@@ -46,15 +46,18 @@
                                                 </button>
                                             </div>
                                             <div class="modal-body">
-                                                <p>Are you sure you want to delete this post?</p>
-                                                <p>Title: {{ $post->title }}</p>
+                                                <div class="mb-2">Are you sure you want to delete this post?</div>
+                                                <div>Title</div>
+                                                <div class="mb-2 px-2 border-left">{{ $post->title }}</div>
+                                                <div>Content</div>
+                                                <div class="px-2 border-left">{{ Str::limit($post->content, 200, '...') }}</div>
                                             </div>
                                             <div class="modal-footer">
                                                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                                                 <form action="{{ route('post.destroy', $post->id) }}" method="POST">
                                                     @csrf
                                                     @method('DELETE')
-                                                    <button type="submit" class="btn btn-danger">Delete</button>
+                                                    <button type="submit" class="btn btn-danger-custamized">Delete</button>
                                                 </form>
                                             </div>
                                         </div>

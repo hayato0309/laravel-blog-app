@@ -43,7 +43,7 @@
                                         </button>
                                     </div>
                                     <div class="modal-body">
-                                        <p>Are you sure you want to hide this post?</p>
+                                        <div class="mb-2">Are you sure you want to hide this post?</div>
                                         <div>Title</div>
                                         <div class="mb-2 px-2 border-left">{{ $post->title }}</div>
                                         <div>Content</div>
@@ -54,7 +54,7 @@
                                         <form action="" method="POST">
                                             @csrf
                                             @method('DELETE')
-                                            <button type="submit" class="btn btn-danger">Hide</button>
+                                            <button type="submit" class="btn btn-danger-custamized">Hide</button>
                                         </form>
                                     </div>
                                 </div>
