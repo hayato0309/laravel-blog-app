@@ -14,7 +14,7 @@ class AdminController extends Controller
 
     public function showUsers()
     {
-        $users = User::simplePaginate(20);
+        $users = User::orderBy('name', 'asc')->simplePaginate(20);
 
         foreach ($users as $user) {
             $user->roles = $user->getRoles($user);
