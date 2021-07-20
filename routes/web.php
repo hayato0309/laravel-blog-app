@@ -27,10 +27,13 @@ Route::patch('/user/{id}/update', 'UserController@update')->name('user.update');
 Route::get('/user/{id}/password/edit', 'UserController@editPassword')->name('user.editPassword');
 Route::patch('/user/password/{id}/update', 'UserController@updatePassword')->name('user.updatePassword');
 
-// For Admin user
+// For Admin user (using Gate (app/Providers/AppServiceProvider.php))
 Route::group(['middleware' => 'can:isAdmin'], function () {
     Route::get('admin', 'AdminController@index')->name('admin.home');
+
     Route::get('admin/users', 'AdminController@showUsers')->name('admin.showUsers');
+
+    Route::get('admin/posts', 'AdminController@showPosts')->name('admin.showPosts');
 });
 
 // Follow users
