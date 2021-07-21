@@ -15,7 +15,7 @@ class AdminController extends Controller
 
     public function showUsers()
     {
-        $users = User::orderBy('name', 'asc')->simplePaginate(20);
+        $users = User::withTrashed()->orderBy('name', 'asc')->simplePaginate(20);
 
         foreach ($users as $user) {
             $user->roles = $user->getRoles($user);
@@ -29,5 +29,25 @@ class AdminController extends Controller
         $posts = Post::orderBy('created_at', 'desc')->simplePaginate(20);
 
         return view('admin.posts.index', compact('posts'));
+    }
+
+    public function activateUser($id)
+    {
+        $user = User::onlyTrashed()->findOrFail($id);
+        $user->restore();
+
+        session()->flash('user-activated-message', 'User was activated successfully. : ' . $user->name);
+
+        return back();
+    }
+
+    public function deactivateUser($id)
+    {
+        $user = User::findOrFail($id);
+        $user->delete();
+
+        session()->flash('user-deactivated-message', 'User was deactivated successfully. : ' . $user->name);
+
+        return back();
     }
 }

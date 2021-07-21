@@ -32,6 +32,8 @@ Route::group(['middleware' => 'can:isAdmin'], function () {
     Route::get('admin', 'AdminController@index')->name('admin.home');
 
     Route::get('admin/users', 'AdminController@showUsers')->name('admin.showUsers');
+    Route::patch('admin/users/{id}/restore', 'AdminController@activateUser')->name('admin.activateUser');
+    Route::delete('admin/users/{id}/delete', 'AdminController@deactivateUser')->name('admin.deactivateUser');
 
     Route::get('admin/posts', 'AdminController@showPosts')->name('admin.showPosts');
 });
