@@ -1,6 +1,12 @@
 @extends('layouts.admin')
 
 @section('admin.content')
+    @if(session('user-deactivated-message'))
+        <div class="alert alert-danger">{{ session('user-deactivated-message') }}</div>
+    @elseif(session('user-activated-message'))
+        <div class="alert alert-success">{{ session('user-activated-message') }}</div>
+    @endif
+
     <h1 class="mb-4">User list</h1>
 
     <table class="table table-hover">
@@ -27,15 +33,28 @@
                     <td class="align-middle">{{ $user->roles->implode(', ') }}</td>
                     <td class="align-middle">{{ $user->posts()->count() }}</td>
                     <td class="align-middle">{{ $user->created_at }}</td>
-                    <td class="align-middle">Active</td>
+                    <td class="align-middle">
+                        @if($user->deleted_at)
+                            <div class="text-danger">Inactive</div>    
+                        @else    
+                            <div>Active</div>    
+                        @endif
+                    </td> 
                     <td class="align-middle">
                         <!-- Button trigger modal -->
-                        <button type="button" class="btn btn-link p-0" data-toggle="modal" data-target="#modal-{{ $user->id }}">
-                            <i class="fas fa-toggle-on text-body"></i>
-                        </button>
+                        @if($user->deleted_at)
+                            <button type="button" class="btn btn-link p-0" data-toggle="modal" data-target="#modal-activate-{{ $user->id }}">
+                                <i class="fas fa-toggle-off text-body"></i>
+                            </button>
+                        @else    
+                            <button type="button" class="btn btn-link p-0" data-toggle="modal" data-target="#modal-deactivate-{{ $user->id }}">
+                                <i class="fas fa-toggle-on text-body"></i>
+                            </button>
+                        @endif
+                        
                             
-                        <!-- Modal -->
-                        <div class="modal fade" id="modal-{{ $user->id }}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                        <!-- Modal for deactivating users -->
+                        <div class="modal fade" id="modal-deactivate-{{ $user->id }}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                             <div class="modal-dialog" role="document">
                                 <div class="modal-content">
                                     <div class="modal-header">
@@ -53,7 +72,7 @@
                                     </div>
                                     <div class="modal-footer">
                                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                        <form action="" method="POST">
+                                        <form action="{{ route('admin.deactivateUser', $user->id) }}" method="POST">
                                             @csrf
                                             @method('DELETE')
                                             <button type="submit" class="btn btn-danger-custamized">Deactivate</button>
@@ -62,6 +81,36 @@
                                 </div>
                             </div>
                         </div>
+
+                        <!-- Modal for activating users -->
+                        <div class="modal fade" id="modal-activate-{{ $user->id }}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                            <div class="modal-dialog" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="exampleModalLabel">Deactivate confirmation</h5>
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <p>Are you sure you want to activate this user?</p>
+                                        <div class="d-flex align-items-center">
+                                            <img src="{{ asset('storage/'.$user->avatar) }}" alt="avatar" class="rounded-circle mr-3 float-left" style="width: 35px">
+                                            <div class="float-left">{{ $user->name }}</div>
+                                        </div>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                        <form action="{{ route('admin.activateUser', $user->id) }}" method="POST">
+                                            @csrf
+                                            @method('PATCH')
+                                            <button type="submit" class="btn btn-primary">Activate</button>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
                     </td>
                 </tr>
             @endforeach
