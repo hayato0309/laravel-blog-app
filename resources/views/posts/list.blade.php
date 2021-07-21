@@ -9,7 +9,7 @@
                 <div class="alert alert-danger">{{ session('post-deleted-message') }}</div>
             @endif
 
-            <h1>My posts</h1>
+            <h1 class="mb-4">My posts</h1>
             <table class="table table-hover">
                 <thead>
                     <tr>
@@ -47,10 +47,10 @@
                                             </div>
                                             <div class="modal-body">
                                                 <div class="mb-2">Are you sure you want to delete this post?</div>
-                                                <div>Title</div>
-                                                <div class="mb-2 px-2 border-left">{{ $post->title }}</div>
-                                                <div>Content</div>
-                                                <div class="px-2 border-left">{{ Str::limit($post->content, 200, '...') }}</div>
+                                                <div class="mb-1">Title</div>
+                                                <div class="mb-2 px-3 border-left">{{ $post->title }}</div>
+                                                <div class="mb-1">Content</div>
+                                                <div class="px-3 border-left">{{ Str::limit($post->content, 200, '...') }}</div>
                                             </div>
                                             <div class="modal-footer">
                                                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
