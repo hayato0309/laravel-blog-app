@@ -3,8 +3,8 @@
 @section('admin.content')
     @if(session('post-hidden-message'))
         <div class="alert alert-danger">{{ session('post-hidden-message') }}</div>
-    {{-- @elseif(session('user-activated-message'))
-        <div class="alert alert-success">{{ session('user-activated-message') }}</div> --}}
+    @elseif(session('post-unhidden-message'))
+        <div class="alert alert-success">{{ session('post-unhidden-message') }}</div>
     @endif
 
     <h1 class="mb-4">Post list</h1>

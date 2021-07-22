@@ -25,6 +25,12 @@
                             <span class="col-sm-11">Posts</span>
                         </a>
                     </li>
+                    <li class="row h5 mb-3">
+                        <a href="{{ route('admin.category') }}" class="text-muted">
+                            <i class="fas fa-th-large col-sm-1"></i>
+                            <span class="col-sm-11">Categories</span>
+                        </a>
+                    </li>
                 </ul>
             </div>
         </div>
