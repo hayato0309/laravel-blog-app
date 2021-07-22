@@ -26,7 +26,7 @@ class AdminController extends Controller
 
     public function showPosts()
     {
-        $posts = Post::orderBy('created_at', 'desc')->simplePaginate(20);
+        $posts = Post::withTrashed()->orderBy('created_at', 'desc')->simplePaginate(20);
 
         return view('admin.posts.index', compact('posts'));
     }
@@ -47,6 +47,26 @@ class AdminController extends Controller
         $user->delete();
 
         session()->flash('user-deactivated-message', 'User was deactivated successfully. : ' . $user->name);
+
+        return back();
+    }
+
+    public function unhidePost($id)
+    {
+        $post = Post::onlyTrashed()->findOrFail($id);
+        $post->restore();
+
+        session()->flash('post-unhidden-message', 'User was unhidden successfully. : ' . $post->title);
+
+        return back();
+    }
+
+    public function hidePost($id)
+    {
+        $post = Post::findOrFail($id);
+        $post->delete();
+
+        session()->flash('post-hidden-message', 'Post was hidden successfully. : ' . $post->title);
 
         return back();
     }
