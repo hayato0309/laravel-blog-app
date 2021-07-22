@@ -7,9 +7,24 @@
         <div class="col-sm-2">
             <div class="p-4 rounded bg-white">
                 <ul class="list-unstyled">
-                    <li class="h5 mb-3"><a href="{{ route('admin.home') }}" class="text-muted"><i class="fas fa-home mr-2"></i>Home</a></li>
-                    <li class="h5 mb-3"><a href="{{ route('admin.showUsers') }}" class="text-muted"><i class="fas fa-users mr-2"></i>Users</a></li>
-                    <li class="h5 mb-3"><a href="{{ route('admin.showPosts') }}" class="text-muted"><i class="fas fa-newspaper mr-2"></i>Posts</a></li>
+                    <li class="row h5 mb-3">
+                        <a href="{{ route('admin.home') }}" class="text-muted">
+                            <i class="fas fa-home col-sm-1"></i>
+                            <span class="col-sm-11">Home</span>
+                        </a>
+                    </li>
+                    <li class="row h5 mb-3">
+                        <a href="{{ route('admin.showUsers') }}" class="text-muted">
+                            <i class="fas fa-users col-sm-1"></i>
+                            <span class="col-sm-11">Home</span>
+                        </a>
+                    </li>
+                    <li class="row h5 mb-3">
+                        <a href="{{ route('admin.showPosts') }}" class="text-muted">
+                            <i class="fas fa-newspaper col-sm-1"></i>
+                            <span class="col-sm-11">Home</span>
+                        </a>
+                    </li>
                 </ul>
             </div>
         </div>
