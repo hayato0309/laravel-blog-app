@@ -16,13 +16,13 @@
                     <li class="row h5 mb-3">
                         <a href="{{ route('admin.showUsers') }}" class="text-muted">
                             <i class="fas fa-users col-sm-1"></i>
-                            <span class="col-sm-11">Home</span>
+                            <span class="col-sm-11">Users</span>
                         </a>
                     </li>
                     <li class="row h5 mb-3">
                         <a href="{{ route('admin.showPosts') }}" class="text-muted">
                             <i class="fas fa-newspaper col-sm-1"></i>
-                            <span class="col-sm-11">Home</span>
+                            <span class="col-sm-11">Posts</span>
                         </a>
                     </li>
                 </ul>
