@@ -36,6 +36,8 @@ Route::group(['middleware' => 'can:isAdmin'], function () {
     Route::delete('admin/users/{id}/delete', 'AdminController@deactivateUser')->name('admin.deactivateUser');
 
     Route::get('admin/posts', 'AdminController@showPosts')->name('admin.showPosts');
+    Route::patch('admin/posts/{id}/unhide', 'AdminController@unhidePost')->name('admin.unhidePost');
+    Route::delete('admin/posts/{id}/hide', 'AdminController@hidePost')->name('admin.hidePost');
 });
 
 // Follow users

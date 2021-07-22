@@ -6,9 +6,14 @@ use Illuminate\Database\Eloquent\Model;
 use App\User;
 use App\Comment;
 use App\Like;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Post extends Model
 {
+    use SoftDeletes;
+
+    protected $dates = ['deleted_at'];
+
     protected $fillable = [
         'user_id', 'title', 'content', 'post_image'
     ];
