@@ -32,6 +32,21 @@ class CategoryController extends Controller
         return back();
     }
 
+    public function update($id)
+    {
+        $input = request()->validate([
+            'name' => ['required', 'min:3', 'max:30', 'unique:categories'],
+        ]);
+
+        $category = Category::findOrFail($id);
+        $category->name = $input['name'];
+        $category->update();
+
+        session()->flash('category-updated-message', 'Category was updated successfully. : ' . $category->name);
+
+        return back();
+    }
+
     public function destroy($id)
     {
         $category = Category::findOrFail($id);
