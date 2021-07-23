@@ -81,17 +81,23 @@
                                 <span aria-hidden="true">&times;</span>
                             </button>
                         </div>
-                        <div class="modal-body">
-                            <form action="{{ route('comment.update', $comment->id) }}" method="POST">
+                        
+                        <form action="{{ route('comment.update', $comment->id) }}" method="POST">
+                            <div class="modal-body">
                                 @csrf
-                                @method('POST')
+                                @method('PATCH')
+
                                 <textarea type="text" class="form-control mb-2 {{ $errors->has('updated-content')?'is-invalid':'' }}" name="content" cols="30" rows="3" placeholder="Please write your comment.">{{ $comment->content }}</textarea>
                                 @if($errors->has('updated-content'))
                                     <p class="text-danger">{{ $errors->first('updated-content') }}</p>
                                 @endif
+                            </div> 
+
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>   
                                 <button type="submit" class="btn btn-primary">Submit</button>
-                            </form>
-                        </div> 
+                            </div>
+                        </form>
                     </div>
                 </div>
             </div>

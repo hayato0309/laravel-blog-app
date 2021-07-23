@@ -41,6 +41,7 @@ Route::group(['middleware' => 'can:isAdmin'], function () {
 
     Route::get('admin/categories', 'CategoryController@index')->name('admin.category');
     Route::post('admin/categories/store', 'CategoryController@store')->name('admin.categoryStore');
+    Route::patch('admin/categories/{id}/update', 'CategoryController@update')->name('admin.categoryUpdate');
     Route::delete('admin/categories/{id}/delete', 'CategoryController@destroy')->name('admin.categoryDestroy');
 });
 
@@ -61,5 +62,5 @@ Route::get('/posts/{id}/like', 'PostController@like')->name('post.like');
 
 // For Comment
 Route::post('/post/{id}/comment', 'CommentController@store')->name('comment.store');
-Route::post('/post/{id}/comment/update', 'CommentController@update')->name('comment.update');
+Route::patch('/post/{id}/comment/update', 'CommentController@update')->name('comment.update');
 Route::delete('/comment/{id}/comment/delete', 'CommentController@destroy')->name('comment.destroy');
