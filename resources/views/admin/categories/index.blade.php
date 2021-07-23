@@ -3,6 +3,8 @@
 @section('admin.content')
     @if(session('category-created-message'))
         <div class="alert alert-success">{{ session('category-created-message') }}</div>
+    @elseif(session('category-deleted-message'))
+        <div class="alert alert-danger">{{ session('category-deleted-message') }}</div>
     @endif
 
     <h1 class="mb-4">Category list</h1>
@@ -60,15 +62,12 @@
                                         </button>
                                     </div>
                                     <div class="modal-body">
-                                        <div class="mb-2">Are you sure you want to delete this post?</div>
-                                        <div class="mb-1">Title</div>
-                                        <div class="mb-2 px-3 border-left">{{ $category->title }}</div>
-                                        <div class="mb-1">Content</div>
-                                        <div class="px-3 border-left">{{ Str::limit($category->content, 200, '...') }}</div>
+                                        <div class="mb-2">Are you sure you want to delete this category?</div>
+                                        <div class="mb-2 px-3 border-left">{{ $category->name }}</div>
                                     </div>
                                     <div class="modal-footer">
                                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                        <form action="{{ route('post.destroy', $category->id) }}" method="POST">
+                                        <form action="{{ route('admin.categoryDestroy', $category->id) }}" method="POST">
                                             @csrf
                                             @method('DELETE')
                                             <button type="submit" class="btn btn-danger-custamized">Delete</button>

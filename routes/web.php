@@ -41,6 +41,7 @@ Route::group(['middleware' => 'can:isAdmin'], function () {
 
     Route::get('admin/categories', 'CategoryController@index')->name('admin.category');
     Route::post('admin/categories/store', 'CategoryController@store')->name('admin.categoryStore');
+    Route::delete('admin/categories/{id}/delete', 'CategoryController@destroy')->name('admin.categoryDestroy');
 });
 
 // Follow users

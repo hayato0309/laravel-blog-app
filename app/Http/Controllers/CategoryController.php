@@ -22,12 +22,22 @@ class CategoryController extends Controller
         ]);
 
         $category = new Category();
-        $category->name = $input['name'];
+        $category->name = Str::ucfirst($input['name']);
         $category->slug = Str::lower($input['name']);
 
         $category->save();
 
         session()->flash('category-created-message', 'Category was created successfully. : ' . $category->name);
+
+        return back();
+    }
+
+    public function destroy($id)
+    {
+        $category = Category::findOrFail($id);
+        $category->delete();
+
+        session()->flash('category-deleted-message', 'Category was deleted successfully. : ' . $category->name);
 
         return back();
     }
