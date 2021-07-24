@@ -9,4 +9,11 @@ class Category extends Model
     protected $fillable = [
         'name', 'slug'
     ];
+
+    public function getCategories()
+    {
+        $categories = $this->all();
+
+        return $categories;
+    }
 }
