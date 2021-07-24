@@ -32,12 +32,17 @@
 
                 <div class="custom-control custom-checkbox mb-4 p-0">
                     <div class="mb-2">Categories</div>
+
                     @foreach($categories as $category)
                         <div class="form-check form-check-inline">
-                            <input class="form-check-input" type="checkbox" id="inlineCheckbox1" value="option1">
+                            <input class="form-check-input" type="checkbox" name="categories[]" id="inlineCheckbox1" value="{{ $category->id }}">
                             <label class="form-check-label" for="inlineCheckbox1">{{ $category->name }}</label>
                         </div>
                     @endforeach
+                    
+                    @if($errors->has('categories[]'))
+                        <p class="text-danger">{{$errors->first('categories[]')}}</p>
+                    @endif
                 </div>
 
                 <button type="submit" class="btn btn-primary">Submit</button>

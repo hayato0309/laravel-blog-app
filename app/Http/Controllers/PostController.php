@@ -47,12 +47,13 @@ class PostController extends Controller
         return view('posts.create', compact('categories'));
     }
 
-    public function store(Request $request)
+    public function store()
     {
         $input = request()->validate([
             'title' => ['required', 'max:255'],
             'content' => ['required', 'max:2000'],
             'post_image' => ['file', 'image', 'max:1024'],
+            'categories' => ['required'],
         ]);
 
         $post = new Post();
@@ -65,6 +66,11 @@ class PostController extends Controller
         }
 
         $post->save();
+
+        // category_idとpost_idをpivot tableに入れるのは$post->save()の後（postができてないのにpivot tableにidを入れることは不可能）
+        foreach ($input['categories'] as $category) {
+            $post->categories()->sync($category, false);
+        }
 
         session()->flash('post-created-message', 'Post was created :' . $post['title']);
 
