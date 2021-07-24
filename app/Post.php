@@ -14,9 +14,7 @@ class Post extends Model
 
     protected $dates = ['deleted_at'];
 
-    protected $fillable = [
-        'user_id', 'title', 'content', 'post_image'
-    ];
+    protected $guarded = [];
 
     public function user()
     {
@@ -31,5 +29,10 @@ class Post extends Model
     public function likes()
     {
         return $this->hasMany(Like::class);
+    }
+
+    public function categories()
+    {
+        return $this->belongsToMany(Category::class);
     }
 }
