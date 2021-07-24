@@ -8,6 +8,7 @@ use App\User;
 use App\Post;
 use App\Comment;
 use App\Like;
+use App\Category;
 
 class PostController extends Controller
 {
@@ -40,7 +41,10 @@ class PostController extends Controller
 
     public function create()
     {
-        return view('posts.create');
+        $categories = new Category();
+        $categories = $categories->getCategories();
+
+        return view('posts.create', compact('categories'));
     }
 
     public function store(Request $request)
