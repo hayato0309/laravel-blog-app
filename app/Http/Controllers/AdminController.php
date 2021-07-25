@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\User;
 use App\Post;
+use App\Role;
 
 class AdminController extends Controller
 {
@@ -17,8 +18,10 @@ class AdminController extends Controller
     {
         $users = User::withTrashed()->orderBy('name', 'asc')->simplePaginate(20);
 
+        $role = new Role();
+
         foreach ($users as $user) {
-            $user->roles = $user->getRoles($user);
+            $user->roles = $role->getRolesForUser($user);
         }
 
         return view('admin.users.index', compact('users'));
