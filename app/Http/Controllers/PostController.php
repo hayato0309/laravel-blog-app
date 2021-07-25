@@ -72,9 +72,8 @@ class PostController extends Controller
         $post->save();
 
         // category_idとpost_idをpivot tableに入れるのは$post->save()の後（postができてないのにpivot tableにidを入れることは不可能）
-        foreach ($input['categories'] as $category) {
-            $post->categories()->sync($category, false);
-        }
+        $post->categories()->sync($input['categories'], false);
+
 
         session()->flash('post-created-message', 'Post was created :' . $post['title']);
 
@@ -88,39 +87,33 @@ class PostController extends Controller
         // Checking which categories the post already has
         $category = new Category();
         $categories = $category->getAllCategories();
-        $current_categories = $category->getCategoriesForPost($post);
-
-        // $categories_checked = [];
-
-        // foreach ($categories as $category) {
-
-        //     foreach ($current_categories as $current_category) {
-
-        //         if ($category->id == $current_category['id']) {
-        //             array_push($categories_checked, $category->id);
-        //         }
-        //     }
-        // }
-        // dd($categories_checked);
+        $current_categories = array_column($category->getCategoriesForPost($post)->toArray(), "id");
 
         return view('posts.edit', compact('post', 'categories', 'current_categories'));
     }
 
     public function update(Request $request, $id)
     {
+
         $input = request()->validate([
             'title' => ['required', 'max:255'],
             'content' => ['required', 'max:2000'],
             'post_image' => ['file', 'image', 'max:1024'],
+            'categories' => ['required'],
         ]);
 
         $post = Post::findOrFail($id);
 
+        $post->title = $input['title'];
+        $post->content = $input['content'];
+
         if (request('post_image')) {
-            $input['post_image'] = $request->file('post_image')->store('images');
+            $post->post_image = $request->file('post_image')->store('images');
         }
 
-        $post->update($input);
+        $post->update();
+
+        $post->categories()->sync($input['categories']);
 
         session()->flash('post-updated-message', 'The post was updated successfully.');
 
