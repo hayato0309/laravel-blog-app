@@ -86,16 +86,4 @@ class User extends Authenticatable
     {
         return $this->belongsToMany(Permission::class);
     }
-
-    public function getRoles($user)
-    {
-        $roles = $user->roles->all();
-        $roleNames = [];
-
-        foreach ($roles as $role) {
-            $roleNames[] = $role->name;
-        }
-
-        return $roleNames = collect($roleNames);
-    }
 }
