@@ -31,8 +31,8 @@ class PostController extends Controller
         }
 
         // Getting categories for the post
-        $categories = new Category();
-        $categories = $categories->getCategoriesForPost($post);
+        $category = new Category();
+        $categories = $category->getCategoriesForPost($post);
 
         return view('posts.show', compact('post', 'comments', 'likesCount', 'isLiked', 'categories'));
     }
@@ -45,8 +45,8 @@ class PostController extends Controller
 
     public function create()
     {
-        $categories = new Category();
-        $categories = $categories->getAllCategories();
+        $category = new Category();
+        $categories = $category->getAllCategories();
 
         return view('posts.create', compact('categories'));
     }
@@ -84,7 +84,26 @@ class PostController extends Controller
     public function edit($id)
     {
         $post = Post::findOrFail($id);
-        return view('posts.edit', compact('post'));
+
+        // Checking which categories the post already has
+        $category = new Category();
+        $categories = $category->getAllCategories();
+        $current_categories = $category->getCategoriesForPost($post);
+
+        // $categories_checked = [];
+
+        // foreach ($categories as $category) {
+
+        //     foreach ($current_categories as $current_category) {
+
+        //         if ($category->id == $current_category['id']) {
+        //             array_push($categories_checked, $category->id);
+        //         }
+        //     }
+        // }
+        // dd($categories_checked);
+
+        return view('posts.edit', compact('post', 'categories', 'current_categories'));
     }
 
     public function update(Request $request, $id)

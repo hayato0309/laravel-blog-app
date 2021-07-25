@@ -18,7 +18,7 @@ class Category extends Model
 
     public function getAllCategories()
     {
-        $categories = $this->orderBy('name', 'asc');
+        $categories = $this->orderBy('name', 'asc')->get();
 
         return $categories;
     }

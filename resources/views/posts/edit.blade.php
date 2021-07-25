@@ -43,6 +43,31 @@
                     <input type="file" class="form-control-file mt-2" name="post_image">
                 </div>
 
+                <div class="custom-control custom-checkbox mb-4 p-0">
+                    <div class="mb-2">Categories</div>
+
+                    {{-- Checked only the categories already chceked for the post --}}
+                    @foreach($categories as $category)
+                        @foreach($current_categories as $current_category)
+                            @if($category->id === $current_category['id'])
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="checkbox" name="categories[]" id="inlineCheckbox1" value="{{ $category->id }}" checked>
+                                    <label class="form-check-label" for="inlineCheckbox1">{{ $category->name }}</label>
+                                </div>
+                            @endif
+                        @endforeach
+
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="checkbox" name="categories[]" id="inlineCheckbox1" value="{{ $category->id }}">
+                            <label class="form-check-label" for="inlineCheckbox1">{{ $category->name }}</label>
+                        </div>
+                    @endforeach
+                    
+                    @if($errors->has('categories[]'))
+                        <p class="text-danger">{{$errors->first('categories[]')}}</p>
+                    @endif
+                </div>
+
                 <button type="submit" class="btn btn-primary">Save</button>
             </form>
         </div>
