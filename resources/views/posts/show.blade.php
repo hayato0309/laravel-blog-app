@@ -41,8 +41,14 @@
                     <div class="d-inline text-muted">Posted by <a href="{{ route('user.show', $post->user->id) }}" class="text-muted">{{ $post->user->name }}</a> {{ $post->created_at->diffForHumans() }}</div>
                 </div>
                 @if($post->post_image)
-                    <img class="rounded" src="{{ asset('storage/'.$post->post_image) }}" alt="avatar" style="width:30%">
+                    <img class="rounded mb-4" src="{{ asset('storage/'.$post->post_image) }}" alt="avatar" style="width:30%">
                 @endif
+
+                <div>
+                    @foreach ($categories as $category)
+                        <div class="badge badge-pill badge-secondary px-2 py-1">{{ $category->name }}</div>
+                    @endforeach
+                </div>
             </div>
             
             {{-- Comments display area --}}

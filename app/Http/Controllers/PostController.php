@@ -30,7 +30,11 @@ class PostController extends Controller
             $isLiked = false;
         }
 
-        return view('posts.show', compact('post', 'comments', 'likesCount', 'isLiked'));
+        // Getting categories for the post
+        $categories = new Category();
+        $categories = $categories->getCategoriesForPost($post);
+
+        return view('posts.show', compact('post', 'comments', 'likesCount', 'isLiked', 'categories'));
     }
 
     public function list()
@@ -42,7 +46,7 @@ class PostController extends Controller
     public function create()
     {
         $categories = new Category();
-        $categories = $categories->getCategories();
+        $categories = $categories->getAllCategories();
 
         return view('posts.create', compact('categories'));
     }
