@@ -16,9 +16,16 @@ class Category extends Model
         return $this->belongsToMany(Post::class);
     }
 
-    public function getCategories()
+    public function getAllCategories()
     {
-        $categories = $this->all();
+        $categories = $this->orderBy('name', 'asc');
+
+        return $categories;
+    }
+
+    public function getCategoriesForPost($post)
+    {
+        $categories = $post->categories->sortBy('name');
 
         return $categories;
     }
