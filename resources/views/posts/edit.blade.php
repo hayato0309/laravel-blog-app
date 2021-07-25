@@ -48,17 +48,8 @@
 
                     {{-- Checked only the categories already chceked for the post --}}
                     @foreach($categories as $category)
-                        @foreach($current_categories as $current_category)
-                            @if($category->id === $current_category['id'])
-                                <div class="form-check form-check-inline">
-                                    <input class="form-check-input" type="checkbox" name="categories[]" id="inlineCheckbox1" value="{{ $category->id }}" checked>
-                                    <label class="form-check-label" for="inlineCheckbox1">{{ $category->name }}</label>
-                                </div>
-                            @endif
-                        @endforeach
-
                         <div class="form-check form-check-inline">
-                            <input class="form-check-input" type="checkbox" name="categories[]" id="inlineCheckbox1" value="{{ $category->id }}">
+                            <input class="form-check-input" type="checkbox" name="categories[]" id="inlineCheckbox1" value="{{ $category->id }}" {{ in_array($category->id, $current_categories) ? "checked" : "" }}>
                             <label class="form-check-label" for="inlineCheckbox1">{{ $category->name }}</label>
                         </div>
                     @endforeach
