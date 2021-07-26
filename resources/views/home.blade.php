@@ -5,11 +5,12 @@
     <div class="row">
         {{-- Left sidebar --}}
         <div class="col-md-3 p-4 rounded bg-white">
-            <form class="form-inline mb-3">
+            <form action="{{ route('home') }}" method="GET" class="form-inline mb-3">
+                {{-- @csrf --}}
                 <div class="form-group mr-2">
-                    <input type="text" class="form-control" placeholder="Category">
+                    <input type="search" class="form-control" name="category_search" value="{{ $category_search }}">
                 </div>
-                <button type="submit" class="btn btn-primary">Search</button>
+                <button type="submit" class="btn btn-secondary">Search</button>
             </form>
             
             @foreach($categories as $category)

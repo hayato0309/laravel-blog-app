@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Str;
 use App\Post;
 use App\User;
 use App\Like;
@@ -26,9 +27,8 @@ class HomeController extends Controller
      *
      * @return \Illuminate\Contracts\Support\Renderable
      */
-    public function index()
+    public function index(Request $request)
     {
-
         $category = new Category();
         $categories = $category->getAllCategories();
 
@@ -47,6 +47,17 @@ class HomeController extends Controller
             }
         }
 
-        return view('home', compact('categories', 'posts'));
+        // Get search keyword
+        $category_search = $request->input('category_search');
+        // Create query instance
+        $query = Category::query();
+
+        // If there is a category search keywaord...
+        if (!empty($category_search)) {
+            $query->where('slug', 'like', '%' . $category_search . '%');
+            $categories = $query->get();
+        }
+
+        return view('home', compact('category_search', 'categories', 'posts'));
     }
 }
