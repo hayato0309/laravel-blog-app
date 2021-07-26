@@ -3,6 +3,7 @@
 @section('content')
 <div class="container-fluid px-5">
     <div class="row">
+        {{-- Left sidebar --}}
         <div class="col-md-3 p-4 rounded bg-white">
             <form class="form-inline mb-3">
                 <div class="form-group mr-2">
@@ -10,19 +11,17 @@
                 </div>
                 <button type="submit" class="btn btn-primary">Search</button>
             </form>
-            <div class="card p-3 mb-2 border-0 bg-white shadow-sm">
-                <h5>Beethoven</h5>
-                <div>123</div>
-            </div>
-            <div class="card p-3 mb-2 border-0 bg-white shadow-sm">
-                <h5>Beethoven</h5>
-                <div>123</div>
-            </div>
-            <div class="card p-3 mb-2 border-0 bg-white shadow-sm">
-                <h5>Beethoven</h5>
-                <div>123</div>
-            </div>
+            
+            @foreach($categories as $category)
+                <div class="card p-3 mb-2 border-0 bg-white shadow-sm">
+                    <h5>{{ $category->name }}</h5>
+                    <div>{{ $category->posts->count() }}</div>
+                </div>
+            @endforeach
+            
         </div>
+
+        {{-- Body (Center) --}}
         <div class="col-md-6">
             @if(session('post-created-message'))
                 <div class="alert alert-success">{{ session('post-created-message') }}</div>
@@ -55,6 +54,8 @@
             </div>
             {{ $posts->links() }}
         </div>
+
+        {{-- Right sidebar --}}
         <div class="col-md-3 p-4 rounded bg-white">
             <h4>News API</h4>
         </div>
