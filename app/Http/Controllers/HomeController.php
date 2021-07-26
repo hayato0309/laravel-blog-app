@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Auth;
 use App\Post;
 use App\User;
 use App\Like;
+use App\Category;
 
 class HomeController extends Controller
 {
@@ -27,6 +28,10 @@ class HomeController extends Controller
      */
     public function index()
     {
+
+        $category = new Category();
+        $categories = $category->getAllCategories();
+
         $posts = Post::orderBy('created_at', 'desc')->simplePaginate(5);
 
         foreach ($posts as $post) {
@@ -42,8 +47,6 @@ class HomeController extends Controller
             }
         }
 
-        // dd($posts);
-
-        return view('home', compact('posts'));
+        return view('home', compact('categories', 'posts'));
     }
 }
