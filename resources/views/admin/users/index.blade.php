@@ -30,7 +30,11 @@
                     <td class="align-middle"><img src="{{ asset('storage/'.$user->avatar) }}" alt="avatar" class="rounded-circle" style="width: 35px"></td>
                     <td class="align-middle"><a href="{{ route('user.show', $user->id) }}">{{ $user->name }}</a></td>
                     <td class="align-middle">{{ $user->email }}</td>
-                    <td class="align-middle">{{ $user->roles->implode(', ') }}</td>
+                    <td class="align-middle">
+                        @foreach ($user->roles as $role)
+                            <div class="badge badge-pill badge-secondary px-2 py-1">{{ $role->name }}</div>
+                        @endforeach
+                    </td>
                     <td class="align-middle">{{ $user->posts()->count() }}</td>
                     <td class="align-middle">{{ $user->created_at }}</td>
                     <td class="align-middle">
