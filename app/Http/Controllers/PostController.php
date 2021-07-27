@@ -39,7 +39,7 @@ class PostController extends Controller
 
     public function list()
     {
-        $posts = Post::where('user_id', Auth::user()->id)->orderBy('created_at', 'desc')->simplePaginate(10);
+        $posts = Post::where('user_id', Auth::user()->id)->orderBy('created_at', 'desc')->paginate(10);
         return view('posts.list', compact('posts'));
     }
 
@@ -148,5 +148,15 @@ class PostController extends Controller
         }
 
         return back();
+    }
+
+    public function categoryPost($id)
+    {
+        $category_selected = Category::findOrFail($id);
+        $posts = $category_selected->posts()->paginate(5);
+
+        $categories = Category::orderBy('slug', 'asc')->get();
+
+        return view('home', compact('categories', 'posts'));
     }
 }
