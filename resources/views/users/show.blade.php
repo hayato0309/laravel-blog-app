@@ -137,9 +137,10 @@
 
             {{-- Post list of the user in profile page --}}
             <div class="row">
-                <h6 class="mb-3">All {{ $user->name }}'s posts</h6>
+                <h6 class="mb-3">All {{ $user->name }}'s posts : {{ $user->posts->count() }} posts</h6>
+                
                 @foreach ($posts as $post)
-                    <div class="card mb-2">
+                    <div class="card mb-2 shadow-sm border-0 w-100">
                         <div class="card-body">
                             <a href="{{ route('post.show', $post->id) }}" class="text-body">
                                 <h5 class="card-title">{{ $post->title }}</h5>
@@ -172,6 +173,7 @@
                         </div>
                     </div>
                 @endforeach
+
                 {{ $posts->links() }}
             </div>
         </div>

@@ -19,12 +19,10 @@ class UserController extends Controller
     {
         $user = User::findOrFail($id);
 
-        $posts = Post::where('user_id', '=', $user->id)->orderBy('created_at', 'desc')->simplePaginate(5);
+        $posts = Post::where('user_id', '=', $user->id)->orderBy('created_at', 'desc')->paginate(5);
 
         // Getting all posts of the user
         foreach ($posts as $post) {
-            $post['likesCount'] = $post->loadCount('likes')->likes_count;
-
             $like = new Like();
             $user_id = Auth::user()->id;
             $post_id = $post->id;
