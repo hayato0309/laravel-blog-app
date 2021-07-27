@@ -4,22 +4,13 @@
 <div class="container-fluid px-5">
     <div class="row">
         {{-- Left sidebar --}}
-        <div class="col-md-3 p-4 rounded bg-white">
-            <form action="{{ route('home') }}" method="GET" class="form-inline mb-3">
-                {{-- @csrf --}}
-                <div class="form-group mr-2">
-                    <input type="search" class="form-control" name="category_search" value="{{ $category_search }}">
-                </div>
-                <button type="submit" class="btn btn-secondary">Search</button>
-            </form>
-            
+        <div class="col-md-3 p-3 bg-white rounded">
             @foreach($categories as $category)
                 <div class="card p-3 mb-2 border-0 bg-white shadow-sm">
                     <h5>{{ $category->name }}</h5>
-                    <div>{{ $category->posts->count() }}</div>
+                    <div>{{ $category->posts->count() }} posts</div>
                 </div>
             @endforeach
-            
         </div>
 
         {{-- Body (Center) --}}
@@ -53,12 +44,23 @@
                     </div>
                 @endforeach
             </div>
-            {{ $posts->links() }}
+            {{ $posts->appends(Request::only('post_search'))->links() }}
         </div>
 
         {{-- Right sidebar --}}
-        <div class="col-md-3 p-4 rounded bg-white">
-            <h4>News API</h4>
+        <div class="col-md-3 p-0">
+            <div class="rounded bg-white p-3 mb-3">
+                <form action="{{ route('home') }}" method="GET" class="form-inline mb-3">
+                    {{-- @csrf --}}
+                    <div class="form-group mr-2">
+                        <input type="search" class="form-control" name="post_search" value="{{ $post_search }}">
+                    </div>
+                    <button type="submit" class="btn btn-secondary"><i class="fas fa-search"></i></button>
+                </form>
+            </div>
+            <div class="rounded bg-white p-3 mb-3">
+                <h4>News API</h4>
+            </div>
         </div>
     </div>
 </div>
