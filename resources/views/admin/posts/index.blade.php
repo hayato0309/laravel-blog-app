@@ -14,7 +14,7 @@
             <tr>
                 <th scope="col">#</th>
                 <th scope="col">Title</th>
-                <th scope="col">Content</th>
+                <th scope="col">Categories</th>
                 <th scope="col">Likes</th>
                 <th scope="col">Auther</th>
                 <th scope="col">Created at</th>
@@ -27,7 +27,11 @@
                 <tr>
                     <th class="align-middle" scope="row">{{ $loop->iteration }}</th>
                     <td class="align-middle"><a href="{{ route('post.show', $post->id) }}">{{ $post->title }}</a></td>
-                    <td class="align-middle">{{ Str::limit($post->content, 50, '...') }}</td>
+                    <td class="align-middle">
+                        @foreach ($post->categories as $category)
+                            <div class="badge badge-pill badge-secondary px-2 py-1">{{ $category->name }}</div>
+                        @endforeach
+                    </td>
                     <td class="align-middle">{{ $post->likes->count() }}</td>
                     <td class="align-middle"><a href="{{ route('user.show', $post->user->id) }}">{{ $post->user->name }}</a></td>
                     <td class="align-middle">{{ $post->created_at }}</td>
