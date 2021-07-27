@@ -18,12 +18,6 @@ class AdminController extends Controller
     {
         $users = User::withTrashed()->orderBy('name', 'asc')->simplePaginate(20);
 
-        $role = new Role();
-
-        foreach ($users as $user) {
-            $user->roles = $role->getRolesForUser($user);
-        }
-
         return view('admin.users.index', compact('users'));
     }
 

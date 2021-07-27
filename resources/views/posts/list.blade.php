@@ -15,7 +15,7 @@
                     <tr>
                         <th scope="col">#</th>
                         <th scope="col">Title</th>
-                        <th scope="col">Content</th>
+                        <th scope="col">Category</th>
                         <th scope="col">Created at</th>
                         <th scope="col"></th>
                         <th scope="col"></th>
@@ -26,7 +26,11 @@
                         <tr>
                             <th scope="row">{{ $loop->iteration }}</th>
                             <td><a href="{{ route('post.show', $post->id) }}">{{ $post->title }}</a></td>
-                            <td>{{ Str::limit($post->content, 50, '...') }}</td>
+                            <td>
+                                @foreach ($post->categories as $category)
+                                    <div class="badge badge-pill badge-secondary px-2 py-1">{{ $category->name }}</div>
+                                @endforeach
+                            </td>
                             <td>{{ $post->created_at }}</td>
                             <td><a href="{{ route('post.edit', $post->id) }}"><i class="far fa-edit text-body"></i></a></td>
                             <td>
