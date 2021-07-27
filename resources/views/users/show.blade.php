@@ -144,18 +144,30 @@
                             <a href="{{ route('post.show', $post->id) }}" class="text-body">
                                 <h5 class="card-title">{{ $post->title }}</h5>
                             </a>
-                            <div class="card-text">{{ Str::limit($post->content, 200, '...') }}</div>
-                            <div class="float-right">
-                                <div class="d-inline mr-3">
-                                    @if($post->isLiked)
-                                        <i class="fas fa-heart d-inline text-danger"></i>
-                                        <span class="text-danger">{{ $post->likesCount }}</span>
-                                    @else
-                                        <i class="far fa-heart d-inline text-muted"></i>
-                                        <span class="text-muted">{{ $post->likesCount }}</span>
-                                    @endif
+                            <div class="card-text mb-2">{{ Str::limit($post->content, 200, '...') }}</div>
+
+                            <div class="row">
+                                <div class="col">
+                                    @foreach ($post->categories as $category)
+                                        <div class="badge badge-pill badge-secondary px-2 py-1">{{ $category->name }}</div>
+                                    @endforeach
                                 </div>
-                                <div class="float-right text-muted">Posted by {{ $post->user->name }} {{ $post->created_at->diffForHumans() }}</div>
+                                <div class="col text-right">
+                                    <div class="d-inline mr-3">
+                                        @if($post->isLiked)
+                                            <i class="fas fa-heart d-inline text-danger"></i>
+                                            <span class="text-danger">{{ $post->likes->count() }}</span>
+                                        @else
+                                            <i class="far fa-heart d-inline text-muted"></i>
+                                            <span class="text-muted">{{ $post->likes->count() }}</span>
+                                        @endif
+                                    </div>
+                                    <div class="d-inline text-muted">
+                                        Posted by 
+                                        <a href="{{ route('user.show', $post->user->id) }}" class="text-muted">{{ $post->user->name }}</a>
+                                        {{ $post->created_at->diffForHumans() }}
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
