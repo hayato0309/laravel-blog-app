@@ -32,7 +32,7 @@ class HomeController extends Controller
         $category = new Category();
         $categories = $category->getAllCategories();
 
-        $posts = Post::orderBy('created_at', 'desc')->simplePaginate(5);
+        $posts = Post::orderBy('created_at', 'desc')->paginate(5);
 
         foreach ($posts as $post) {
             $post['likesCount'] = $post->loadCount('likes')->likes_count;
@@ -48,16 +48,16 @@ class HomeController extends Controller
         }
 
         // Get search keyword
-        $category_search = $request->input('category_search');
+        $post_search = $request->input('post_search');
         // Create query instance
-        $query = Category::query();
+        $query = Post::query();
 
         // If there is a category search keywaord...
-        if (!empty($category_search)) {
-            $query->where('slug', 'like', '%' . $category_search . '%');
-            $categories = $query->get();
+        if (!empty($post_search)) {
+            $query->where('title', 'like', '%' . $post_search . '%');
+            $posts = $query->paginate(5);
         }
 
-        return view('home', compact('category_search', 'categories', 'posts'));
+        return view('home', compact('post_search', 'categories', 'posts'));
     }
 }
