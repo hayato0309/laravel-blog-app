@@ -6,10 +6,12 @@
         {{-- Left sidebar --}}
         <div class="col-md-3 p-3 bg-white rounded">
             @foreach($categories as $category)
-                <div class="card p-3 mb-2 border-0 bg-white shadow-sm">
-                    <h5>{{ $category->name }}</h5>
-                    <div>{{ $category->posts->count() }} posts</div>
-                </div>
+                <a href="{{ route('post.categoryPost', $category->id) }}" class="text-body">
+                    <div class="card p-3 mb-2 border-0 bg-white shadow-sm">
+                        <h5>{{ $category->name }}</h5>
+                        <div>{{ $category->posts->count() }} posts</div>
+                    </div>
+                </a>
             @endforeach
         </div>
 
@@ -53,7 +55,7 @@
                 <form action="{{ route('home') }}" method="GET" class="form-inline mb-3">
                     {{-- @csrf --}}
                     <div class="form-group mr-2">
-                        <input type="search" class="form-control" name="post_search" value="{{ $post_search }}">
+                        <input type="search" class="form-control" name="post_search" value="{{ isset($post_search) ? $post_search : '' }}">
                     </div>
                     <button type="submit" class="btn btn-secondary"><i class="fas fa-search"></i></button>
                 </form>

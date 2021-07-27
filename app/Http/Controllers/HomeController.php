@@ -29,8 +29,7 @@ class HomeController extends Controller
      */
     public function index(Request $request)
     {
-        $category = new Category();
-        $categories = $category->getAllCategories();
+        $categories = Category::orderBy('slug', 'asc')->get();
 
         $posts = Post::orderBy('created_at', 'desc')->paginate(5);
 
