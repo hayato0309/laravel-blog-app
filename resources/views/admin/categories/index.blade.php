@@ -44,7 +44,7 @@
                 <tr>
                     <th scope="row">{{ $loop->iteration }}</th>
                     <td>{{ $category->name }}</td>
-                    <td>123</td>
+                    <td>{{ $category->posts->count() }}</td>
                     <td>{{ $category->created_at }}</td>
                     <td>
                         <!-- Button trigger modal for updating category -->
