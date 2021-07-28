@@ -40,8 +40,10 @@
                     </div>
                     <div class="d-inline text-muted">Posted by <a href="{{ route('user.show', $post->user->id) }}" class="text-muted">{{ $post->user->name }}</a> {{ $post->created_at->diffForHumans() }}</div>
                 </div>
-                @if($post->post_image)
+                @if($post->post_image != "images/post_image.png")
                     <img class="rounded mb-4" src="{{ asset('storage/'.$post->post_image) }}" alt="avatar" style="width:30%">
+                @else
+                    <div class="text-muted mb-4">* This post has no image.</div>
                 @endif
 
                 <div>
