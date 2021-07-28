@@ -16,11 +16,11 @@
         </div>
 
         {{-- Body (Center) --}}
-        <div class="col-md-6">
+        <div class="col-md-6 px-3">
             @if(session('post-created-message'))
                 <div class="alert alert-success">{{ session('post-created-message') }}</div>
             @endif
-            <div class="px-2">
+            <div>
                 @foreach ($posts as $post)
                     <div class="card mb-3 border-0 shadow-sm w-100">
                         <div class="row no-gutters">
@@ -38,7 +38,7 @@
                                         @endforeach
                                     </div>
                                     <div class="col-md-6 text-right">
-                                        <div class="d-inline mr-3">
+                                        <div class="d-inline mr-2">
                                             @if($post->isLiked)
                                                 <i class="fas fa-heart d-inline text-danger"></i>
                                                 <span class="text-danger">{{ $post->likes->count() }}</span>

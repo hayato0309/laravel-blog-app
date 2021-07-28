@@ -156,7 +156,7 @@
                                             @endforeach
                                         </div>
                                         <div class="col-md-6 text-right">
-                                            <div class="d-inline mr-3">
+                                            <div class="d-inline mr-2">
                                                 @if($post->isLiked)
                                                     <i class="fas fa-heart d-inline text-danger"></i>
                                                     <span class="text-danger">{{ $post->likes->count() }}</span>
