@@ -16,14 +16,14 @@ class AdminController extends Controller
 
     public function showUsers()
     {
-        $users = User::withTrashed()->orderBy('name', 'asc')->simplePaginate(20);
+        $users = User::withTrashed()->orderBy('name', 'asc')->paginate(10);
 
         return view('admin.users.index', compact('users'));
     }
 
     public function showPosts()
     {
-        $posts = Post::withTrashed()->orderBy('created_at', 'desc')->simplePaginate(20);
+        $posts = Post::withTrashed()->orderBy('created_at', 'desc')->paginate(10);
 
         return view('admin.posts.index', compact('posts'));
     }
