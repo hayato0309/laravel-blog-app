@@ -16,6 +16,7 @@
                         <th scope="col">#</th>
                         <th scope="col">Title</th>
                         <th scope="col">Category</th>
+                        <th scope="col">Likes</th>
                         <th scope="col">Created at</th>
                         <th scope="col"></th>
                         <th scope="col"></th>
@@ -31,6 +32,7 @@
                                     <div class="badge badge-pill badge-secondary px-2 py-1">{{ $category->name }}</div>
                                 @endforeach
                             </td>
+                            <td>{{ $post->likes->count() }}</td>
                             <td>{{ $post->created_at }}</td>
                             <td><a href="{{ route('post.edit', $post->id) }}"><i class="far fa-edit text-body"></i></a></td>
                             <td>
