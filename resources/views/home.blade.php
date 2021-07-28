@@ -22,63 +22,22 @@
             @endif
             <div class="px-2">
                 @foreach ($posts as $post)
-
-                <div class="card mb-3 border-0 shadow-sm">
-                    <div class="row no-gutters">
-                        <div class="col-md-3">
-                            <img src="{{ asset('storage/'.$post->post_image) }}" alt="post-image" class="rounded-left w-100 h-100" style="object-fit: cover;">
-                        </div>
-                        <div class="col-md-9">
-                        <div class="card-body">
-                            <h5 class="card-title">{{ $post->title }}</h5>
-                            <p class="card-text">{{ Str::limit($post->content, 100, '...') }}</p>
-                            <div class="row">
-                                <div class="col-md-6">
-                                    @foreach ($post->categories as $category)
-                                        <div class="badge badge-pill badge-secondary px-2 py-1">{{ $category->name }}</div>
-                                    @endforeach
-                                </div>
-                                <div class="col-md-6 text-right">
-                                    <div class="d-inline mr-3">
-                                        @if($post->isLiked)
-                                            <i class="fas fa-heart d-inline text-danger"></i>
-                                            <span class="text-danger">{{ $post->likes->count() }}</span>
-                                        @else
-                                            <i class="far fa-heart d-inline text-muted"></i>
-                                            <span class="text-muted">{{ $post->likes->count() }}</span>
-                                        @endif
-                                    </div>
-                                    <div class="d-inline text-muted"> 
-                                        {{ $post->created_at->diffForHumans() }}
-                                        by <a href="{{ route('user.show', $post->user->id) }}" class="text-muted">{{ $post->user->name }}</a>
-                                    </div>
-                                </div>
+                    <div class="card mb-3 border-0 shadow-sm w-100">
+                        <div class="row no-gutters">
+                            <div class="col-md-3">
+                                <img src="{{ asset('storage/'.$post->post_image) }}" alt="post-image" class="rounded-left w-100 h-100" style="object-fit: cover;">
                             </div>
-                        </div>
-                        </div>
-                    </div>
-                </div>
-                    {{-- <div class="card mb-2 shadow-sm border-0">
-
-                        <div class="card-body row">
-
-
-                            <div class="col-sm-3">
-                                <img src="{{ asset('storage/'.$post->post_image) }}" alt="" style="width:100%">
-                            </div>
-                            <div class="col-sm-9">
-                                <a href="{{ route('post.show', $post->id) }}" class="text-body">
-                                    <h5 class="card-title">{{ $post->title }}</h5>
-                                </a>
-                                <div class="card-text mb-2">{{ Str::limit($post->content, 200, '...') }}</div>
-    
+                            <div class="col-md-9">
+                            <div class="card-body">
+                                <h5 class="card-title">{{ $post->title }}</h5>
+                                <p class="card-text">{{ Str::limit($post->content, 100, '...') }}</p>
                                 <div class="row">
-                                    <div class="col">
+                                    <div class="col-md-6">
                                         @foreach ($post->categories as $category)
                                             <div class="badge badge-pill badge-secondary px-2 py-1">{{ $category->name }}</div>
                                         @endforeach
                                     </div>
-                                    <div class="col text-right">
+                                    <div class="col-md-6 text-right">
                                         <div class="d-inline mr-3">
                                             @if($post->isLiked)
                                                 <i class="fas fa-heart d-inline text-danger"></i>
@@ -88,16 +47,16 @@
                                                 <span class="text-muted">{{ $post->likes->count() }}</span>
                                             @endif
                                         </div>
-                                        <div class="d-inline text-muted">
-                                            Posted by 
-                                            <a href="{{ route('user.show', $post->user->id) }}" class="text-muted">{{ $post->user->name }}</a>
+                                        <div class="d-inline text-muted"> 
                                             {{ $post->created_at->diffForHumans() }}
+                                            by <a href="{{ route('user.show', $post->user->id) }}" class="text-muted">{{ $post->user->name }}</a>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                        </div> --}}
-                    {{-- </div> --}}
+                            </div>
+                        </div>
+                    </div>
                 @endforeach
                 {{ $posts->appends(Request::only('post_search'))->links() }}
             </div>
