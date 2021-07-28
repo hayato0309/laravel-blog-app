@@ -147,7 +147,7 @@
                             </div>
                             <div class="col-md-9">
                                 <div class="card-body">
-                                    <h5 class="card-title">{{ $post->title }}</h5>
+                                    <h5 class="card-title"><a href="{{ route('post.show', $post->id) }}" class="text-body">{{ $post->title }}</a></h5>
                                     <p class="card-text">{{ Str::limit($post->content, 100, '...') }}</p>
                                     <div class="row">
                                         <div class="col-md-6">
