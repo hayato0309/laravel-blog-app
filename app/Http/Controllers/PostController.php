@@ -84,11 +84,12 @@ class PostController extends Controller
         $post = Post::findOrFail($id);
 
         // Checking which categories the post already has
-        $category = new Category();
-        $categories = $category->getAllCategories();
-        $current_categories = array_column($category->getCategoriesForPost($post)->toArray(), "id");
+        $categories = Category::all();
 
-        return view('posts.edit', compact('post', 'categories', 'current_categories'));
+        $category = new Category();
+        $current_categories_id = array_column($category->getCategoriesForPost($post)->toArray(), "id");
+
+        return view('posts.edit', compact('post', 'categories', 'current_categories_id'));
     }
 
     public function update(Request $request, $id)
@@ -149,6 +150,7 @@ class PostController extends Controller
         return back();
     }
 
+    // Display the posts only for the selected category on home page
     public function categoryPost($id)
     {
         $category_selected = Category::findOrFail($id);

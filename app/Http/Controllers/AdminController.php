@@ -18,7 +18,27 @@ class AdminController extends Controller
     {
         $users = User::withTrashed()->orderBy('name', 'asc')->paginate(10);
 
-        return view('admin.users.index', compact('users'));
+        $roles = Role::all();
+
+        $role = new Role();
+
+        foreach ($users as $user) {
+            // Getting role ID for iterated users
+            $current_role_ids = array_column($role->getRoleIdsForUser($user)->toArray(), 'id');
+            // Assigning the role ID array to iterated users
+            $user->current_role_ids = $current_role_ids;
+        }
+
+        return view('admin.users.index', compact('users', 'roles'));
+    }
+
+    public function updateRoles(Request $request, $id)
+    {
+        $user = User::findOrFail($id);
+        $user->roles()->sync($request['roles']);
+
+        // $post->categories()->sync($input['categories']);
+        return back();
     }
 
     public function showPosts()

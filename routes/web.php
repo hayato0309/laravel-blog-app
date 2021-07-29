@@ -31,14 +31,19 @@ Route::patch('/user/password/{id}/update', 'UserController@updatePassword')->nam
 Route::group(['middleware' => 'can:isAdmin'], function () {
     Route::get('admin', 'AdminController@index')->name('admin.home');
 
+    // Users
     Route::get('admin/users', 'AdminController@showUsers')->name('admin.showUsers');
     Route::patch('admin/users/{id}/restore', 'AdminController@activateUser')->name('admin.activateUser');
     Route::delete('admin/users/{id}/delete', 'AdminController@deactivateUser')->name('admin.deactivateUser');
 
+    Route::post('admin/users/{id}/roles/update', 'AdminController@updateRoles')->name('admin.updateRoles');
+
+    // Posts
     Route::get('admin/posts', 'AdminController@showPosts')->name('admin.showPosts');
     Route::patch('admin/posts/{id}/unhide', 'AdminController@unhidePost')->name('admin.unhidePost');
     Route::delete('admin/posts/{id}/hide', 'AdminController@hidePost')->name('admin.hidePost');
 
+    // Categories
     Route::get('admin/categories', 'CategoryController@index')->name('admin.category');
     Route::post('admin/categories/store', 'CategoryController@store')->name('admin.categoryStore');
     Route::patch('admin/categories/{id}/update', 'CategoryController@update')->name('admin.categoryUpdate');
