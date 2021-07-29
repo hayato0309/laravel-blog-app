@@ -20,16 +20,10 @@ class Role extends Model
         return $this->belongsToMany(User::class);
     }
 
-    public function getRolesForUser($user)
+    public function getRoleIdsForUser($user)
     {
-        $roles = $user->roles->all();
+        $roles = $user->roles->sortBy('slug');
 
-        $roleNames = [];
-
-        foreach ($roles as $role) {
-            $roleNames[] = $role->name;
-        }
-
-        return $roleNames = collect($roleNames);
+        return $roles;
     }
 }
