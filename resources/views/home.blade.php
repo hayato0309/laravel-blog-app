@@ -74,7 +74,15 @@
                 </form>
             </div>
             <div class="rounded bg-white p-3 mb-3">
-                <h4>News API</h4>
+                @foreach ($news_list as $news)
+                    <a href="{{ $news['url'] }}" class="text-body" target="_blank">
+                        <div class="card p-3 mb-2 border-0 bg-white shadow-sm">
+                            {{-- <div class="mb-2">{{ $news['title'] }}</div> --}}
+                            <img src="{{ $news['thumbnail'] }}" alt="news_image" class="rounded shadow-sm mb-2">
+                            <div>{{ $news['title'] }}</div>
+                        </div>
+                    </a>
+                @endforeach
             </div>
         </div>
     </div>
