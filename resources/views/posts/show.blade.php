@@ -22,7 +22,17 @@
             </div>
             
             <div class="mb-3">
-                <h1 class="mb-4">{{ $post->title }}</h1>
+                <div class="row">
+                    <h1 class="col-md-10 mb-4">{{ $post->title }}</h1>
+
+                    <div class="col-md-2 text-right">
+                        @if($post->postType->slug === "article")
+                            <h5><span class="badge badge-pill badge-light border border-dark px-3 py-2"><i class="far fa-newspaper"></i> {{ $post->postType->name }}</span></h5>
+                        @elseif($post->postType->slug === "question")
+                            <h5><span class="badge badge-pill badge-dark px-3 py-2"><i class="far fa-question-circle"></i> {{ $post->postType->name }}</span></h5>
+                        @endif
+                    </div>
+                </div>
                 <div class="mb-4">{{ $post->content }}</div>
                 <div class="text-right mb-4">
                     <div class="d-inline mr-3">
