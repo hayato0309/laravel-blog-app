@@ -24,11 +24,12 @@
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css">
 </head>
 <body>
-    <div id="app">
+    <div id="app" class="footerFixed">
+        {{-- Header --}}
         <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm fixed-top py-2">
             <div class="container-fluid">
                 <a class="navbar-brand" href="{{ route('home') }}">
-                    {{ config('app.name', 'Laravel') }}
+                    Askipert
                 </a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
                     <span class="navbar-toggler-icon"></span>
@@ -90,9 +91,30 @@
             </div>
         </nav>
 
-        <main class="py-4 mt-5">
+        <main class="mb-3" style="margin-top: 70px; min-height: 100vh;">
             @yield('content')
         </main>
+
+        {{-- Footer --}}
+        <footer class="container-fluid text-white bg-dark w-100 p-3">
+            <div class="row mb-2">
+                <h5 class="col-md-4 text-center m-0">
+                    <a href="{{ route('home') }}" class="text-white">Askipert</a>
+                </h5>
+                <div class="col-md-4 text-center">
+                    <a href="#" class="text-white"><i class="fab fa-facebook mx-2"></i></a>
+                    <a href="#" class="text-white"><i class="fab fa-instagram mx-2"></i></a>
+                    <a href="#" class="text-white"><i class="fab fa-twitter mx-2"></i></a>
+                    <a href="#" class="text-white"><i class="fab fa-youtube mx-2"></i></a>
+                </div>
+                <div class="col-md-4 text-center">
+                    <a href="" class="text-white">Request to Admin <i class="far fa-paper-plane"></i></a>
+                </div>
+            </div>
+            <div class="row d-flex justify-content-center">
+                <div class="small">© 2020 Copyright: Hayato Yokomiya</div>
+            </div>
+        </footer>
     </div>
 </body>
 </html>
