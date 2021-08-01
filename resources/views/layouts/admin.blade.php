@@ -40,7 +40,7 @@
                 </ul>
             </div>
         </div>
-        <div class="col-md-10">
+        <div class="col-md-10 pl-0">
             <div class="p-4 rounded bg-white">
                 @yield('admin.content')
             </div>

@@ -1,12 +1,12 @@
 @extends('layouts.admin')
 
 @section('admin.content')
-    @if(session('category-created-message'))
-        <div class="alert alert-success">{{ session('category-created-message') }}</div>
+    @if(session('post-type-created-message'))
+        <div class="alert alert-success">{{ session('post-type-created-message') }}</div>
     @elseif(session('category-updated-message'))
         <div class="alert alert-success">{{ session('category-updated-message') }}</div>
-    @elseif(session('category-deleted-message'))
-        <div class="alert alert-danger">{{ session('category-deleted-message') }}</div>
+    @elseif(session('post-type-deleted-message'))
+        <div class="alert alert-danger">{{ session('post-type-deleted-message') }}</div>
     @endif
 
     <h1 class="mb-4">Post type list</h1>
@@ -51,7 +51,7 @@
                         </button>
 
                         <!-- Modal for updating category -->
-                        <div class="modal fade" id="modal-update-{{ $post_type->id }}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                        {{-- <div class="modal fade" id="modal-update-{{ $post_type->id }}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                             <div class="modal-dialog" role="document">
                                 <div class="modal-content">
                                     <div class="modal-header">
@@ -74,7 +74,7 @@
                                         </div>
                                     </form>
                                 </div>
-                            </div>
+                            </div> --}}
                         </div>
                     </td>
                     <td>
@@ -84,7 +84,7 @@
                         </button>
 
                         <!-- Modal for deleting category -->
-                        {{-- <div class="modal fade" id="modal-delete-{{ $category->id }}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                        <div class="modal fade" id="modal-delete-{{ $post_type->id }}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                             <div class="modal-dialog" role="document">
                                 <div class="modal-content">
                                     <div class="modal-header">
@@ -94,12 +94,12 @@
                                         </button>
                                     </div>
                                     <div class="modal-body">
-                                        <div class="mb-2">Are you sure you want to delete this category?</div>
-                                        <div class="mb-2 px-3 border-left">{{ $category->name }}</div>
+                                        <div class="mb-2">Are you sure you want to delete this post type?</div>
+                                        <div class="mb-2 px-3 border-left">{{ $post_type->name }}</div>
                                     </div>
                                     <div class="modal-footer">
                                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                        <form action="{{ route('admin.categoryDestroy', $category->id) }}" method="POST">
+                                        <form action="{{ route('admin.postTypeDestroy', $post_type->id) }}" method="POST">
                                             @csrf
                                             @method('DELETE')
                                             <button type="submit" class="btn btn-danger-custamized">Delete</button>
@@ -107,7 +107,7 @@
                                     </div>
                                 </div>
                             </div>
-                        </div> --}}
+                        </div>
                     </td>   
                 </tr>
             @endforeach

@@ -46,6 +46,7 @@ Route::group(['middleware' => 'can:isAdmin'], function () {
     // Post types
     Route::get('admin/posts_types', 'PostTypeController@index')->name('admin.postType');
     Route::post('admin/posts_types/store', 'PostTypeController@store')->name('admin.postTypeStore');
+    Route::delete('admin/post_types/{id}/delete', 'PostTypeController@destroy')->name('admin.postTypeDestroy');
 
     // Categories
     Route::get('admin/categories', 'CategoryController@index')->name('admin.category');
