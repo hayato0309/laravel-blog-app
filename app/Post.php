@@ -35,4 +35,9 @@ class Post extends Model
     {
         return $this->belongsToMany(Category::class);
     }
+
+    public function postType()
+    {
+        return $this->belongsTo(PostType::class);
+    }
 }

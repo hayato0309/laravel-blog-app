@@ -9,6 +9,7 @@ use App\Post;
 use App\Comment;
 use App\Like;
 use App\Category;
+use App\PostType;
 
 class PostController extends Controller
 {
@@ -45,14 +46,16 @@ class PostController extends Controller
 
     public function create()
     {
+        $post_types = PostType::orderBy('slug', 'asc')->get();
         $categories = Category::orderBy('slug', 'asc')->get();
 
-        return view('posts.create', compact('categories'));
+        return view('posts.create', compact('post_types', 'categories'));
     }
 
     public function store()
     {
         $input = request()->validate([
+            'post_type_id' => ['required'],
             'title' => ['required', 'max:255'],
             'content' => ['required', 'max:2000'],
             'post_image' => ['file', 'image', 'max:1024'],
@@ -61,6 +64,7 @@ class PostController extends Controller
 
         $post = new Post();
         $post->user_id = Auth::user()->id;
+        $post->post_type_id = $input['post_type_id'];
         $post->title = $input['title'];
         $post->content = $input['content'];
 

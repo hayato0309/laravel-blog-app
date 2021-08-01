@@ -16,10 +16,14 @@ class CreatePostsTable extends Migration
         Schema::create('posts', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->unsignedBigInteger('user_id');
-            $table->foreign('user_id')->references('id')->on('users');
+            $table->unsignedBigInteger('post_type_id');
             $table->string('title');
             $table->text('content');
             $table->string('post_image')->default('images/post_image.png');
+
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
+            $table->foreign('post_type_id')->references('id')->on('post_types')->onDelete('cascade');
+
             $table->timestamps();
         });
     }
