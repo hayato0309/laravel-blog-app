@@ -43,6 +43,9 @@ Route::group(['middleware' => 'can:isAdmin'], function () {
     Route::patch('admin/posts/{id}/unhide', 'AdminController@unhidePost')->name('admin.unhidePost');
     Route::delete('admin/posts/{id}/hide', 'AdminController@hidePost')->name('admin.hidePost');
 
+    // Post types
+    Route::get('admin/posts_types', 'PostTypeController@index')->name('admin.postTypes');
+
     // Categories
     Route::get('admin/categories', 'CategoryController@index')->name('admin.category');
     Route::post('admin/categories/store', 'CategoryController@store')->name('admin.categoryStore');
