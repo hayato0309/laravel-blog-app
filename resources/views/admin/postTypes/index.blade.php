@@ -39,19 +39,19 @@
             </tr>
         </thead>
         <tbody>
-            {{-- @foreach ($categories as $category)
+            @foreach ($post_types as $post_type)
                 <tr>
                     <th scope="row">{{ $loop->iteration }}</th>
-                    <td>{{ $category->name }}</td>
-                    <td>{{ $category->created_at }}</td>
+                    <td>{{ $post_type->name }}</td>
+                    <td>{{ $post_type->created_at }}</td>
                     <td>
                         <!-- Button trigger modal for updating category -->
-                        <button type="button" class="btn btn-link p-0" data-toggle="modal" data-target="#modal-update-{{ $category->id }}">
+                        <button type="button" class="btn btn-link p-0" data-toggle="modal" data-target="#modal-update-{{ $post_type->id }}">
                             <i class="far fa-edit text-body"></i>
                         </button>
 
                         <!-- Modal for updating category -->
-                        <div class="modal fade" id="modal-update-{{ $category->id }}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                        <div class="modal fade" id="modal-update-{{ $post_type->id }}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                             <div class="modal-dialog" role="document">
                                 <div class="modal-content">
                                     <div class="modal-header">
@@ -60,12 +60,12 @@
                                             <span aria-hidden="true">&times;</span>
                                         </button>
                                     </div>
-                                    <form action="{{ route('admin.categoryUpdate', $category->id) }}" method="POST">
+                                    <form action="{{ route('admin.categoryUpdate', $post_type->id) }}" method="POST">
                                         <div class="modal-body">
                                             @csrf
                                             @method('PATCH')
     
-                                            <input type="text" class="form-control" name="name" value="{{ $category->name }}">
+                                            <input type="text" class="form-control" name="name" value="{{ $post_type->name }}">
                                         </div> 
             
                                         <div class="modal-footer">
@@ -79,12 +79,12 @@
                     </td>
                     <td>
                         <!-- Button trigger modal for deleting category -->
-                        <button type="button" class="btn btn-link p-0" data-toggle="modal" data-target="#modal-delete-{{ $category->id }}">
+                        <button type="button" class="btn btn-link p-0" data-toggle="modal" data-target="#modal-delete-{{ $post_type->id }}">
                             <i class="far fa-trash-alt text-body"></i>
                         </button>
 
                         <!-- Modal for deleting category -->
-                        <div class="modal fade" id="modal-delete-{{ $category->id }}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                        {{-- <div class="modal fade" id="modal-delete-{{ $category->id }}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                             <div class="modal-dialog" role="document">
                                 <div class="modal-content">
                                     <div class="modal-header">
@@ -107,10 +107,10 @@
                                     </div>
                                 </div>
                             </div>
-                        </div>
+                        </div> --}}
                     </td>   
                 </tr>
-            @endforeach --}}
+            @endforeach
         </tbody>
     </table>
     {{-- {{ $categories->links() }} --}}
