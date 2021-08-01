@@ -3,8 +3,8 @@
 @section('admin.content')
     @if(session('post-type-created-message'))
         <div class="alert alert-success">{{ session('post-type-created-message') }}</div>
-    @elseif(session('category-updated-message'))
-        <div class="alert alert-success">{{ session('category-updated-message') }}</div>
+    @elseif(session('post-type-updated-message'))
+        <div class="alert alert-success">{{ session('post-type-updated-message') }}</div>
     @elseif(session('post-type-deleted-message'))
         <div class="alert alert-danger">{{ session('post-type-deleted-message') }}</div>
     @endif
@@ -51,16 +51,16 @@
                         </button>
 
                         <!-- Modal for updating category -->
-                        {{-- <div class="modal fade" id="modal-update-{{ $post_type->id }}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                        <div class="modal fade" id="modal-update-{{ $post_type->id }}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                             <div class="modal-dialog" role="document">
                                 <div class="modal-content">
                                     <div class="modal-header">
-                                        <h5 class="modal-title" id="exampleModalLabel">Edit category</h5>
+                                        <h5 class="modal-title" id="exampleModalLabel">Edit post type</h5>
                                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                             <span aria-hidden="true">&times;</span>
                                         </button>
                                     </div>
-                                    <form action="{{ route('admin.categoryUpdate', $post_type->id) }}" method="POST">
+                                    <form action="{{ route('admin.postTypeUpdate', $post_type->id) }}" method="POST">
                                         <div class="modal-body">
                                             @csrf
                                             @method('PATCH')
@@ -74,7 +74,7 @@
                                         </div>
                                     </form>
                                 </div>
-                            </div> --}}
+                            </div>
                         </div>
                     </td>
                     <td>
