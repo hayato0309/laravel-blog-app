@@ -32,6 +32,21 @@ class PostTypeController extends Controller
         return back();
     }
 
+    public function update($id)
+    {   
+        $input = request()->validate([
+            'name' => ['required', 'min:3', 'max:30', 'unique:categories'],
+        ]);
+        
+        $post_type = PostType::findOrFail($id);
+        $post_type->name = $input['name'];
+        $post_type->update();
+
+        session()->flash('post-type-updated-message', 'Post type was updated successfully. : ' . $post_type->name);
+
+        return back();
+    }
+
     public function destroy($id)
     {
         $post_type = PostType::findOrFail($id);
