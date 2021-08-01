@@ -31,4 +31,14 @@ class PostTypeController extends Controller
 
         return back();
     }
+
+    public function destroy($id)
+    {
+        $post_type = PostType::findOrFail($id);
+        $post_type->delete();
+
+        session()->flash('post-type-deleted-message', 'Post type was deleted successfully. : ' . $post_type->name);
+        
+        return back();
+    }
 }
