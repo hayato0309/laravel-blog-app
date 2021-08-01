@@ -9,7 +9,13 @@
                 <a href="{{ route('post.categoryPost', $category->id) }}" class="text-body">
                     <div class="card p-3 mb-2 border-0 bg-white shadow-sm">
                         <h5>{{ $category->name }}</h5>
-                        <div>{{ $category->posts->count() }} posts</div>
+                        {{-- <div>{{ $category->posts->count() }} posts</div> --}}
+
+                        <div clas="d-flex">
+                            @foreach($category->count_for_each_post_type as $post_count)                            
+                                    <span>{{ $post_count['name'] }}: {{ $post_count['num_of_posts'] }}</span>
+                            @endforeach
+                        </div>
                     </div>
                 </a>
             @endforeach

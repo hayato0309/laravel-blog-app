@@ -162,6 +162,8 @@ class PostController extends Controller
 
         $categories = Category::orderBy('slug', 'asc')->get();
 
-        return view('home', compact('categories', 'posts'));
+        $news_list = session()->get('news_list');
+
+        return view('home', compact('categories', 'posts', 'news_list'));
     }
 }
