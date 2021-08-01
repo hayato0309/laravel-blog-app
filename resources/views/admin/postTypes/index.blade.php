@@ -11,7 +11,7 @@
 
     <h1 class="mb-4">Post type list</h1>
 
-    {{-- <form action="" method="POST" class="mb-4">
+    <form action="{{ route('admin.postTypeStore') }}" method="POST" class="mb-4">
         @csrf
         <div class="row">
             <div class="col">
@@ -26,7 +26,7 @@
                 <button type="submit" class="btn btn-primary">Submit</button>
             </div>
         </div>
-    </form> --}}
+    </form>
 
     <table class="table table-hover">
         <thead>

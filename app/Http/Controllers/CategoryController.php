@@ -23,7 +23,7 @@ class CategoryController extends Controller
 
         $category = new Category();
         $category->name = Str::ucfirst($input['name']);
-        $category->slug = Str::lower($input['name']);
+        $category->slug = Str::slug($input['name']);
 
         $category->save();
 
