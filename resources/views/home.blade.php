@@ -73,7 +73,7 @@
                     <button type="submit" class="btn btn-secondary"><i class="fas fa-search"></i></button>
                 </form>
             </div>
-            <div class="rounded bg-white p-3 mb-3">
+            <div class="rounded bg-white p-3">
                 @foreach ($news_list as $news)
                     <a href="{{ $news['url'] }}" class="text-body" target="_blank">
                         <div class="card p-3 mb-2 border-0 bg-white shadow-sm">
