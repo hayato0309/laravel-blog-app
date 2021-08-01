@@ -29,7 +29,16 @@
                             </div>
                             <div class="col-md-9">
                             <div class="card-body">
-                                <h5 class="card-title"><a href="{{ route('post.show', $post->id) }}" class="text-body">{{ $post->title }}</a></h5> 
+                                <div class="row">
+                                    <h5 class="col-md-9 card-title"><a href="{{ route('post.show', $post->id) }}" class="text-body">{{ $post->title }}</a></h5> 
+                                    <div class="col-md-3 text-right">
+                                        @if($post->postType->slug === "article")
+                                            <div><span class="badge badge-pill badge-light border border-dark px-2 py-1"><i class="far fa-newspaper"></i> {{ $post->postType->name }}</span></div>
+                                        @elseif($post->postType->slug === "question")
+                                            <div><span class="badge badge-pill badge-dark px-2 py-1"><i class="far fa-question-circle"></i> {{ $post->postType->name }}</span></div>
+                                        @endif
+                                    </div>
+                                </div>
                                 <p class="card-text">{{ Str::limit($post->content, 100, '...') }}</p>
                                 <div class="row">
                                     <div class="col-md-6">
@@ -74,6 +83,7 @@
                 </form>
             </div>
             <div class="rounded bg-white p-3">
+                <h5 class="mb-3">Recent news</h5>
                 @foreach ($news_list as $news)
                     <a href="{{ $news['url'] }}" class="text-body" target="_blank">
                         <div class="card p-3 mb-2 border-0 bg-white shadow-sm">
