@@ -10,7 +10,9 @@ class PostTypeController extends Controller
 {
     public function index()
     {
-        return view('admin.postTypes.index');
+        $post_types = PostType::all();
+
+        return view('admin.postTypes.index', compact('post_types'));
     }
 
     public function store()
