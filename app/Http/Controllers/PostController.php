@@ -178,6 +178,6 @@ class PostController extends Controller
 
         $news_list = session()->get('news_list');
 
-        return view('home', compact('categories', 'posts', 'news_list'));
+        return view('home', compact('categories', 'category_selected', 'posts', 'news_list'));
     }
 }
