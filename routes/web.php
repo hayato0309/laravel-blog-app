@@ -64,11 +64,11 @@ Route::get('/post/create', 'PostController@create')->name('post.create');
 Route::post('/post/store', 'PostController@store')->name('post.store');
 Route::get('/post/{id}', 'PostController@show')->name('post.show');
 Route::get('/posts', 'PostController@list')->name('post.posts');
-Route::get('/posts/{id}/edit', 'PostController@edit')->name('post.edit');
-Route::patch('/posts/{id}/update', 'PostController@update')->name('post.update');
-Route::delete('/posts/{id}/delete', 'PostController@destroy')->name('post.destroy');
+Route::get('/post/{id}/edit', 'PostController@edit')->name('post.edit');
+Route::patch('/post/{id}/update', 'PostController@update')->name('post.update');
+Route::delete('/post/{id}/delete', 'PostController@destroy')->name('post.destroy');
 
-Route::get('posts/category/{id}', 'PostController@categoryPost')->name('post.categoryPost');
+Route::get('category/{id}/posts', 'PostController@categoryPost')->name('post.categoryPost');
 
 // Like on posts
 Route::get('/posts/{id}/like', 'PostController@like')->name('post.like');

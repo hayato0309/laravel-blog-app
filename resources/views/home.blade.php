@@ -9,11 +9,12 @@
                 <a href="{{ route('post.categoryPost', $category->id) }}" class="text-body">
                     <div class="card p-3 mb-2 border-0 bg-white shadow-sm">
                         <h5>{{ $category->name }}</h5>
-                        {{-- <div>{{ $category->posts->count() }} posts</div> --}}
-
                         <div clas="d-flex">
-                            @foreach($category->count_for_each_post_type as $post_count)                            
-                                    <span>{{ $post_count['name'] }}: {{ $post_count['num_of_posts'] }}</span>
+                            @foreach($category->count_for_each_post_type as $count_post)                            
+                                <span class="mr-1">
+                                    <span>{{ $count_post['name'] }}: </span>
+                                    <span>{{ $count_post['num_of_posts'] }}</span>
+                                </span>
                             @endforeach
                         </div>
                     </div>
@@ -39,7 +40,7 @@
                                     <h5 class="col-md-9 card-title"><a href="{{ route('post.show', $post->id) }}" class="text-body">{{ $post->title }}</a></h5> 
                                     <div class="col-md-3 text-right">
                                         @if($post->postType->slug === "article")
-                                            <div><span class="badge badge-pill badge-light border border-dark px-2 py-1"><i class="far fa-newspaper"></i> {{ $post->postType->name }}</span></div>
+                                            <div><span class="badge badge-pill badge-white border border-dark px-2 py-1"><i class="far fa-newspaper"></i> {{ $post->postType->name }}</span></div>
                                         @elseif($post->postType->slug === "question")
                                             <div><span class="badge badge-pill badge-dark px-2 py-1"><i class="far fa-question-circle"></i> {{ $post->postType->name }}</span></div>
                                         @endif
