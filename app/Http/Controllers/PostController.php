@@ -162,6 +162,20 @@ class PostController extends Controller
 
         $categories = Category::orderBy('slug', 'asc')->get();
 
+        // Count articles and questions for the specific category
+        $post_types = PostType::all();
+
+        foreach ($categories as $category) {
+            $count_for_each_post_type = [];
+
+            foreach ($post_types as $post_type) {
+                $num_of_posts = $category->posts->where('post_type_id', '=', $post_type->id)->count();
+                array_push($count_for_each_post_type, ['name' => $post_type->name, 'num_of_posts' => $num_of_posts]);
+            }
+
+            $category->count_for_each_post_type = $count_for_each_post_type;
+        }
+
         $news_list = session()->get('news_list');
 
         return view('home', compact('categories', 'posts', 'news_list'));
