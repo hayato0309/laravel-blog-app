@@ -54,9 +54,16 @@
                                 </li>
                             @endif
                         @else
-                            <a href="{{ route('post.create') }}" class="d-flex align-items-center mr-3 text-muted">Create a post</a>
-                            <a href="{{ route('post.posts') }}" class="d-flex align-items-center mr-2 text-muted">My posts</a>
-                            <li class="nav-item dropdown">
+                            <li class="nav-item d-flex align-items-center">
+                                <a href="{{ route('post.create') }}" class="nav-link">Create a post</a>
+                            </li>
+                            <li class="nav-item d-flex align-items-center">
+                                <a href="{{ route('post.posts') }}" class="nav-link">My posts</a>
+                            </li>
+                            <li class="nav-item d-flex align-items-center">
+                                <a href="#" class="nav-link"><i class="far fa-bell fa-lg"></i></a>
+                            </li>
+                            <li class="nav-item d-flex align-items-center dropdown">
                                 <a id="navbarDropdown" class="nav-link" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
                                     <img class="rounded-circle" src="{{ asset('storage/'.Auth::user()->avatar) }}" alt="avatar" style="width:25px">
                                 </a>
