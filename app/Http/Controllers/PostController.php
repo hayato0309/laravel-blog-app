@@ -162,6 +162,16 @@ class PostController extends Controller
 
         $categories = Category::orderBy('slug', 'asc')->get();
 
+        foreach ($categories as $category) {
+            if ($category->id === $category_selected->id) {
+                $category->selected = true;
+            } else {
+                $category->selected = false;
+            }
+        }
+
+        // dd($categories);
+
         // Count articles and questions for the specific category
         $post_types = PostType::all();
 
@@ -176,8 +186,9 @@ class PostController extends Controller
             $category->count_for_each_post_type = $count_for_each_post_type;
         }
 
+        // Get news from session
         $news_list = session()->get('news_list');
 
-        return view('home', compact('categories', 'category_selected', 'posts', 'news_list'));
+        return view('home', compact('categories', 'posts', 'news_list'));
     }
 }
