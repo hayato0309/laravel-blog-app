@@ -3,3 +3,7 @@
     background-color: #ea5550;
     border-color: #ea5550;
 }
+
+.selected {
+    background-color: #e6e7e9;
+}
