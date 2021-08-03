@@ -77,3 +77,6 @@ Route::get('/posts/{id}/like', 'PostController@like')->name('post.like');
 Route::post('/post/{id}/comment', 'CommentController@store')->name('comment.store');
 Route::patch('/post/{id}/comment/update', 'CommentController@update')->name('comment.update');
 Route::delete('/comment/{id}/comment/delete', 'CommentController@destroy')->name('comment.destroy');
+
+// For Notification
+Route::get('/notifications', 'NotificationController@index')->name('notification.notifications');
