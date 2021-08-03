@@ -61,7 +61,7 @@
                                 <a href="{{ route('post.posts') }}" class="nav-link">My posts</a>
                             </li>
                             <li class="nav-item d-flex align-items-center">
-                                <a href="#" class="nav-link"><i class="far fa-bell fa-lg"></i></a>
+                                <a href="{{ route('notification.notifications') }}" class="nav-link"><i class="far fa-bell fa-lg"></i></a>
                             </li>
                             <li class="nav-item d-flex align-items-center dropdown">
                                 <a id="navbarDropdown" class="nav-link" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
