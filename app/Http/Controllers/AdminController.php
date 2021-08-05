@@ -6,12 +6,24 @@ use Illuminate\Http\Request;
 use App\User;
 use App\Post;
 use App\Role;
+use Illuminate\Support\Facades\DB;
 
 class AdminController extends Controller
 {
     public function index()
     {
         return view('admin.index');
+    }
+
+    public function showNotifications()
+    {
+        $notifications = DB::table('notifications')->get();
+
+        foreach ($notifications as $notification) {
+            $notification->data = json_decode(($notification->data));
+        }
+
+        return view('admin.notifications.index', compact('notifications'));
     }
 
     public function showUsers()
