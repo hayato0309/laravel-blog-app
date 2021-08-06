@@ -159,7 +159,7 @@ class PostController extends Controller
     public function categoryPost($id, Request $request)
     {
         $category_selected = Category::findOrFail($id);
-        $posts = $category_selected->posts()->paginate(10);
+        $posts = $category_selected->posts()->orderBy('created_at', 'desc')->paginate(10);
 
         $categories = Category::orderBy('slug', 'asc')->get();
 
