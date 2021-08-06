@@ -159,7 +159,21 @@ class PostController extends Controller
     public function categoryPost($id, Request $request)
     {
         $category_selected = Category::findOrFail($id);
+
         $posts = $category_selected->posts()->orderBy('created_at', 'desc')->paginate(10);
+
+        foreach ($posts as $post) {
+            $post['likesCount'] = $post->loadCount('likes')->likes_count;
+
+            $like = new Like();
+            $user_id = Auth::user()->id;
+            $post_id = $post->id;
+            if ($like->likeExists($user_id, $post_id)) {
+                $post['isLiked'] = true;
+            } else {
+                $post['isLiked'] = false;
+            }
+        }
 
         $categories = Category::orderBy('slug', 'asc')->get();
 
