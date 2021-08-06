@@ -10,6 +10,7 @@ use App\Comment;
 use App\Like;
 use App\Category;
 use App\PostType;
+use Illuminate\Database\Eloquent\Builder;
 
 class PostController extends Controller
 {
@@ -155,10 +156,10 @@ class PostController extends Controller
     }
 
     // Display the posts only for the selected category on home page
-    public function categoryPost($id)
+    public function categoryPost($id, Request $request)
     {
         $category_selected = Category::findOrFail($id);
-        $posts = $category_selected->posts()->paginate(5);
+        $posts = $category_selected->posts()->paginate(10);
 
         $categories = Category::orderBy('slug', 'asc')->get();
 
@@ -169,8 +170,6 @@ class PostController extends Controller
                 $category->selected = false;
             }
         }
-
-        // dd($categories);
 
         // Count articles and questions for the specific category
         $post_types = PostType::all();
@@ -186,9 +185,20 @@ class PostController extends Controller
             $category->count_for_each_post_type = $count_for_each_post_type;
         }
 
+        // Get search keyword
+        $post_search = $request->input('post_search');
+        // Create query instance
+        $query = Post::query();
+
+        // When there is a category search keyword
+        if (!empty($post_search)) {
+            $query->where('title', 'like', '%' . $post_search . '%');
+            $posts = $query->paginate(10);
+        }
+
         // Get news from session
         $news_list = session()->get('news_list');
 
-        return view('home', compact('categories', 'posts', 'news_list'));
+        return view('home_category', compact('categories', 'posts', 'news_list'));
     }
 }

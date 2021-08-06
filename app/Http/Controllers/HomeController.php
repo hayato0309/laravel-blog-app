@@ -49,7 +49,7 @@ class HomeController extends Controller
             $category->count_for_each_post_type = $count_for_each_post_type;
         }
 
-        $posts = Post::orderBy('created_at', 'desc')->paginate(5);
+        $posts = Post::orderBy('created_at', 'desc')->paginate(10);
 
         foreach ($posts as $post) {
             $post['likesCount'] = $post->loadCount('likes')->likes_count;
@@ -72,7 +72,7 @@ class HomeController extends Controller
         // When there is a category search keyword
         if (!empty($post_search)) {
             $query->where('title', 'like', '%' . $post_search . '%');
-            $posts = $query->paginate(5);
+            $posts = $query->paginate(10);
         }
 
         // Get news with News API
