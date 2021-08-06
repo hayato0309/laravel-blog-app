@@ -7,7 +7,7 @@
         <div class="col-md-3 p-3 bg-white rounded">
             @foreach($categories as $category)
                 <a href="{{ route('post.categoryPost', $category->id) }}" class="text-body">
-                    <div class="card p-3 mb-2 border-0 shadow-sm">
+                    <div class="card p-3 mb-2 border-0 shadow-sm {{ $category->selected ? 'selected' : '' }}">
                         <h5>{{ $category->name }}</h5>
                         <div clas="d-flex">
                             @foreach($category->count_for_each_post_type as $count_post)                            
@@ -81,7 +81,7 @@
         {{-- Right sidebar --}}
         <div class="col-md-3 p-0">
             <div class="rounded bg-white p-3 mb-3">
-                <form action="{{ route('home') }}" method="GET" class="form-inline mb-3">
+                <form action="{{ route('post.categoryPost', $category->id) }}" method="GET" class="form-inline mb-3">
                     {{-- @csrf --}}
                     <div class="form-group mr-2">
                         <input type="search" class="form-control" name="post_search" value="{{ isset($post_search) ? $post_search : '' }}">
