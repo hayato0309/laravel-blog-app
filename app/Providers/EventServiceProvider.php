@@ -8,6 +8,8 @@ use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvi
 use Illuminate\Support\Facades\Event;
 use App\Events\UserRegisteredEvent;
 use App\Listeners\UserRegisteredListener;
+use App\Events\PostPostedEvent;
+use App\Listeners\PostPostedListener;
 
 class EventServiceProvider extends ServiceProvider
 {
@@ -20,6 +22,9 @@ class EventServiceProvider extends ServiceProvider
         UserRegisteredEvent::class => [
             // SendEmailVerificationNotification::class,
             UserRegisteredListener::class,
+        ],
+        PostPostedEvent::class => [
+            PostPostedListener::class,
         ],
     ];
 

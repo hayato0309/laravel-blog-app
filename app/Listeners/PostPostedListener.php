@@ -4,11 +4,10 @@ namespace App\Listeners;
 
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Queue\InteractsWithQueue;
-use App\Events\UserRegisteredEvent;
-use App\Notifications\UserRegisteredNotification;
-// use App\User;
+use App\Events\PostPostedEvent;
+use App\Notifications\PostPostedNotification;
 
-class UserRegisteredListener
+class PostPostedListener
 {
     /**
      * Create the event listener.
@@ -26,9 +25,9 @@ class UserRegisteredListener
      * @param  object  $event
      * @return void
      */
-    public function handle(UserRegisteredEvent $event)
+    public function handle(PostPostedEvent $event)
     {
-        $user = $event->user;
-        $event->user->notify(new UserRegisteredNotification($user));
+        $post = $event->post;
+        $event->post->notify(new PostPostedNotification($post));
     }
 }

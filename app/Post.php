@@ -7,10 +7,12 @@ use App\User;
 use App\Comment;
 use App\Like;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Notifications\Notifiable;
 
 class Post extends Model
 {
     use SoftDeletes;
+    use Notifiable;
 
     protected $dates = ['deleted_at'];
 
