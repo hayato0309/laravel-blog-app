@@ -80,6 +80,10 @@
                                             </a>
                                         @endif
                                     @endforeach
+
+                                    <a class="dropdown-item" href="{{ route('activityLogs') }}">
+                                        Activity log
+                                    </a>
                                     
                                     <a class="dropdown-item" href="{{ route('logout') }}"
                                        onclick="event.preventDefault();

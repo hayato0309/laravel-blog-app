@@ -83,3 +83,6 @@ Route::delete('/comment/{id}/comment/delete', 'CommentController@destroy')->name
 
 // For Notification
 Route::get('/notifications', 'NotificationController@index')->name('notification.notifications');
+
+// For Activity Log
+Route::get('/activity_logs', 'ActivityLogController@index')->name('activityLogs');
