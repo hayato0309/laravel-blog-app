@@ -10,7 +10,7 @@ use App\Comment;
 use App\Like;
 use App\Category;
 use App\PostType;
-use Illuminate\Database\Eloquent\Builder;
+use App\Events\PostPostedEvent;
 
 class PostController extends Controller
 {
@@ -80,6 +80,9 @@ class PostController extends Controller
 
 
         session()->flash('post-created-message', 'Post was created :' . $post['title']);
+
+        // Triger activity log (notification)
+        event(new PostPostedEvent($post));
 
         return redirect()->route('home');
     }
