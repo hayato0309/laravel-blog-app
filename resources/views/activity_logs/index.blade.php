@@ -11,40 +11,23 @@
 
             <h1 class="mb-4">Activity logs</h1>
 
-            <div class="container card px-5 py-3 mb-2 border-0 shadow-sm">
-                <div class="row">
-                    <div class="col-md-1">
-                        <i class="far fa-user"></i>
-                    </div>
-                    <div class="col-md-8">
-                        {{-- <span><a href="#">{{ $notification->data->name }}</a> was just registered.</span> --}}
-                    </div>
-                    <div class="col-md-3 text-muted text-right">
-                        {{-- {{ $notification->created_at }}     --}}
+            @forelse ($activity_logs as $activity_log)
+                <div class="container card px-5 py-3 mb-2 border-0 shadow-sm">
+                    <div class="row">
+                        <div class="col-md-9">
+                            <span><a href="{{ route('post.show', $activity_log->notifiable_id) }}">{{ $activity_log->data->title }}</a> was posted.</span>
+                        </div>
+                        <div class="col-md-3 text-muted text-right">
+                            {{ $activity_log->created_at }}
+                        </div>
                     </div>
                 </div>
-            </div>
+            @empty
+                <div>No activity logs yet.</div>
+            @endforelse
+
         </div>
     </div>
-
-    {{-- @forelse ($notifications as $notification)
-        <div class="container card px-5 py-3 mb-2 border-0 shadow-sm">
-            <div class="row">
-                <div class="col-md-1">
-                    <i class="far fa-user"></i>
-                </div>
-                <div class="col-md-8">
-                    <span><a href="#">{{ $notification->data->name }}</a> was just registered.</span>
-                </div>
-                <div class="col-md-3 text-muted text-right">
-                    {{ $notification->created_at }}    
-                </div>
-            </div>
-        </div>
-    @empty
-        <div>No notifications yet.</div>
-    @endforelse --}}
-
 </div>
 
 @endsection
