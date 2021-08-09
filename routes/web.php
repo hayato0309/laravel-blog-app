@@ -74,6 +74,7 @@ Route::delete('/posts/{id}/delete', 'PostController@destroy')->name('post.destro
 Route::get('/category/{id}/posts', 'PostController@categoryPost')->name('post.categoryPost');
 
 Route::get('/posts/favorite_posts', 'PostController@favoritePost')->name('post.favoritePost');
+Route::delete('/posts/favorite_posts/{id}/undo_like', 'PostController@like')->name('post.undoLike');
 
 // Like on posts
 Route::get('/posts/{id}/like', 'PostController@like')->name('post.like');
