@@ -11,6 +11,7 @@ use App\Like;
 use App\Category;
 use App\PostType;
 use App\Events\PostPostedEvent;
+use Illuminate\Pagination\LengthAwarePaginator;
 
 class PostController extends Controller
 {
@@ -217,5 +218,30 @@ class PostController extends Controller
         $news_list = session()->get('news_list');
 
         return view('home_category', compact('categories', 'posts', 'news_list'));
+    }
+
+    public function favoritePost(Request $request)
+    {
+        $posts = Post::all();
+
+        $likes = auth()->user()->likes()->get();
+
+        $liked_posts = [];
+
+        foreach ($likes as $like) {
+            array_push($liked_posts, $like->post);
+        }
+
+        $liked_posts = collect($liked_posts);
+
+        $liked_posts = new LengthAwarePaginator(
+            $liked_posts->forPage($request->page, 10),
+            count($liked_posts),
+            10,
+            $request->page,
+            array('path' => $request->url())
+        );
+
+        return view('posts.favorite', compact('liked_posts'));
     }
 }
