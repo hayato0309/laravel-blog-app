@@ -5,16 +5,9 @@
 <div class="container">
     <div class="row justify-content-center">
         <div class="col-md-10">
-            {{-- @if(session('post-updated-message'))
-                <div class="alert alert-success">{{ session('post-updated-message') }}</div>
-            @endif --}}
-
-            {{-- Breadcrumb list --}}
-            {{-- <div class="mb-4">
-                <a href="{{ route('post.posts') }}" class="text-body">My posts</a>
-                <i class="fas fa-caret-right"></i>
-                <a href="#" class="text-body">{{$post->title}}</a>
-            </div> --}}
+            @if(session('undo-like-post-message'))
+                <div class="alert alert-danger">{{ session('undo-like-post-message') }}</div>
+            @endif
 
             <h1 class="mb-4">Favorite posts</h1>
             <table class="table table-hover">
@@ -65,10 +58,10 @@
                                                 </div>
                                                 <div class="modal-footer">
                                                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                                    <form action="" method="POST">
+                                                    <form action="{{ route('post.undoLike', $post->id) }}" method="POST">
                                                         @csrf
                                                         @method('DELETE')
-                                                        <button type="submit" class="btn btn-danger-custamized">Delete</button>
+                                                        <button type="submit" class="btn btn-danger-custamized">Undo like</button>
                                                     </form>
                                                 </div>
                                             </div>
