@@ -56,9 +56,11 @@ class PostPostedNotification extends Notification
     public function toArray($notifiable)
     {
         return [
-            'id' => $this->post->id,
-            'post_type_id' => $this->post->post_type_id,
+            'post_id' => $this->post->id,
+            'post_type' => $this->post->postType->name,
             'title' => $this->post->title,
+            'user_id' => $this->post->user->id,
+            'user_name' => $this->post->user->name,
         ];
     }
 }

@@ -22,7 +22,7 @@ class ActivityLogController extends Controller
         foreach ($activity_logs as $activity_log) {
             // ログインユーザIDとNotificationテーブルにデータを発行したPostのUser IDが同じ時だけ、Activity Logとして取得
 
-            if (auth()->user()->id === Post::find($activity_log->data['id'])->user_id) {
+            if (auth()->user()->id === $activity_log->data['user_id']) {
                 $activity_logs_for_auth = $activity_logs_for_auth->concat(collect([$key_for_activity_logs_collection => $activity_log]));
                 $key_for_activity_logs_collection += 1;
             }
