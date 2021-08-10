@@ -2,10 +2,6 @@
 
 @section('admin.content')
 
-    {{-- @if(session('post-deleted-message'))
-        <div class="alert alert-danger">{{ session('post-deleted-message') }}</div>
-    @endif --}}
-
     <h1 class="mb-4">Notifications</h1>
 
     @forelse ($notifications as $notification)

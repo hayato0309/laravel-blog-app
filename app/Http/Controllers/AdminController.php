@@ -18,15 +18,13 @@ class AdminController extends Controller
     public function showNotifications()
     {
         $notifications = DB::table('notifications')
-            ->where('notifiable_type', 'App\User')
+            ->where('type', 'App\Notifications\UserRegisteredNotification')
             ->orderBy('created_at', 'desc')
             ->get();
 
         foreach ($notifications as $notification) {
             $notification->data = json_decode(($notification->data));
         }
-
-        // dd($notifications);
 
         return view('admin.notifications.index', compact('notifications'));
     }
