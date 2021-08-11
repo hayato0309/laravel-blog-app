@@ -13,6 +13,7 @@ use GuzzleHttp\Client;
 use GuzzleHttp\Exception\RequestException;
 use GuzzleHttp\Psr7;
 use App\PostType;
+use Illuminate\Support\Facades\DB;
 
 class HomeController extends Controller
 {
@@ -33,6 +34,9 @@ class HomeController extends Controller
      */
     public function index(Request $request)
     {
+        // Counting unread-notifications for auth user
+        $num_of_unread_notifications = auth()->user()->unreadNotifications()->count();
+
         $categories = Category::orderBy('slug', 'asc')->get();
 
         // Count articles and questions for the specific category
@@ -109,6 +113,6 @@ class HomeController extends Controller
             }
         }
 
-        return view('home', compact('post_search', 'categories', 'posts', 'news_list'));
+        return view('home', compact('num_of_unread_notifications', 'post_search', 'categories', 'posts', 'news_list'));
     }
 }
