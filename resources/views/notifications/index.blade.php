@@ -8,7 +8,7 @@
 
             <h1 class="mb-4">Notifications</h1>
 
-            @forelse ($notifications_for_auth as $notification)
+            @forelse ($notifications as $notification)
                 <div class="container card px-5 py-3 mb-2 border-0 shadow-sm">
                     <div class="row">
                         <div class="col-md-9">
@@ -18,7 +18,6 @@
                                 <a href="{{ route('post.show', $notification->notifiable_id) }}">{{ $notification->data['title'] }}</a>
                                 <span>[{{ $notification->data['post_type']}}]</span>
                             </span>
-                            
                         </div>
                         <div class="col-md-3 text-muted text-right">
                             {{ $notification->created_at }}
