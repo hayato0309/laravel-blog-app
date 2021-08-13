@@ -10,8 +10,11 @@ class NotificationController extends Controller
 {
     public function index()
     {
-        $notifications = auth()->user()->notifications;
+        $unread_notifications = auth()->user()->unreadNotifications;
+        $read_notifications = auth()->user()->notifications->where('read_at', '<>', NULL);
 
-        return view('notifications.index', compact('notifications'));
+        auth()->user()->unreadNotifications->markAsRead();
+
+        return view('notifications.index', compact('unread_notifications', 'read_notifications'));
     }
 }

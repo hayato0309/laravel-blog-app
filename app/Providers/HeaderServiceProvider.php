@@ -3,7 +3,6 @@
 namespace App\Providers;
 
 use Illuminate\Support\ServiceProvider;
-use Illuminate\Support\Facades\View;
 
 class HeaderServiceProvider extends ServiceProvider
 {
@@ -24,6 +23,6 @@ class HeaderServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        View::composer('*', 'App\Http\Composers\HeaderComposer');
+        view()->composer('*', 'App\Http\Composers\HeaderComposer');
     }
 }
