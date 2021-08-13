@@ -63,7 +63,11 @@
                             <li class="nav-item d-flex align-items-center">
                                 <a href="{{ route('notification.notifications') }}" class="nav-link">
                                     <i class="far fa-bell fa-lg"></i>
-                                    <span class="badge badge-pill badge-danger">{{ $num_of_unread_notifications }}</span>
+                                    <span class="badge badge-pill badge-danger">
+                                        @if($num_of_unread_notifications > 0)
+                                            {{ $num_of_unread_notifications }}
+                                        @endif
+                                    </span>
                                 </a>
                             </li>
                             <li class="nav-item d-flex align-items-center dropdown">

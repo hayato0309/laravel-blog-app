@@ -8,8 +8,10 @@ class HeaderComposer
 {
     public function compose(View $view)
     {
-        $num_of_unread_notifications = auth()->user()->unreadNotifications()->count();
+        if (auth()->user()) {
+            $num_of_unread_notifications = auth()->user()->unreadNotifications()->count();
 
-        $view->with('num_of_unread_notifications', $num_of_unread_notifications);
+            $view->with('num_of_unread_notifications', $num_of_unread_notifications);
+        }
     }
 }

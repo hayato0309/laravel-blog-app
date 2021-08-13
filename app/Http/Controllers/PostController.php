@@ -192,6 +192,7 @@ class PostController extends Controller
             }
         }
 
+
         // Count articles and questions for the specific category
         $post_types = PostType::all();
 
@@ -205,6 +206,7 @@ class PostController extends Controller
 
             $category->count_for_each_post_type = $count_for_each_post_type;
         }
+
 
         // Get search keyword
         $post_search = $request->input('post_search');
