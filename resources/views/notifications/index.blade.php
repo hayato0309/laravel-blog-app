@@ -14,7 +14,7 @@
 
             @else
                 <div class="mb-3">
-                    <h5><i class="far fa-square"></i> Unread</h5>
+                    <h5 class="text-muted"><i class="far fa-square mr-2"></i>Unread</h5>
                     @forelse ($unread_notifications as $unread_notification)
                         <div class="container card px-5 py-3 mb-2 border-0 shadow-sm">
                             <div class="row">
@@ -37,7 +37,7 @@
                 </div>
 
                 <div class="mb-3">
-                    <h5><i class="far fa-square"></i> Read</h5>
+                    <h5 class="text-muted"><i class="far fa-square mr-2"></i>Read</h5>
                     @forelse ($read_notifications as $read_notification)
                         <div class="container card px-5 py-3 mb-2 border-0">
                             <div class="row">
