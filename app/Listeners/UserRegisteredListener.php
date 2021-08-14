@@ -5,8 +5,9 @@ namespace App\Listeners;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Queue\InteractsWithQueue;
 use App\Events\UserRegisteredEvent;
+use Illuminate\Support\Facades\Notification;
 use App\Notifications\UserRegisteredNotification;
-// use App\User;
+use App\Role;
 
 class UserRegisteredListener
 {
@@ -29,6 +30,10 @@ class UserRegisteredListener
     public function handle(UserRegisteredEvent $event)
     {
         $user = $event->user;
-        $event->user->notify(new UserRegisteredNotification($user));
+
+        $admin_role = Role::find(1); // Admin roleを取得
+        $admin_users = $admin_role->users()->get(); // Adminを持つUserを取得
+
+        Notification::send($admin_users, new UserRegisteredNotification($user));
     }
 }

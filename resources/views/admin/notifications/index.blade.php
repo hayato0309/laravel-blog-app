@@ -11,7 +11,7 @@
                     <i class="far fa-user"></i>
                 </div>
                 <div class="col-md-8">
-                    <span><a href="#">{{ $notification->data->name }}</a> ({{ $notification->data->email }}) was just registered.</span>
+                    <span><a href="{{ route('user.show', $notification->data->id) }}">{{ $notification->data->name }}</a> ({{ $notification->data->email }}) was just registered.</span>
                 </div>
                 <div class="col-md-3 text-muted text-right">
                     {{ $notification->created_at }}    
