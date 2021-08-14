@@ -10,6 +10,8 @@ use App\Events\UserRegisteredEvent;
 use App\Listeners\UserRegisteredListener;
 use App\Events\PostPostedEvent;
 use App\Listeners\PostPostedListener;
+use App\Events\UserFollowedEvent;
+use App\Listeners\UserFollowedListener;
 
 class EventServiceProvider extends ServiceProvider
 {
@@ -25,6 +27,9 @@ class EventServiceProvider extends ServiceProvider
         ],
         PostPostedEvent::class => [
             PostPostedListener::class,
+        ],
+        UserFollowedEvent::class => [
+            UserFollowedListener::class,
         ],
     ];
 

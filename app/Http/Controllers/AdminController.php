@@ -19,6 +19,7 @@ class AdminController extends Controller
     {
         $notifications = DB::table('notifications')
             ->where('type', 'App\Notifications\UserRegisteredNotification')
+            ->where('notifiable_id', auth()->user()->id)
             ->orderBy('created_at', 'desc')
             ->get();
 

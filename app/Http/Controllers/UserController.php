@@ -10,6 +10,7 @@ use App\User;
 use App\Post;
 use App\Like;
 use App\Follow;
+use App\Events\UserFollowedEvent;
 
 
 
@@ -135,6 +136,8 @@ class UserController extends Controller
             // No following yet => Record new following
             $follow->following_id = $following_id;
             $follow->follower_id = $follower_id;
+
+            event(new UserFollowedEvent(User::find($follower_id)));
 
             $follow->save();
         }

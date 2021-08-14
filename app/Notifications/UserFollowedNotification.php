@@ -8,7 +8,7 @@ use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
 use App\User;
 
-class UserRegisteredNotification extends Notification
+class UserFollowedNotification extends Notification
 {
     use Queueable;
 
@@ -58,7 +58,6 @@ class UserRegisteredNotification extends Notification
         return [
             'id' => $this->user->id,
             'name' => $this->user->name,
-            'email' => $this->user->email,
         ];
     }
 }
