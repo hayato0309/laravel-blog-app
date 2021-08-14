@@ -17,7 +17,9 @@ class NotificationController extends Controller
             ->where('type', '<>', 'App\Notifications\UserRegisteredNotification')
             ->where('read_at', '<>', NULL);
 
-        auth()->user()->unreadNotifications->markAsRead();
+        auth()->user()->unreadNotifications
+            ->where('type', '<>', 'App\Notifications\UserRegisteredNotification')
+            ->markAsRead();
 
         return view('notifications.index', compact('unread_notifications', 'read_notifications'));
     }
