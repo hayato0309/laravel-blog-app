@@ -17,17 +17,24 @@ class AdminController extends Controller
 
     public function showNotifications()
     {
-        $notifications = DB::table('notifications')
+        $unread_notifications = auth()->user()->unreadNotifications
+            ->where('type', 'App\Notifications\UserRegisteredNotification');
+
+        $read_notifications = auth()->user()->notifications
             ->where('type', 'App\Notifications\UserRegisteredNotification')
-            ->where('notifiable_id', auth()->user()->id)
-            ->orderBy('created_at', 'desc')
-            ->get();
+            ->where('read_at', '<>', NULL);
 
-        foreach ($notifications as $notification) {
-            $notification->data = json_decode(($notification->data));
-        }
 
-        return view('admin.notifications.index', compact('notifications'));
+        auth()->user()->unreadNotifications
+            ->where('type', 'App\Notifications\UserRegisteredNotification')
+            ->markAsRead();
+        // $unread_notifications = DB::table('notifications')
+        //     ->where('type', 'App\Notifications\UserRegisteredNotification')
+        //     ->where('notifiable_id', auth()->user()->id)
+        //     ->where('read_at', '<>', NULL)
+        //     ->update(['read_at' => now()]); // 未読データを取得した後に「既読」に変更
+
+        return view('admin.notifications.index', compact('unread_notifications', 'read_notifications'));
     }
 
     public function showUsers()
