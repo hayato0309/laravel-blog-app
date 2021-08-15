@@ -15,7 +15,16 @@ class CreateInquiriesTable extends Migration
     {
         Schema::create('inquiries', function (Blueprint $table) {
             $table->bigIncrements('id');
+            $table->unsignedBigInteger('user_id');
+            $table->string('title');
+            $table->text('content');
+            $table->string('inquiry_image')->nullable();
+
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
+
             $table->timestamps();
+
+            $table->boolean('is_checked')->default(false);
         });
     }
 

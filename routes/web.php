@@ -92,3 +92,4 @@ Route::get('/activity_logs', 'ActivityLogController@index')->name('activityLogs'
 
 // For Inquiries (contact us function)
 Route::get('/contact_us', 'InquiryController@create')->name('inquiry.create');
+Route::post('contact_us/store', 'InquiryController@store')->name('inquiry.store');
