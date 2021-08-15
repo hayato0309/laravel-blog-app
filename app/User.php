@@ -86,4 +86,9 @@ class User extends Authenticatable
     {
         return $this->belongsToMany(Permission::class);
     }
+
+    public function inquiries()
+    {
+        return $this->hasMany(Inquiry::class);
+    }
 }
