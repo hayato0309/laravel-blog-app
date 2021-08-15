@@ -26,7 +26,10 @@
         <div class="col-md-6 px-3">
             @if(session('post-created-message'))
                 <div class="alert alert-success">{{ session('post-created-message') }}</div>
+            @elseif(session('inquiry-submitted-message'))
+                <div class="alert alert-success">{{ session('inquiry-submitted-message') }}</div>
             @endif
+            
             <div>
                 @foreach ($posts as $post)
                     <div class="card mb-3 border-0 shadow-sm w-100">
