@@ -30,5 +30,9 @@ class InquiryController extends Controller
         }
 
         $inquiry->save();
+
+        session()->flash('inquiry-submitted-message', 'Your inquiry was submitted successfully. : ' . $inquiry->title);
+
+        return redirect('home');
     }
 }
