@@ -126,11 +126,11 @@
                     <a href="#" class="text-white"><i class="fab fa-youtube mx-2"></i></a>
                 </div>
                 <div class="col-md-4 text-center">
-                    <a href="" class="text-white">Request to Admin <i class="far fa-paper-plane"></i></a>
+                    <a href="{{ route('inquiry.create') }}" class="text-white">Contact us <i class="far fa-paper-plane"></i></a>
                 </div>
             </div>
             <div class="row d-flex justify-content-center">
-                <div class="small">© 2020 Copyright: Hayato Yokomiya</div>
+                <div class="small">© 2021 Copyright: Hayato Yokomiya</div>
             </div>
         </footer>
     </div>
