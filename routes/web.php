@@ -34,6 +34,9 @@ Route::group(['middleware' => 'can:isAdmin'], function () {
     // Notifications
     Route::get('/admin/notifications', 'AdminController@showNotifications')->name('admin.notifications');
 
+    // Inquiries
+    Route::get('/admin/inquiries', 'AdminController@showInquiries')->name('admin.inquiries');
+
     // Users
     Route::get('/admin/users', 'AdminController@showUsers')->name('admin.users');
     Route::patch('/admin/users/{id}/restore', 'AdminController@activateUser')->name('admin.activateUser');
