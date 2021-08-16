@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\User;
 use App\Post;
 use App\Role;
+use App\Inquiry;
 use Illuminate\Support\Facades\DB;
 
 class AdminController extends Controller
@@ -15,6 +16,8 @@ class AdminController extends Controller
         return view('admin.index');
     }
 
+
+    // About notifications
     public function showNotifications()
     {
         $unread_notifications = auth()->user()->unreadNotifications
@@ -24,19 +27,24 @@ class AdminController extends Controller
             ->where('type', 'App\Notifications\UserRegisteredNotification')
             ->where('read_at', '<>', NULL);
 
-
         auth()->user()->unreadNotifications
             ->where('type', 'App\Notifications\UserRegisteredNotification')
             ->markAsRead();
-        // $unread_notifications = DB::table('notifications')
-        //     ->where('type', 'App\Notifications\UserRegisteredNotification')
-        //     ->where('notifiable_id', auth()->user()->id)
-        //     ->where('read_at', '<>', NULL)
-        //     ->update(['read_at' => now()]); // 未読データを取得した後に「既読」に変更
 
         return view('admin.notifications.index', compact('unread_notifications', 'read_notifications'));
     }
 
+
+    // About inquiries
+    public function showInquiries()
+    {
+        $inquiries = Inquiry::orderBy('created_at', 'desc')->paginate(10);
+
+        return view('admin.inquiries.index', compact('inquiries'));
+    }
+
+
+    // About users
     public function showUsers()
     {
         $users = User::withTrashed()->orderBy('name', 'asc')->paginate(10);
@@ -60,15 +68,7 @@ class AdminController extends Controller
         $user = User::findOrFail($id);
         $user->roles()->sync($request['roles']);
 
-        // $post->categories()->sync($input['categories']);
         return back();
-    }
-
-    public function showPosts()
-    {
-        $posts = Post::withTrashed()->orderBy('created_at', 'desc')->paginate(10);
-
-        return view('admin.posts.index', compact('posts'));
     }
 
     public function activateUser($id)
@@ -89,6 +89,15 @@ class AdminController extends Controller
         session()->flash('user-deactivated-message', 'User was deactivated successfully. : ' . $user->name);
 
         return back();
+    }
+
+
+    // About posts
+    public function showPosts()
+    {
+        $posts = Post::withTrashed()->orderBy('created_at', 'desc')->paginate(10);
+
+        return view('admin.posts.index', compact('posts'));
     }
 
     public function unhidePost($id)
