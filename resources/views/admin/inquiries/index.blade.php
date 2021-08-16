@@ -24,29 +24,48 @@
         <table class="table table-hover">
                 <thead>
                     <tr>
+                        <th scope="col"></th>
                         <th scope="col">#</th>
                         <th scope="col">Title</th>
                         <th scope="col">Created at</th>
-                        <th scope="col"></th>
                         <th scope="col"></th>
                     </tr>
                 </thead>
                 <tbody>
                     @foreach ($inquiries as $inquiry)
                         <tr>
-                            <th class="align-middle" scope="row">{{ $loop->iteration }}</th>
-                            <td class="align-middle">{{ Str::limit($inquiry->title, 100, '...') }}</td>
-                            <td class="align-middle">{{ $inquiry->created_at }}</td>
                             <td class="align-middle">
-                                <button type="button" class="btn btn-link p-0" data-toggle="modal" data-target="">
-                                    <i class="far fa-eye text-body"></i>
+                                <button type="button" class="btn btn-link p-0" data-toggle="collapse" data-target="#collapsed_inquiry_{{ $inquiry->id }}">
+                                    <i class="far fa-plus-square text-body"></i>
                                 </button>
                             </td>
-                            <th scope="align-middle">
+                            <td class="align-middle" scope="row">{{ $loop->iteration }}</td>
+                            <td class="align-middle">{{ Str::limit($inquiry->title, 100, '...') }}</td>
+                            <td class="align-middle">{{ $inquiry->created_at }}</td>
+                            <td scope="align-middle">
                                 <i class="far fa-square"></i>
                                 {{-- <i class="fas fa-check-square"></i> --}}
-                            </th>
-                        @endforeach
+                            </td>
+                        </tr>
+
+                        {{-- Collapse part --}}
+                        <tr class="collapse" id="collapsed_inquiry_{{ $inquiry->id }}">
+                            <td></td>
+                            <td colspan="4">
+                                <div class="mb-4">{{ $inquiry->title }}</div>
+                                <div class="mb-4">{{ $inquiry->content }}</div>
+
+                                @if($inquiry->inquiry_image)
+                                    <img class="rounded mb-4" src="{{ asset('storage/'.$inquiry->inquiry_image) }}" alt="avatar" style="width:30%">
+                                @else
+                                    <div class="text-muted mb-4">* This inquiry has no image.</div>
+                                @endif
+
+                                <div class="text-right">By <a href="{{ route('user.show', $inquiry->user_id) }}">{{ $inquiry->user->name }}</a>
+                                </div>
+                            </td>
+                        </tr>
+                    @endforeach
                 </tbody>
             </table>
     </form>

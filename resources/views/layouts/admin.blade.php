@@ -22,7 +22,7 @@
                         </a>
                     </li>
                     <li class="h5 mb-3">
-                        <a href="{{ route('admin.inquiries') }}" class="text-decoration-none text-body">Inquiries from users</a>
+                        <a href="{{ route('admin.inquiries') }}" class="text-decoration-none text-body">Inquiries</a>
                     </li>
                     <li class="h5 mb-3">
                         <a href="{{ route('admin.users') }}" class="text-decoration-none text-body">Users</a>

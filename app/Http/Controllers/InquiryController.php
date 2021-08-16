@@ -26,7 +26,7 @@ class InquiryController extends Controller
         $inquiry->content = $input['content'];
 
         if (request('inquiry_image')) {
-            $post['inquiry_image'] = request('inquiry_image')->store('images');
+            $inquiry['inquiry_image'] = request('inquiry_image')->store('images');
         }
 
         $inquiry->save();
