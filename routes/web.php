@@ -36,6 +36,8 @@ Route::group(['middleware' => 'can:isAdmin'], function () {
 
     // Inquiries
     Route::get('/admin/inquiries', 'AdminController@showInquiries')->name('admin.inquiries');
+    Route::get('/admin/inquiries/{id}/solve', 'AdminController@solveInquiry')->name('admin.solveInquiry');
+    Route::get('/admin/inquiries/{id}/unsolve', 'AdminController@unsolveInquiry')->name('admin.unsolveInquiry');
 
     // Users
     Route::get('/admin/users', 'AdminController@showUsers')->name('admin.users');
@@ -45,9 +47,9 @@ Route::group(['middleware' => 'can:isAdmin'], function () {
     Route::post('/admin/users/{id}/roles/update', 'AdminController@updateRoles')->name('admin.updateRoles');
 
     // Posts
-    Route::get('admin/posts', 'AdminController@showPosts')->name('admin.posts');
-    Route::patch('admin/posts/{id}/unhide', 'AdminController@unhidePost')->name('admin.unhidePost');
-    Route::delete('admin/posts/{id}/hide', 'AdminController@hidePost')->name('admin.hidePost');
+    Route::get('/admin/posts', 'AdminController@showPosts')->name('admin.posts');
+    Route::patch('/admin/posts/{id}/unhide', 'AdminController@unhidePost')->name('admin.unhidePost');
+    Route::delete('/admin/posts/{id}/hide', 'AdminController@hidePost')->name('admin.hidePost');
 
     // Post types
     Route::get('/admin/posts_types', 'PostTypeController@index')->name('admin.postTypes');
@@ -89,9 +91,6 @@ Route::delete('/comment/{id}/comment/delete', 'CommentController@destroy')->name
 
 // For Notification
 Route::get('/notifications', 'NotificationController@index')->name('notification.notifications');
-
-// For Activity Log
-Route::get('/activity_logs', 'ActivityLogController@index')->name('activityLogs');
 
 // For Inquiries (contact us function)
 Route::get('/contact_us', 'InquiryController@create')->name('inquiry.create');
