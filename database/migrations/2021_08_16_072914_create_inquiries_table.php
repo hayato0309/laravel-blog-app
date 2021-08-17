@@ -24,7 +24,7 @@ class CreateInquiriesTable extends Migration
 
             $table->timestamps();
 
-            $table->boolean('is_checked')->default(false);
+            $table->boolean('is_solved')->default(false);
         });
     }
 

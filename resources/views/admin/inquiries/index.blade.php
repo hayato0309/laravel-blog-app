@@ -28,6 +28,7 @@
                         <th scope="col">#</th>
                         <th scope="col">Title</th>
                         <th scope="col">Created at</th>
+                        <th scope="col">Status</th>
                         <th scope="col"></th>
                     </tr>
                 </thead>
@@ -42,9 +43,23 @@
                             <td class="align-middle" scope="row">{{ $loop->iteration }}</td>
                             <td class="align-middle">{{ Str::limit($inquiry->title, 100, '...') }}</td>
                             <td class="align-middle">{{ $inquiry->created_at }}</td>
+                            <td class="align-middle">
+                                @if($inquiry->is_solved === 1)
+                                    <div>Solved</div>
+                                @elseif($inquiry->is_solved === 0) 
+                                    <div class="text-danger">Unsolved</div>
+                                @endif
+                            </td>
                             <td scope="align-middle">
-                                <i class="far fa-square"></i>
-                                {{-- <i class="fas fa-check-square"></i> --}}
+                                    @if($inquiry->is_solved === 1)
+                                    <button type="button" class="btn btn-link p-0" data-toggle="modal" data-target="#modal-mark-as-unsolved-{{ $inquiry->id }}">
+                                        <i class="fas fa-check-square text-body"></i>
+                                    </button>
+                                    @elseif($inquiry->is_solved === 0) 
+                                    <button type="button" class="btn btn-link p-0" data-toggle="modal" data-target="#modal-mark-as-solved-{{ $inquiry->id }}">
+                                        <i class="far fa-square text-body"></i>
+                                    </button>
+                                @endif
                             </td>
                         </tr>
 
@@ -65,6 +80,57 @@
                                 </div>
                             </td>
                         </tr>
+
+                        {{-- Modal - mark as Solved --}}
+                        <div class="modal fade" id="modal-mark-as-solved-{{ $inquiry->id }}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                            <div class="modal-dialog" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="exampleModalLabel">Confirmation</h5>
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <div class="mb-2">Are you sure you want to mark this inquiry as "solved"?</div>
+                                        <div class="mb-1">Title</div>
+                                        <div class="mb-2 px-3 border-left">{{ $inquiry->title }}</div>
+                                        <div class="mb-1">Content</div>
+                                        <div class="px-3 border-left">{{ Str::limit($inquiry->content, 200, '...') }}</div>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                        <a href="{{ route('admin.solveInquiry', $inquiry->id) }}" class="btn btn-primary">Solved</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        {{-- Modal - mark as Unsolved --}}
+                        <div class="modal fade" id="modal-mark-as-unsolved-{{ $inquiry->id }}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                            <div class="modal-dialog" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="exampleModalLabel">Confirmation</h5>
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <div class="mb-2">Are you sure you want to mark this inquiry as "unsolved"?</div>
+                                        <div class="mb-1">Title</div>
+                                        <div class="mb-2 px-3 border-left">{{ $inquiry->title }}</div>
+                                        <div class="mb-1">Content</div>
+                                        <div class="px-3 border-left">{{ Str::limit($inquiry->content, 200, '...') }}</div>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                        <a href="{{ route('admin.unsolveInquiry', $inquiry->id) }}" class="btn btn-danger-custamized">Unsolved</a>
+                                    </div>
+                                </div>
+                            </div>
+                            </div>
+
                     @endforeach
                 </tbody>
             </table>

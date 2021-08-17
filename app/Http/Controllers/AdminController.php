@@ -43,6 +43,26 @@ class AdminController extends Controller
         return view('admin.inquiries.index', compact('inquiries'));
     }
 
+    public function solveInquiry($id)
+    {
+        $inquiry = Inquiry::findOrFail($id);
+        $inquiry->is_solved = 1;
+
+        $inquiry->update();
+
+        return back();
+    }
+
+    public function unsolveInquiry($id)
+    {
+        $inquiry = Inquiry::findOrFail($id);
+        $inquiry->is_solved = 0;
+
+        $inquiry->update();
+
+        return back();
+    }
+
 
     // About users
     public function showUsers()
