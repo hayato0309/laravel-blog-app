@@ -9,7 +9,7 @@ class AdminSidebarComposer
 {
     public function compose(View $view)
     {
-        // 未読のnotificationsをカウント
+        // 未読のUserRegisterNotificationsをカウント
         $num_of_unread_notifications_for_admin = auth()->user()->unreadNotifications()
             ->where('type', 'App\Notifications\UserRegisteredNotification')
             ->count();
