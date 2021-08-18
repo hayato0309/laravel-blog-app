@@ -61,6 +61,8 @@ class AdminController extends Controller
 
         $inquiry->update();
 
+        session()->flash('inquiry-status-solved-message', 'The status of the inquiry was changed to "solved" sccessfully. : ' . $inquiry->title);
+
         return back();
     }
 
@@ -70,6 +72,8 @@ class AdminController extends Controller
         $inquiry->is_solved = 0;
 
         $inquiry->update();
+
+        session()->flash('inquiry-status-unsolved-message', 'The status of the inquiry was changed to "unsolved" sccessfully. : ' . $inquiry->title);
 
         return back();
     }

@@ -1,11 +1,11 @@
 @extends('layouts.admin')
 
 @section('admin.content')
-    {{-- @if(session('user-deactivated-message'))
-        <div class="alert alert-danger">{{ session('user-deactivated-message') }}</div>
-    @elseif(session('user-activated-message'))
-        <div class="alert alert-success">{{ session('user-activated-message') }}</div>
-    @endif --}}
+    @if(session('inquiry-status-solved-message'))
+        <div class="alert alert-success">{{ session('inquiry-status-solved-message') }}</div>
+    @elseif(session('inquiry-status-unsolved-message'))
+        <div class="alert alert-danger">{{ session('inquiry-status-unsolved-message') }}</div>
+    @endif
 
     <h1 class="mb-4">Inquiries</h1>
 
