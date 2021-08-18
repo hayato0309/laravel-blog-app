@@ -21,7 +21,9 @@
         <button type="submit" class="btn btn-primary">Filter</button>
     </form>
     
-    <table class="table table-hover">
+    @if(!$inquiries->isEmpty())
+
+        <table class="table table-hover">
             <thead>
                 <tr>
                     <th scope="col"></th>
@@ -32,6 +34,7 @@
                     <th scope="col"></th>
                 </tr>
             </thead>
+
             <tbody>
                 @foreach ($inquiries as $inquiry)
                     <tr>
@@ -130,9 +133,22 @@
                             </div>
                         </div>
                         </div>
-
                 @endforeach
             </tbody>
+
         </table>
+
+    @else
+
+        @if($inquiry_filter === 'solved')
+            <div>No solved inquiry yet.</div>
+        @elseif($inquiry_filter === 'unsolved')
+            <div>No unsolved inquiry yet.</div>
+        @else
+            <div>No inquiry yet.</div>
+        @endif
+
+    @endif
+
     {{ $inquiries->links() }}
 @endsection

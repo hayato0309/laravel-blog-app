@@ -37,13 +37,13 @@ class AdminController extends Controller
     // About inquiries
     public function showInquiries(Request $request)
     {
-        $inquiries = Inquiry::orderBy('created_at', 'desc')->paginate(10);
+        $inquiry_filter = $request->inquiry_filter;
 
         // Inquiryのフィルタリング
-        if ($request->inquiry_filter === 'solved') {
+        if ($inquiry_filter === 'solved') {
             // 解決したinquiryを取得
             $inquiries = Inquiry::where('is_solved', 1)->orderBy('created_at', 'desc')->paginate(10);
-        } elseif ($request->inquiry_filter === 'unsolved') {
+        } elseif ($inquiry_filter === 'unsolved') {
             // 未解決のinquiryを取得
             $inquiries = Inquiry::where('is_solved', 0)->orderBy('created_at', 'desc')->paginate(10);
         } else {
@@ -51,7 +51,7 @@ class AdminController extends Controller
             $inquiries = Inquiry::orderBy('created_at', 'desc')->paginate(10);
         }
 
-        return view('admin.inquiries.index', compact('inquiries'));
+        return view('admin.inquiries.index', compact('inquiries', 'inquiry_filter'));
     }
 
     public function solveInquiry($id)
