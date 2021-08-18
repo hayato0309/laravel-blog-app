@@ -7,7 +7,6 @@ use App\User;
 use App\Post;
 use App\Role;
 use App\Inquiry;
-use Illuminate\Support\Facades\DB;
 
 class AdminController extends Controller
 {
@@ -36,9 +35,21 @@ class AdminController extends Controller
 
 
     // About inquiries
-    public function showInquiries()
+    public function showInquiries(Request $request)
     {
         $inquiries = Inquiry::orderBy('created_at', 'desc')->paginate(10);
+
+        // Inquiryのフィルタリング
+        if ($request->inquiry_filter === 'solved') {
+            // 解決したinquiryを取得
+            $inquiries = Inquiry::where('is_solved', 1)->orderBy('created_at', 'desc')->paginate(10);
+        } elseif ($request->inquiry_filter === 'unsolved') {
+            // 未解決のinquiryを取得
+            $inquiries = Inquiry::where('is_solved', 0)->orderBy('created_at', 'desc')->paginate(10);
+        } else {
+            // 全てのinquiryを取得（inquiry_filterがNULLの時。inquiryページ訪問時はこれ）
+            $inquiries = Inquiry::orderBy('created_at', 'desc')->paginate(10);
+        }
 
         return view('admin.inquiries.index', compact('inquiries'));
     }
