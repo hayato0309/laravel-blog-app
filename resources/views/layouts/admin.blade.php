@@ -12,17 +12,25 @@
                     </li>
                     <li class="h5 mb-3">
                         <a href="{{ route('admin.notifications') }}" class="text-decoration-none text-body">Notifications</a>
-                            <span class="small">
-                                <span class="badge badge-pill badge-danger">
-                                    @if($num_of_unread_notifications_for_admin > 0)
-                                        {{ $num_of_unread_notifications_for_admin }}
-                                    @endif
-                                </span>
+                        <span class="small">
+                            <span class="badge badge-pill badge-danger">
+                                {{-- AdminSidebarComposerで取得 --}}
+                                @if($num_of_unread_notifications_for_admin > 0)
+                                    {{ $num_of_unread_notifications_for_admin }}
+                                @endif
                             </span>
-                        </a>
+                        </span>
                     </li>
                     <li class="h5 mb-3">
                         <a href="{{ route('admin.inquiries') }}" class="text-decoration-none text-body">Inquiries</a>
+                        <span class="small">
+                            <span class="badge badge-pill badge-danger">
+                                {{-- AdminSidebarComposerで取得 --}}
+                                @if($num_of_unsolved_inquiries > 0) 
+                                    {{ $num_of_unsolved_inquiries }}
+                                @endif
+                            </span>
+                        </span>
                     </li>
                     <li class="h5 mb-3">
                         <a href="{{ route('admin.users') }}" class="text-decoration-none text-body">Users</a>
