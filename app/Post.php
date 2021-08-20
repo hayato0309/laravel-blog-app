@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 use App\User;
 use App\Comment;
 use App\Like;
+use App\Ensemble;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Notifications\Notifiable;
 
@@ -41,5 +42,10 @@ class Post extends Model
     public function postType()
     {
         return $this->belongsTo(PostType::class);
+    }
+
+    public function ensembles()
+    {
+        return $this->belongsToMany(Ensemble::class);
     }
 }
