@@ -29,7 +29,7 @@
         <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm fixed-top py-2">
             <div class="container-fluid">
                 <a class="navbar-brand" href="{{ route('home') }}">
-                    Askipert
+                    Askpert
                 </a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
                     <span class="navbar-toggler-icon"></span>
@@ -55,11 +55,13 @@
                             @endif
                         @else
                             <li class="nav-item d-flex align-items-center">
+                                <a href="{{ route('ensemble.create') }}" class="nav-link">Create an ensemble</a>
+                            </li>
+
+                            <li class="nav-item d-flex align-items-center">
                                 <a href="{{ route('post.create') }}" class="nav-link">Create a post</a>
                             </li>
-                            <li class="nav-item d-flex align-items-center">
-                                <a href="{{ route('post.posts') }}" class="nav-link">My posts</a>
-                            </li>
+
                             <li class="nav-item d-flex align-items-center">
                                 <a href="{{ route('notification.notifications') }}" class="nav-link">
                                     <i class="far fa-bell fa-lg"></i>
@@ -80,6 +82,14 @@
                                         Profile
                                     </a>
 
+                                    <a class="dropdown-item" href="{{ route('post.posts') }}" class="nav-link">
+                                        My posts
+                                    </a>
+
+                                    <a class="dropdown-item" href="{{ route('post.favoritePost') }}">
+                                        Favorite post
+                                    </a>
+
                                     @foreach(Auth::user()->roles as $role)
                                         @if($role->slug == 'admin')
                                             <a class="dropdown-item" href="{{ route('admin.home', Auth::user()) }}">
@@ -87,10 +97,6 @@
                                             </a>
                                         @endif
                                     @endforeach
-
-                                    <a class="dropdown-item" href="{{ route('post.favoritePost') }}">
-                                        Favorite post
-                                    </a>
                                     
                                     <a class="dropdown-item" href="{{ route('logout') }}"
                                        onclick="event.preventDefault();
@@ -117,7 +123,7 @@
         <footer class="container-fluid text-white bg-dark w-100 p-3">
             <div class="row mb-2">
                 <h5 class="col-md-4 text-center m-0">
-                    <a href="{{ route('home') }}" class="text-white">Askipert</a>
+                    <a href="{{ route('home') }}" class="text-white">Askpert</a>
                 </h5>
                 <div class="col-md-4 text-center">
                     <a href="#" class="text-white"><i class="fab fa-facebook mx-2"></i></a>

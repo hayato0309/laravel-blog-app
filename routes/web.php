@@ -95,3 +95,6 @@ Route::get('/notifications', 'NotificationController@index')->name('notification
 // For Inquiries (contact us function)
 Route::get('/contact_us', 'InquiryController@create')->name('inquiry.create');
 Route::post('contact_us/store', 'InquiryController@store')->name('inquiry.store');
+
+// For Ensemble
+Route::get('/ensemble/create', 'EnsembleController@create')->name('ensemble.create');
