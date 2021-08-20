@@ -15,6 +15,39 @@ class CreateEnsemblesTable extends Migration
     {
         Schema::create('ensembles', function (Blueprint $table) {
             $table->bigIncrements('id');
+            $table->string('headline', 100);
+            $table->string('introduction', 200);
+            $table->string('piece', 100);
+            $table->string('composer', 100);
+            $table->string('music_sheet');
+
+            $table->integer('violin')->nullable();
+            $table->integer('viola')->nullable();
+            $table->integer('cello')->nullable();
+            $table->integer('contrabass')->nullable();
+
+            $table->integer('flute')->nullable();
+            $table->integer('oboe')->nullable();
+            $table->integer('clarinet')->nullable();
+            $table->integer('bassoon')->nullable();
+            $table->integer('saxophone')->nullable();
+
+            $table->integer('trumpet')->nullable();
+            $table->integer('horn')->nullable();
+            $table->integer('trombone')->nullable();
+            $table->integer('tuba')->nullable();
+
+            $table->integer('piano')->nullable();
+            $table->integer('harp')->nullable();
+            $table->integer('timpani')->nullable();
+            $table->integer('snare_drum')->nullable();
+            $table->integer('bass_drum')->nullable();
+            $table->integer('tambourine')->nullable();
+            $table->integer('triangle')->nullable();
+
+            $table->date('deadline');
+            $table->text('notes');
+
             $table->timestamps();
         });
     }
