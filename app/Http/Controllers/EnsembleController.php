@@ -7,6 +7,13 @@ use App\Ensemble;
 
 class EnsembleController extends Controller
 {
+    public function home()
+    {
+        $ensembles = Ensemble::orderBy('created_at', 'desc')->paginate(10);
+
+        return view('ensemble.home', compact('ensembles'));
+    }
+
     public function create()
     {
         return view('ensemble.create');
@@ -31,7 +38,7 @@ class EnsembleController extends Controller
             'clarinet' => ['max:2'],
             'bassoon' => ['max:2'],
             'saxohone' => ['max:2'],
-            
+
             'trumpet' => ['max:2'],
             'horn' => ['max:2'],
             'trombone' => ['max:2'],

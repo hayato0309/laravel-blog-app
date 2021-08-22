@@ -4,26 +4,35 @@
 <div class="container-fluid px-5">
     <div class="row">
         {{-- Left sidebar --}}
-        <div class="col-md-3 p-3 bg-white rounded">
-            @foreach($categories as $category)
-                <a href="{{ route('post.categoryPost', $category->id) }}" class="text-body">
-                    <div class="card p-3 mb-2 border-0 shadow-sm">
-                        <h5>{{ $category->name }}</h5>
-                        <div clas="d-flex">
-                            @foreach($category->count_for_each_post_type as $count_post)                            
-                                <span class="mr-1">
-                                    <span>{{ $count_post['name'] }}: </span>
-                                    <span>{{ $count_post['num_of_posts'] }}</span>
-                                </span>
-                            @endforeach
+        <div class="col-md-3 p-3">
+            <div class="p-3 mb-3 bg-white rounded">
+                <div class="btn-group btn-group-toggle w-100">
+                    <a class="btn btn-outline-dark active">Articles</a>
+                    <a href="{{ route('ensemble.home') }}" class="btn btn-outline-dark">Ensembles</a>
+                </div>
+            </div>
+
+            <div class="p-3 bg-white rounded">
+                @foreach($categories as $category)
+                    <a href="{{ route('post.categoryPost', $category->id) }}" class="text-body">
+                        <div class="card p-3 mb-2 border-0 shadow-sm">
+                            <h5>{{ $category->name }}</h5>
+                            <div clas="d-flex">
+                                @foreach($category->count_for_each_post_type as $count_post)                            
+                                    <span class="mr-1">
+                                        <span>{{ $count_post['name'] }}: </span>
+                                        <span>{{ $count_post['num_of_posts'] }}</span>
+                                    </span>
+                                @endforeach
+                            </div>
                         </div>
-                    </div>
-                </a>
-            @endforeach
+                    </a>
+                @endforeach
+            </div>
         </div>
 
         {{-- Body (Center) --}}
-        <div class="col-md-6 px-3">
+        <div class="col-md-6 p-3">
             @if(session('post-created-message'))
                 <div class="alert alert-success">{{ session('post-created-message') }}</div>
             @elseif(session('inquiry-submitted-message'))
@@ -82,7 +91,7 @@
         </div>
 
         {{-- Right sidebar --}}
-        <div class="col-md-3 p-0">
+        <div class="col-md-3 p-3">
             <div class="rounded bg-white p-3 mb-3">
                 <form action="{{ route('home') }}" method="GET" class="form-inline mb-3">
                     {{-- @csrf --}}

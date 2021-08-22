@@ -38,7 +38,7 @@
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <!-- Left Side Of Navbar -->
                     <ul class="navbar-nav mr-auto">
-
+                        
                     </ul>
 
                     <!-- Right Side Of Navbar -->
@@ -82,7 +82,7 @@
                                         Profile
                                     </a>
 
-                                    <a class="dropdown-item" href="{{ route('post.posts') }}" class="nav-link">
+                                    <a class="dropdown-item" href="{{ route('post.list') }}" class="nav-link">
                                         My posts
                                     </a>
 

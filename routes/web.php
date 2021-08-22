@@ -71,7 +71,7 @@ Route::get('/user/{id}/follow', 'UserController@follow')->name('user.follow');
 Route::get('/post/create', 'PostController@create')->name('post.create');
 Route::post('/post/store', 'PostController@store')->name('post.store');
 Route::get('/post/{id}', 'PostController@show')->name('post.show');
-Route::get('/posts', 'PostController@list')->name('post.posts');
+Route::get('/posts', 'PostController@list')->name('post.list');
 Route::get('/posts/{id}/edit', 'PostController@edit')->name('post.edit');
 Route::patch('/posts/{id}/update', 'PostController@update')->name('post.update');
 Route::delete('/posts/{id}/delete', 'PostController@destroy')->name('post.destroy');
@@ -97,5 +97,6 @@ Route::get('/contact_us', 'InquiryController@create')->name('inquiry.create');
 Route::post('contact_us/store', 'InquiryController@store')->name('inquiry.store');
 
 // For Ensemble
+Route::get('/ensembles', 'EnsembleController@home')->name('ensemble.home');
 Route::get('/ensemble/create', 'EnsembleController@create')->name('ensemble.create');
 Route::post('/ensemble/store', 'EnsembleController@store')->name('ensemble.store');
