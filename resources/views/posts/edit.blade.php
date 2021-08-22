@@ -11,7 +11,7 @@
 
             {{-- Breadcrumb list --}}
             <div class="mb-4">
-                <a href="{{ route('post.posts') }}" class="text-body">My posts</a>
+                <a href="{{ route('post.list') }}" class="text-body">My posts</a>
                 <i class="fas fa-caret-right"></i>
                 <a href="#" class="text-body">{{$post->title}}</a>
             </div>
