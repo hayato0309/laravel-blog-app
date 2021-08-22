@@ -166,7 +166,7 @@
 
                 <div class="form-group">
                     <label>Deadline</label>
-                    <input type="date" min="{{ date('y/m/d') }}" class="form-control {{ $errors->has('deadline')?'is-invalid':'' }}" name="deadline" placeholder="e.g. https://imslp.org/..." value="">
+                    <input type="date" min="{{ date('y/m/d') }}" class="form-control {{ $errors->has('deadline')?'is-invalid':'' }}" name="deadline" placeholder="e.g. https://imslp.org/..." value="{{ old('deadline') }}">
                     
                     @if($errors->has('dealine'))
                         <p class="text-danger">{{ $errors->first('dealine') }}</p>

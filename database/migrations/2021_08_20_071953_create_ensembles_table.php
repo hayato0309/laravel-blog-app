@@ -16,7 +16,7 @@ class CreateEnsemblesTable extends Migration
         Schema::create('ensembles', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('headline', 100);
-            $table->string('introduction', 200);
+            $table->text('introduction');
             $table->string('piece', 100);
             $table->string('composer', 100);
             $table->string('music_sheet');
@@ -47,6 +47,7 @@ class CreateEnsemblesTable extends Migration
 
             $table->date('deadline');
             $table->text('notes');
+            $table->string('status')->default('open');
 
             $table->timestamps();
         });

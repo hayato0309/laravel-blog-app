@@ -23,7 +23,7 @@ class EnsembleController extends Controller
     {
         $input = request()->validate([
             'headline' => ['required', 'min:3', 'max:100'],
-            'introduction' => ['required', 'min:3', 'max:200'],
+            'introduction' => ['required', 'min:3', 'max:300'],
             'piece' => ['required', 'min:3', 'max:100'],
             'composer' => ['required', 'min:3', 'max:100'],
             'music_sheet' => ['required'],

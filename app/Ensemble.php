@@ -15,7 +15,7 @@ class Ensemble extends Model
         'trumpet', 'horn', 'trombone', 'tuba',
         'piano', 'harp', 'timpani', 'snare_drum', 'bass_drum', 'tambourine', 'triangle',
 
-        'deadline', 'notes',
+        'deadline', 'notes', 'status',
     ];
 
     public function users()
