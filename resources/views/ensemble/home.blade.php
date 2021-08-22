@@ -26,7 +26,7 @@
             @endif --}}
             
             <div class="clearfix">
-                @foreach($ensembles as $ensemble)
+                @forelse($ensembles as $ensemble)
                     <a href="#" class="text-body">
                         <div class="card float-left border-0 shadow-sm ml-4 mb-4 p-4" style="width: 47%">
                             <h5>{{ $ensemble->headline }}</h5>
@@ -36,7 +36,9 @@
                             <div><i class="far fa-calendar-alt mr-2"></i> {{ $ensemble->deadline }}</div>
                         </div>
                     </a>
-                @endforeach
+                @empty
+                    <div class="text-muted">No open ensemble for now.</div>
+                @endforelse
             </div>
 
             <div class="pl-4">{{ $ensembles->links() }}</div>
