@@ -4,6 +4,7 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 use App\User;
+use App\EnsembleApplication;
 
 class Ensemble extends Model
 {
@@ -26,5 +27,10 @@ class Ensemble extends Model
     public function users()
     {
         return $this->belongsToMany(User::class);
+    }
+
+    public function ensembleApplications()
+    {
+        return $this->hasMany(EnsembleApplication::class);
     }
 }

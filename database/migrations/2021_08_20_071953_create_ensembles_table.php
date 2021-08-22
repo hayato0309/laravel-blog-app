@@ -23,7 +23,7 @@ class CreateEnsemblesTable extends Migration
             $table->text('introduction');
             $table->string('piece', 100);
             $table->string('composer', 100);
-            $table->string('music_sheet');
+            $table->text('music_sheet');
 
             $table->integer('violin')->nullable();
             $table->integer('viola')->nullable();
@@ -50,7 +50,7 @@ class CreateEnsemblesTable extends Migration
             $table->integer('triangle')->nullable();
 
             $table->date('deadline');
-            $table->text('notes');
+            $table->text('notes')->nullable();
             $table->string('status')->default('open');
 
             $table->timestamps();
