@@ -70,7 +70,7 @@ Route::get('/user/{id}/follow', 'UserController@follow')->name('user.follow');
 // For Post
 Route::get('/post/create', 'PostController@create')->name('post.create');
 Route::post('/post/store', 'PostController@store')->name('post.store');
-Route::get('/post/{id}', 'PostController@show')->name('post.show');
+Route::get('/posts/{id}', 'PostController@show')->name('post.show');
 Route::get('/posts', 'PostController@list')->name('post.list');
 Route::get('/posts/{id}/edit', 'PostController@edit')->name('post.edit');
 Route::patch('/posts/{id}/update', 'PostController@update')->name('post.update');
@@ -98,6 +98,9 @@ Route::post('contact_us/store', 'InquiryController@store')->name('inquiry.store'
 
 // For Ensemble
 Route::get('/ensembles', 'EnsembleController@home')->name('ensemble.home');
-Route::get('/ensemble/{id}', 'EnsembleController@show')->name('ensemble.show');
 Route::get('/ensemble/create', 'EnsembleController@create')->name('ensemble.create');
 Route::post('/ensemble/store', 'EnsembleController@store')->name('ensemble.store');
+Route::get('/ensembles/{id}', 'EnsembleController@show')->name('ensemble.show');
+
+// For Ensemble Application
+Route::post('/ensembles/{id}/ensemble_application/store', 'EnsembleApplicationController@store')->name('ensembleApplication.store');

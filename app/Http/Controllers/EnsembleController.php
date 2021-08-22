@@ -16,6 +16,7 @@ class EnsembleController extends Controller
         return view('ensemble.home', compact('ensembles', 'num_of_open_ensembles'));
     }
 
+
     public function show($id)
     {
         $ensemble = Ensemble::findOrFail($id);
@@ -23,10 +24,12 @@ class EnsembleController extends Controller
         return view('ensemble.show', compact('ensemble'));
     }
 
+
     public function create()
     {
         return view('ensemble.create');
     }
+
 
     public function store()
     {
@@ -46,7 +49,7 @@ class EnsembleController extends Controller
             'oboe' => ['max:2'],
             'clarinet' => ['max:2'],
             'bassoon' => ['max:2'],
-            'saxohone' => ['max:2'],
+            'saxophone' => ['max:2'],
 
             'trumpet' => ['max:2'],
             'horn' => ['max:2'],

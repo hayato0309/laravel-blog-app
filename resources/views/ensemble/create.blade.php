@@ -10,6 +10,13 @@
                 <div class="alert alert-success">{{ session('ensemble-create-message') }}</div>
             @endif
 
+            {{-- Breadcrumb list --}}
+            <div class="mb-4">
+                <a href="{{ route('ensemble.home') }}" class="text-body">Ensembles</a>
+                <i class="fas fa-caret-right"></i>
+                <a href="#" class="text-body">Create an ensemble</a>
+            </div>
+
             <h1>Create an ensemble</h1>
             <form action="{{ route('ensemble.store') }}" method="POST">
                 @csrf
@@ -166,7 +173,7 @@
 
                 <div class="form-group">
                     <label>Deadline</label>
-                    <input type="date" min="{{ date('y/m/d') }}" class="form-control {{ $errors->has('deadline')?'is-invalid':'' }}" name="deadline" placeholder="e.g. https://imslp.org/..." value="{{ old('deadline') }}">
+                    <input type="date" min="{{ date('Y-m-d') }}" class="form-control {{ $errors->has('deadline')?'is-invalid':'' }}" name="deadline" placeholder="e.g. https://imslp.org/..." value="{{ old('deadline') }}">
                     
                     @if($errors->has('dealine'))
                         <p class="text-danger">{{ $errors->first('dealine') }}</p>

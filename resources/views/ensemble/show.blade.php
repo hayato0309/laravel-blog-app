@@ -6,20 +6,16 @@
     <div class="row justify-content-center">
         <div class="col-md-9">
 
-            {{-- @if(session('comment-posted-message'))
-                <div class="alert alert-success">{{ session('comment-posted-message') }}</div>
-            @elseif(session('comment-updated-message'))
-                <div class="alert alert-success">{{ session('comment-updated-message') }}</div>
-            @elseif(session('comment-deleted-message'))
-                <div class="alert alert-danger">{{ session('comment-deleted-message') }}</div>
-            @endif --}}
+            @if(session('applied-to-ensemble-message'))
+                <div class="alert alert-success">{{ session('applied-to-ensemble-message') }}</div>
+            @endif
 
             {{-- Breadcrumb list --}}
-            {{-- <div class="mb-4">
-                <a href="{{ route('home') }}" class="text-body"><i class="fas fa-home"></i></a>
+            <div class="mb-4">
+                <a href="{{ route('ensemble.home') }}" class="text-body">Ensembles</a>
                 <i class="fas fa-caret-right"></i>
-                <a href="#" class="text-body">{{ $post->title }}</a>
-            </div> --}}
+                <a href="#" class="text-body">{{ $ensemble->headline }}</a>
+            </div>
             
             <div class="mb-3 p-4 bg-white rounded shadow-sm">
                 <div class="row">
@@ -36,13 +32,26 @@
                     </div>
 
                 </div>
-                <div class="text-muted">Until {{ $ensemble->deadline }}</div>
+                <div class="text-right mb-3">
+                    <div class="text-muted">Until {{ $ensemble->deadline }}</div>
+                    @if($ensemble->ensembleApplications->count() > 0)
+                        <div class="text-danger"><i class="fas fa-fire-alt mr-1"></i>{{ $ensemble->ensembleApplications->count() }} applications now</div>
+                    @else
+                        <div class="text-muted"><i class="fas fa-fire-alt mr-1"></i>No applications yet</div>
+                    @endif
+                </div>
                 <div class="mb-3">{{ $ensemble->introduction }}</div>
                 <div><i class="fas fa-music mr-2"></i>{{ $ensemble->piece }}</div>
-                <div><i class="fas fa-pencil-alt mr-2"></i>{{ $ensemble->composer }}</div>
-                <div class="mb-3"><a href="{{ $ensemble->music_sheet }}" target="_blank">Access the music sheet from here</a></div>
+                <div><i class="far fa-user mr-2"></i>{{ $ensemble->composer }}</div>
+                <div class="mb-3"><i class="far fa-file-alt mr-2"></i><a href="{{ $ensemble->music_sheet }}" target="_blank">Access the music sheet from here</a></div>
                 <div class="mb-1">Notes</div>
-                <div class="bg-light p-3 rounded mb-3">{{ $ensemble->notes }}</div>
+                <div class="bg-light p-3 rounded mb-3">
+                    @empty($ensemble->notes)
+                        <div class="text-muted">No notes for this ensemble.</div>
+                    @else
+                        <div>{{ $ensemble->notes }}</div>
+                    @endempty
+                </div>
 
                 <div class="mb-1">I'm looking for ...</div>
                 <div class="row mr-auto mb-3">
@@ -150,40 +159,51 @@
 
                 <div class="mb-3 text-muted text-right">{{ $ensemble->created_at->diffForHumans() }} by <a href="{{ route('user.show', $ensemble->user->id) }}" class="text-muted">{{ $ensemble->user->name }}</a></div>
 
+
+                {{-- For application to ensemble --}}
                 <a class="btn btn-outline-dark btn-lg btn-block mb-2" data-toggle="collapse" href="#collapse-submit-recording-textarea" role="button" aria-expanded="false" aria-controls="collapse-submit-recording-textarea">
                     I want to join <i class="far fa-hand-point-down"></i>
                 </a>
                 <div class="collapse" id="collapse-submit-recording-textarea">
-                    <form action="" method="POST">
+                    <form action="{{ route('ensembleApplication.store', $ensemble->id) }}" method="POST">
                         @csrf
                         @method('POST')
                         <div>
                             <label for="instrument">What is your instrument?</label>
                             <input type="text" class="form-control mb-2" name="instrument" {{ $ensemble->status !== "open" ? "disabled" : "" }}>
+                            @if($errors->has('recording_url'))
+                                <p class="text-danger">{{ $errors->first('recording_url') }}</p>
+                            @endif
 
                             <label for="recording_url">Recording URL (e.g. Google Drive)</label>
-                            <textarea type="text" class="form-control mb-1 {{ $errors->has('content')?'is-invalid':'' }}" name="recording_url" rows="2" placeholder="Please input the URL for the recording_url." {{ $ensemble->status !== "open" ? "disabled" : "" }}>{{ old('recording') }}</textarea>
-                        
-                            @if($errors->has('content'))
-                                <p class="text-danger">{{ $errors->first('content') }}</p>
+                            <textarea type="text" class="form-control mb-2 {{ $errors->has('content')?'is-invalid':'' }}" name="recording_url" rows="2" placeholder="Please input the URL for the recording URL." {{ $ensemble->status !== "open" ? "disabled" : "" }}>{{ old('recording_url') }}</textarea>
+                            @if($errors->has('recording_url'))
+                                <p class="text-danger">{{ $errors->first('recording_url') }}</p>
+                            @endif
+
+                            <label for="notes">Notes</label>
+                            <textarea type="text" class="form-control mb-2 {{ $errors->has('content')?'is-invalid':'' }}" name="notes" rows="2" placeholder="Please input here if you have some notes." {{ $ensemble->status !== "open" ? "disabled" : "" }}>{{ old('notes') }}</textarea>
+                            @if($errors->has('notes'))
+                                <p class="text-danger">{{ $errors->first('notes') }}</p>
                             @endif
 
                             <button type="submit" class="btn btn-primary" {{ $ensemble->status !== "open" ? "disabled" : "" }}>Submit</button>
                         </div>
                     </form>
                 </div>
+
             </div>
 
             {{-- Comments textarea --}}
             <div>
                 <div class="text-muted text-right">
                     <i class="far fa-comment-alt"></i>
-                    <span>Comment / Question</span>
+                    <span>Comment</span>
                 </div>
                 <form action="" method="POST">
                     @csrf
                     @method('POST')
-                    <textarea type="text" class="form-control mb-2 {{ $errors->has('content')?'is-invalid':'' }}" name="content" cols="30" rows="3" placeholder="Please write your comment / question." {{ $ensemble->status !== "open" ? "disabled" : "" }}>{{ old('content') }}</textarea>
+                    <textarea type="text" class="form-control mb-2 {{ $errors->has('content')?'is-invalid':'' }}" name="content" cols="30" rows="3" placeholder="Please write your comment." {{ $ensemble->status !== "open" ? "disabled" : "" }}>{{ old('content') }}</textarea>
                     @if($errors->has('content'))
                         <p class="text-danger">{{ $errors->first('content') }}</p>
                     @endif
