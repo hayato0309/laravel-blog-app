@@ -26,7 +26,7 @@
                             <h5>{{ $ensemble->headline }}</h5>
                             <div class="text-muted mb-2">{{ $ensemble->introduction }}</div>
                             <div><i class="fas fa-music mr-2"></i>{{ $ensemble->piece }}</div>
-                            <div><i class="fas fa-pencil-alt mr-2"></i>{{ $ensemble->composer }}</div>
+                            <div><i class="far fa-user mr-2"></i>{{ $ensemble->composer }}</div>
                             <div><i class="far fa-calendar-alt mr-2"></i>{{ $ensemble->deadline }}</div>
                         </div>
                     </a>
