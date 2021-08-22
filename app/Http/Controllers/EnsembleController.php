@@ -16,6 +16,13 @@ class EnsembleController extends Controller
         return view('ensemble.home', compact('ensembles', 'num_of_open_ensembles'));
     }
 
+    public function show($id)
+    {
+        $ensemble = Ensemble::findOrFail($id);
+
+        return view('ensemble.show', compact('ensemble'));
+    }
+
     public function create()
     {
         return view('ensemble.create');
