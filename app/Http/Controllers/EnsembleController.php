@@ -11,7 +11,9 @@ class EnsembleController extends Controller
     {
         $ensembles = Ensemble::orderBy('created_at', 'desc')->paginate(10);
 
-        return view('ensemble.home', compact('ensembles'));
+        $num_of_open_ensembles = Ensemble::where('status', 'open')->count();
+
+        return view('ensemble.home', compact('ensembles', 'num_of_open_ensembles'));
     }
 
     public function create()

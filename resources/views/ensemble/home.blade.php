@@ -13,7 +13,7 @@
             </div>
 
             <div class="p-3 bg-white rounded">
-                <div>123 ensembles are open.</div>
+                <div>{{ $num_of_open_ensembles }} ensembles are open.</div>
             </div>
         </div>
 
