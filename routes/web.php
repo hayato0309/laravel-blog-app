@@ -98,5 +98,6 @@ Route::post('contact_us/store', 'InquiryController@store')->name('inquiry.store'
 
 // For Ensemble
 Route::get('/ensembles', 'EnsembleController@home')->name('ensemble.home');
+Route::get('/ensemble/{id}', 'EnsembleController@show')->name('ensemble.show');
 Route::get('/ensemble/create', 'EnsembleController@create')->name('ensemble.create');
 Route::post('/ensemble/store', 'EnsembleController@store')->name('ensemble.store');
