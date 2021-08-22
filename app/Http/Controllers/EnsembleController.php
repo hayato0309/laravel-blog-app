@@ -58,6 +58,8 @@ class EnsembleController extends Controller
             'notes' => ['max:2000'],
         ]);
 
+        $input['user_id'] = auth()->user()->id;
+
         $ensemble = Ensemble::create($input);
 
         session()->flash('ensemble-create-message', 'Ensemble was created successfully. : ' . $ensemble->headline);

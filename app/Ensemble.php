@@ -8,7 +8,7 @@ use App\User;
 class Ensemble extends Model
 {
     protected $fillable = [
-        'headline', 'introduction', 'piece', 'composer', 'music_sheet',
+        'user_id', 'headline', 'introduction', 'piece', 'composer', 'music_sheet',
 
         'violin', 'viola', 'cello', 'contrabass',
         'flute', 'oboe', 'clarinet', 'bassoon', 'saxophone',
