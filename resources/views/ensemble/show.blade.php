@@ -41,7 +41,7 @@
                     @endif
                 </div>
                 <div class="mb-3">{{ $ensemble->introduction }}</div>
-                <div><i class="fas fa-music mr-2"></i>{{ $ensemble->piece }}</div>
+                <div><i class="fab fa-itunes-note mr-2"></i>{{ $ensemble->piece }}</div>
                 <div><i class="far fa-user mr-2"></i>{{ $ensemble->composer }}</div>
                 <div class="mb-3"><i class="far fa-file-alt mr-2"></i><a href="{{ $ensemble->music_sheet }}" target="_blank">Access the music sheet from here</a></div>
                 <div class="mb-1">Notes</div>

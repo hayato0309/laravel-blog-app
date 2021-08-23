@@ -86,6 +86,10 @@
                                         My posts
                                     </a>
 
+                                    <a class="dropdown-item" href="{{ route('ensemble.myEnsembles') }}" class="nav-link">
+                                        My ensembles
+                                    </a>
+
                                     <a class="dropdown-item" href="{{ route('post.favoritePost') }}">
                                         Favorite post
                                     </a>

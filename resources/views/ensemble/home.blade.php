@@ -25,7 +25,7 @@
                         <div class="card float-left border-0 shadow-sm ml-4 mb-4 p-4" style="width: 47%">
                             <h5>{{ $ensemble->headline }}</h5>
                             <div class="text-muted mb-2">{{ $ensemble->introduction }}</div>
-                            <div><i class="fas fa-music mr-2"></i>{{ $ensemble->piece }}</div>
+                            <div><i class="fab fa-itunes-note mr-2"></i>{{ $ensemble->piece }}</div>
                             <div><i class="far fa-user mr-2"></i>{{ $ensemble->composer }}</div>
                             <div><i class="far fa-calendar-alt mr-2"></i>{{ $ensemble->deadline }}</div>
                         </div>

@@ -17,14 +17,6 @@ class EnsembleController extends Controller
     }
 
 
-    public function show($id)
-    {
-        $ensemble = Ensemble::findOrFail($id);
-
-        return view('ensemble.show', compact('ensemble'));
-    }
-
-
     public function create()
     {
         return view('ensemble.create');
@@ -75,5 +67,21 @@ class EnsembleController extends Controller
         session()->flash('ensemble-create-message', 'Ensemble was created successfully. : ' . $ensemble->headline);
 
         return back();
+    }
+
+
+    public function show($id)
+    {
+        $ensemble = Ensemble::findOrFail($id);
+
+        return view('ensemble.show', compact('ensemble'));
+    }
+
+
+    public function myEnsembles()
+    {
+        $ensembles = Ensemble::where('user_id', auth()->user()->id)->orderBy('deadline', 'asc')->paginate(10);
+
+        return view('ensemble.my_ensembles', compact('ensembles'));
     }
 }
