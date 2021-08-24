@@ -38,8 +38,8 @@
                     <td class="align-middle">{{ $user->posts()->count() }}</td>
                     <td class="align-middle">{{ $user->created_at }}</td>
                     <td class="align-middle">
-                        @if($user->deleted_at)
-                            <div class="text-danger">Deactived</div>    
+                        @if($user->trashed())
+                            <div class="text-danger">Deactivated</div>    
                         @else    
                             <div>Active</div>    
                         @endif
