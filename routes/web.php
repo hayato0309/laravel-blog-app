@@ -100,6 +100,8 @@ Route::post('contact_us/store', 'InquiryController@store')->name('inquiry.store'
 Route::get('/ensembles', 'EnsembleController@home')->name('ensemble.home');
 Route::get('/ensemble/create', 'EnsembleController@create')->name('ensemble.create');
 Route::post('/ensemble/store', 'EnsembleController@store')->name('ensemble.store');
+Route::get('/ensembles/{id}/edit', 'EnsembleController@edit')->name('ensemble.edit');
+Route::patch('/ensembles/{id}/update', 'EnsembleController@update')->name('ensemble.update');
 Route::get('/ensembles/my_ensembles', 'EnsembleController@myEnsembles')->name('ensemble.myEnsembles');
 Route::get('/ensembles/{id}', 'EnsembleController@show')->name('ensemble.show');
 

@@ -6,7 +6,7 @@
     <div class="row justify-content-center">
         <div class="col-md-8">
 
-            @if(session('ensemble-create-message'))
+            @if(session('ensemble-created-message'))
                 <div class="alert alert-success">{{ session('ensemble-create-message') }}</div>
             @endif
 
@@ -182,7 +182,7 @@
 
                 <div class="form-group">
                     <label>Notes</label>
-                    <textarea type="text" class="form-control {{ $errors->has('notes')?'is-invalid':'' }}" name="notes" cols="30" rows="3" placeholder="e.g. tempo, background when they shoot the video, clothes, lighting" value=""></textarea>
+                    <textarea type="text" class="form-control {{ $errors->has('notes')?'is-invalid':'' }}" name="notes" cols="30" rows="3" placeholder="e.g. tempo, background when they shoot the video, clothes, lighting">{{ old('notes') }}</textarea>
                     
                     @if($errors->has('notes'))
                         <p class="text-danger">{{ $errors->first('notes') }}</p>
