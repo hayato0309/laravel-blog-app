@@ -5,8 +5,8 @@
 <div class="container">
     <div class="row justify-content-center">
         <div class="col-md-10">
-            @if(session('undo-like-post-message'))
-                <div class="alert alert-danger">{{ session('undo-like-post-message') }}</div>
+            @if(session('removed-like-post-message'))
+                <div class="alert alert-danger">{{ session('removed-like-post-message') }}</div>
             @endif
 
             <h1 class="mb-4">Favorite posts</h1>
@@ -44,13 +44,13 @@
                                         <div class="modal-dialog" role="document">
                                             <div class="modal-content">
                                                 <div class="modal-header">
-                                                    <h5 class="modal-title" id="exampleModalLabel">Undo like confirmation</h5>
+                                                    <h5 class="modal-title" id="exampleModalLabel">Remove like confirmation</h5>
                                                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                                         <span aria-hidden="true">&times;</span>
                                                     </button>
                                                 </div>
                                                 <div class="modal-body">
-                                                    <div class="mb-2">Are you sure you want to undo like this post?</div>
+                                                    <div class="mb-2">Are you sure you want to remove like from this post?</div>
                                                     <div class="mb-1">Title</div>
                                                     <div class="mb-2 px-3 border-left">{{ $post->title }}</div>
                                                     <div class="mb-1">Content</div>
@@ -61,7 +61,7 @@
                                                     <form action="{{ route('post.undoLike', $post->id) }}" method="POST">
                                                         @csrf
                                                         @method('DELETE')
-                                                        <button type="submit" class="btn btn-danger-custamized">Undo like</button>
+                                                        <button type="submit" class="btn btn-danger-custamized">Remove like</button>
                                                     </form>
                                                 </div>
                                             </div>
