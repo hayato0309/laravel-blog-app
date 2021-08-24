@@ -39,7 +39,7 @@
                     <td class="align-middle">{{ $user->created_at }}</td>
                     <td class="align-middle">
                         @if($user->deleted_at)
-                            <div class="text-danger">Inactive</div>    
+                            <div class="text-danger">Deactived</div>    
                         @else    
                             <div>Active</div>    
                         @endif
@@ -51,8 +51,13 @@
                             </a>
                             
                             <div class="dropdown-menu-right dropdown-menu" aria-labelledby="dropdownMenuLink">
-                                {{-- Trigger modal to activate / deactivate the user --}}
-                                <div class="dropdown-item" data-toggle="modal" data-target="#modal-activate-{{ $user->id }}" style="cursor: pointer;">Activate / Deactivate</div>
+                                @if($user->trashed())
+                                    {{-- Trigger modal to activate / deactivate the user --}}
+                                    <div class="dropdown-item" data-toggle="modal" data-target="#modal-activate-{{ $user->id }}" style="cursor: pointer;">Activate</div>
+                                @else
+                                    {{-- Trigger modal to activate / deactivate the user --}}
+                                    <div class="dropdown-item" data-toggle="modal" data-target="#modal-deactivate-{{ $user->id }}" style="cursor: pointer;">Deactivate</div>
+                                @endif
 
                                 {{-- Trigger modal to assign roles to the user --}}
                                 <div class="dropdown-item" data-toggle="modal" data-target="#modal-assign-roles-{{ $user->id }}" style="cursor: pointer;">Assign roles</div>
