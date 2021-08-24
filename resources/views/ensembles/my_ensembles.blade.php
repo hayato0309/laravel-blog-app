@@ -21,7 +21,6 @@
                         <th scope="col">Dealine</th>
                         <th scope="col">Created at</th>
                         <th scope="col"></th>
-                        <th scope="col"></th>
                     </tr>
                 </thead>
                 <tbody>
@@ -79,13 +78,30 @@
 
                             <td>{{ $ensemble->deadline }}</td>
                             <td>{{ $ensemble->created_at }}</td>
-                            <td><a href="#"><i class="far fa-edit text-body"></i></a></td>
+                            <td>
+                                <div class="dropdown">
+                                    <a href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        <i class="fas fa-ellipsis-h text-body"></i>
+                                    </a>
+                                    
+                                    <div class="dropdown-menu-right dropdown-menu" aria-labelledby="dropdownMenuLink">
+                                        {{-- Trigger modal to edit the ensemble --}}
+                                        <a href="{{ route('ensemble.edit', $ensemble->id) }}" class="text-decoration-none"><div class="dropdown-item" style="cursor: pointer;">Edit</div></a>
+        
+                                        {{-- Trigger modal to close the ensemble --}}
+                                        <div class="dropdown-item" data-toggle="modal" data-target="#" style="cursor: pointer;">Close</div>
+
+                                        {{-- Trigger modal to delete the ensemble --}}
+                                        <div class="dropdown-item text-danger" data-toggle="modal" data-target="#" style="cursor: pointer;">Delete</div>
+                                    </div>
+                                </div>
+                            </td>
                             <td>
                                 <!-- Button trigger modal -->
-                                <button type="button" class="btn btn-link p-0" data-toggle="modal" data-target="#deleteEnsembleModal_{{ $ensemble->id }}">
+                                {{-- <button type="button" class="btn btn-link p-0" data-toggle="modal" data-target="#deleteEnsembleModal_{{ $ensemble->id }}">
                                     <i class="far fa-trash-alt text-body"></i>
                                 </button>
-                                    
+                                     --}}
                                 <!-- Modal -->
                                 {{-- <div class="modal fade" id="modal-{{ $post->id }}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                                     <div class="modal-dialog" role="document">
