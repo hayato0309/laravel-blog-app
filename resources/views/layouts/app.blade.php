@@ -91,7 +91,7 @@
                                     </a>
 
                                     <a class="dropdown-item" href="{{ route('post.favoritePost') }}">
-                                        Favorite post
+                                        Favorite posts
                                     </a>
 
                                     @foreach(Auth::user()->roles as $role)

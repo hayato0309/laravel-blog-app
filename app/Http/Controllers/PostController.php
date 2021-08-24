@@ -157,7 +157,7 @@ class PostController extends Controller
         }
 
         $post = Post::findOrFail($post_id);
-        session()->flash('undo-like-post-message', 'Undo like the post.: ' . $post->title);
+        session()->flash('removed-like-post-message', 'Removed like from the post.: ' . $post->title);
 
         return back();
     }
