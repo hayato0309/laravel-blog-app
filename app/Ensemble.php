@@ -5,9 +5,14 @@ namespace App;
 use Illuminate\Database\Eloquent\Model;
 use App\User;
 use App\EnsembleApplication;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Ensemble extends Model
 {
+    use SoftDeletes;
+
+    protected $dates = ['deleted_at'];
+
     protected $fillable = [
         'user_id', 'headline', 'introduction', 'piece', 'composer', 'music_sheet',
 
@@ -16,7 +21,7 @@ class Ensemble extends Model
         'trumpet', 'horn', 'trombone', 'tuba',
         'piano', 'harp', 'timpani', 'snare_drum', 'bass_drum', 'tambourine', 'triangle',
 
-        'deadline', 'notes', 'status',
+        'deadline', 'notes',
     ];
 
     public function user()

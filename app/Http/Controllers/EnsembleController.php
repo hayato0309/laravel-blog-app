@@ -133,8 +133,19 @@ class EnsembleController extends Controller
 
     public function myEnsembles()
     {
-        $ensembles = Ensemble::where('user_id', auth()->user()->id)->orderBy('deadline', 'asc')->paginate(10);
+        $ensembles = Ensemble::withTrashed()->where('user_id', auth()->user()->id)->orderBy('deadline', 'asc')->paginate(10);
 
         return view('ensembles.my_ensembles', compact('ensembles'));
+    }
+
+
+    public function destroy($id)
+    {
+        $ensemble = Ensemble::findOrFail($id);
+        $ensemble->delete();
+
+        session()->flash('ensemble-closed-message', 'The ensemble was closed successfully. : ' . $ensemble->headline);
+
+        return back();
     }
 }

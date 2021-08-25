@@ -7,7 +7,7 @@
         <div class="col-md-8">
 
             @if(session('ensemble-created-message'))
-                <div class="alert alert-success">{{ session('ensemble-create-message') }}</div>
+                <div class="alert alert-success">{{ session('ensemble-created-message') }}</div>
             @endif
 
             {{-- Breadcrumb list --}}
