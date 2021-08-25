@@ -51,7 +51,6 @@ class CreateEnsemblesTable extends Migration
 
             $table->date('deadline');
             $table->text('notes')->nullable();
-            $table->string('status')->default('open');
 
             $table->timestamps();
         });

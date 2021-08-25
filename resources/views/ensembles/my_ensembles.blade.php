@@ -20,6 +20,7 @@
                         <th scope="col">Applications</th>
                         <th scope="col">Dealine</th>
                         <th scope="col">Created at</th>
+                        <th scope="col">Status</th>
                         <th scope="col"></th>
                     </tr>
                 </thead>
@@ -79,6 +80,13 @@
                             <td>{{ $ensemble->deadline }}</td>
                             <td>{{ $ensemble->created_at }}</td>
                             <td>
+                                @if(empty($ensemble->deleted_at))
+                                    <div>Open</div>
+                                @else
+                                    <div class="text-danger">Closed</div>
+                                @endif
+                            </td>
+                            <td>
                                 <div class="dropdown">
                                     <a href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                         <i class="fas fa-ellipsis-h text-body"></i>
@@ -87,51 +95,44 @@
                                     <div class="dropdown-menu-right dropdown-menu" aria-labelledby="dropdownMenuLink">
                                         {{-- Trigger modal to edit the ensemble --}}
                                         <a href="{{ route('ensemble.edit', $ensemble->id) }}" class="text-decoration-none"><div class="dropdown-item" style="cursor: pointer;">Edit</div></a>
-        
-                                        {{-- Trigger modal to close the ensemble --}}
-                                        <div class="dropdown-item" data-toggle="modal" data-target="#" style="cursor: pointer;">Close</div>
 
-                                        {{-- Trigger modal to delete the ensemble --}}
-                                        <div class="dropdown-item text-danger" data-toggle="modal" data-target="#" style="cursor: pointer;">Delete</div>
+                                        {{-- Trigger modal to close (soft delete) the ensemble --}}
+                                        <div class="dropdown-item" data-toggle="modal" data-target="#closeModal-{{ $ensemble->id }}" style="cursor: pointer;">Close ensemble</div>
                                     </div>
                                 </div>
-                            </td>
-                            <td>
-                                <!-- Button trigger modal -->
-                                {{-- <button type="button" class="btn btn-link p-0" data-toggle="modal" data-target="#deleteEnsembleModal_{{ $ensemble->id }}">
-                                    <i class="far fa-trash-alt text-body"></i>
-                                </button>
-                                     --}}
-                                <!-- Modal -->
-                                {{-- <div class="modal fade" id="modal-{{ $post->id }}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                            
+                                
+                                <div class="modal fade" id="closeModal-{{ $ensemble->id }}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                                     <div class="modal-dialog" role="document">
                                         <div class="modal-content">
                                             <div class="modal-header">
-                                                <h5 class="modal-title" id="exampleModalLabel">Delete confirmation</h5>
+                                                <h5 class="modal-title" id="exampleModalLabel">Close confirmation</h5>
                                                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                                     <span aria-hidden="true">&times;</span>
                                                 </button>
                                             </div>
                                             <div class="modal-body">
-                                                <div class="mb-2">Are you sure you want to delete this post?</div>
+                                                <div class="mb-2">Are you sure you want to close this ensemble?</div>
                                                 <div class="mb-1">Title</div>
-                                                <div class="mb-2 px-3 border-left">{{ $post->title }}</div>
-                                                <div class="mb-1">Content</div>
-                                                <div class="px-3 border-left">{{ Str::limit($post->content, 200, '...') }}</div>
+                                                <div class="mb-2 px-3 border-left">{{ $ensemble->headline }}</div>
+                                                <div class="mb-1">Piece</div>
+                                                <div class="px-3 border-left">{{ $ensemble->piece }}</div>
+                                                <div class="mb-1">Composer</div>
+                                                <div class="px-3 border-left">{{ $ensemble->composer }}</div>
                                             </div>
                                             <div class="modal-footer">
                                                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                                <form action="{{ route('post.destroy', $post->id) }}" method="POST">
+                                                <form action="{{ route('ensemble.destroy', $ensemble->id) }}" method="POST">
                                                     @csrf
                                                     @method('DELETE')
-                                                    <button type="submit" class="btn btn-danger-custamized">Delete</button>
+                                                    <button type="submit" class="btn btn-danger-custamized">Close ensemble</button>
                                                 </form>
                                             </div>
                                         </div>
                                     </div>
-                                </div> --}}
+                                </div>
                             </td>
-                        </tr>
+                        </tr>   
                     @endforeach
                 </tbody>
             </table>

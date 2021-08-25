@@ -27,6 +27,7 @@ Route::patch('/user/{id}/update', 'UserController@update')->name('user.update');
 Route::get('/user/{id}/password/edit', 'UserController@editPassword')->name('user.editPassword');
 Route::patch('/user/password/{id}/update', 'UserController@updatePassword')->name('user.updatePassword');
 
+
 // For Admin user (using Gate (app/Providers/AppServiceProvider.php))
 Route::group(['middleware' => 'can:isAdmin'], function () {
     Route::get('/admin', 'AdminController@index')->name('admin.home');
@@ -67,6 +68,7 @@ Route::group(['middleware' => 'can:isAdmin'], function () {
 // Follow users
 Route::get('/user/{id}/follow', 'UserController@follow')->name('user.follow');
 
+
 // For Post
 Route::get('/post/create', 'PostController@create')->name('post.create');
 Route::post('/post/store', 'PostController@store')->name('post.store');
@@ -81,29 +83,38 @@ Route::get('/category/{id}/posts', 'PostController@categoryPost')->name('post.ca
 Route::get('/favorite_posts', 'PostController@favoritePost')->name('post.favoritePost');
 Route::delete('/favorite_posts/{id}/undo_like', 'PostController@like')->name('post.undoLike');
 
+
 // Like on posts
 Route::get('/posts/{id}/like', 'PostController@like')->name('post.like');
+
 
 // For Comment
 Route::post('/post/{id}/comment', 'CommentController@store')->name('comment.store');
 Route::patch('/post/{id}/comment/update', 'CommentController@update')->name('comment.update');
 Route::delete('/comment/{id}/comment/delete', 'CommentController@destroy')->name('comment.destroy');
 
+
 // For Notification
 Route::get('/notifications', 'NotificationController@index')->name('notification.notifications');
+
 
 // For Inquiries (contact us function)
 Route::get('/contact_us', 'InquiryController@create')->name('inquiry.create');
 Route::post('contact_us/store', 'InquiryController@store')->name('inquiry.store');
 
+
 // For Ensemble
 Route::get('/ensembles', 'EnsembleController@home')->name('ensemble.home');
 Route::get('/ensemble/create', 'EnsembleController@create')->name('ensemble.create');
 Route::post('/ensemble/store', 'EnsembleController@store')->name('ensemble.store');
+
+Route::get('/ensembles/my_ensembles', 'EnsembleController@myEnsembles')->name('ensemble.myEnsembles');
+
+Route::get('/ensembles/{id}', 'EnsembleController@show')->name('ensemble.show');
 Route::get('/ensembles/{id}/edit', 'EnsembleController@edit')->name('ensemble.edit');
 Route::patch('/ensembles/{id}/update', 'EnsembleController@update')->name('ensemble.update');
-Route::get('/ensembles/my_ensembles', 'EnsembleController@myEnsembles')->name('ensemble.myEnsembles');
-Route::get('/ensembles/{id}', 'EnsembleController@show')->name('ensemble.show');
+Route::delete('/ensembles/{id}/delete', 'EnsembleController@destroy')->name('ensemble.destroy');
+
 
 // For Ensemble Application
 Route::post('/ensembles/{id}/ensemble_application/store', 'EnsembleApplicationController@store')->name('ensembleApplication.store');
