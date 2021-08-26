@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Ensemble;
+use App\Events\EnsembleCreatedEvent;
 
 class EnsembleController extends Controller
 {
@@ -65,6 +66,9 @@ class EnsembleController extends Controller
         $ensemble = Ensemble::create($input);
 
         session()->flash('ensemble-created-message', 'Ensemble was created successfully. : ' . $ensemble->headline);
+
+        // Triger notification
+        event(new EnsembleCreatedEvent($ensemble));
 
         return back();
     }

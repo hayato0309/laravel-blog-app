@@ -12,6 +12,8 @@ use App\Events\PostPostedEvent;
 use App\Listeners\PostPostedListener;
 use App\Events\UserFollowedEvent;
 use App\Listeners\UserFollowedListener;
+use App\Events\EnsembleCreatedEvent;
+use App\Listeners\EnsembleCreatedListener;
 
 class EventServiceProvider extends ServiceProvider
 {
@@ -22,7 +24,6 @@ class EventServiceProvider extends ServiceProvider
      */
     protected $listen = [
         UserRegisteredEvent::class => [
-            // SendEmailVerificationNotification::class,
             UserRegisteredListener::class,
         ],
         PostPostedEvent::class => [
@@ -31,6 +32,10 @@ class EventServiceProvider extends ServiceProvider
         UserFollowedEvent::class => [
             UserFollowedListener::class,
         ],
+
+        EnsembleCreatedEvent::class => [
+            EnsembleCreatedListener::class,
+        ]
     ];
 
     /**
