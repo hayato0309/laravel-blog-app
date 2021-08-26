@@ -5,9 +5,11 @@
 <div class="container">
     <div class="row justify-content-center">
         <div class="col-md-12">
-            {{-- @if(session('post-deleted-message'))
-                <div class="alert alert-danger">{{ session('post-deleted-message') }}</div>
-            @endif --}}
+            @if(session('ensemble-closed-message'))
+                <div class="alert alert-danger">{{ session('ensemble-closed-message') }}</div>
+            @elseif(session('ensemble-reopened-message'))
+                <div class="alert alert-success">{{ session('ensemble-reopened-message') }}</div>
+            @endif
 
             <h1 class="mb-4">My ensembles</h1>
             <table class="table table-hover">
@@ -20,7 +22,6 @@
                         <th scope="col">Applications</th>
                         <th scope="col">Dealine</th>
                         <th scope="col">Created at</th>
-                        <th scope="col">Status</th>
                         <th scope="col"></th>
                     </tr>
                 </thead>
@@ -96,12 +97,16 @@
                                         {{-- Trigger modal to edit the ensemble --}}
                                         <a href="{{ route('ensemble.edit', $ensemble->id) }}" class="text-decoration-none"><div class="dropdown-item" style="cursor: pointer;">Edit</div></a>
 
-                                        {{-- Trigger modal to close (soft delete) the ensemble --}}
-                                        <div class="dropdown-item" data-toggle="modal" data-target="#closeModal-{{ $ensemble->id }}" style="cursor: pointer;">Close ensemble</div>
+                                        {{-- Trigger modal to close (soft delete) / restore the ensemble --}}
+                                        @if(empty($ensemble->deleted_at))
+                                            <div class="dropdown-item" data-toggle="modal" data-target="#closeModal-{{ $ensemble->id }}" style="cursor: pointer;">Close ensemble</div>
+                                        @else
+                                            <div class="dropdown-item" data-toggle="modal" data-target="#reopenModal-{{ $ensemble->id }}" style="cursor: pointer;">Reopen ensemble</div>
+                                        @endif
                                     </div>
                                 </div>
                             
-                                
+                                {{-- Modal to soft delete ensembles --}}
                                 <div class="modal fade" id="closeModal-{{ $ensemble->id }}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                                     <div class="modal-dialog" role="document">
                                         <div class="modal-content">
@@ -126,6 +131,37 @@
                                                     @csrf
                                                     @method('DELETE')
                                                     <button type="submit" class="btn btn-danger-custamized">Close ensemble</button>
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                {{-- Modal to re-open ensembles --}}
+                                <div class="modal fade" id="reopenModal-{{ $ensemble->id }}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                    <div class="modal-dialog" role="document">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h5 class="modal-title" id="exampleModalLabel">Reopen confirmation</h5>
+                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                    <span aria-hidden="true">&times;</span>
+                                                </button>
+                                            </div>
+                                            <div class="modal-body">
+                                                <div class="mb-2">Are you sure you want to reopen this ensemble?</div>
+                                                <div class="mb-1">Title</div>
+                                                <div class="mb-2 px-3 border-left">{{ $ensemble->headline }}</div>
+                                                <div class="mb-1">Piece</div>
+                                                <div class="px-3 border-left">{{ $ensemble->piece }}</div>
+                                                <div class="mb-1">Composer</div>
+                                                <div class="px-3 border-left">{{ $ensemble->composer }}</div>
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                                <form action="{{ route('ensemble.reopen', $ensemble->id) }}" method="POST">
+                                                    @csrf
+                                                    @method('PATCH')
+                                                    <button type="submit" class="btn btn-primary">Reopen ensemble</button>
                                                 </form>
                                             </div>
                                         </div>
