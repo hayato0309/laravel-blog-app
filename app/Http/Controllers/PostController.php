@@ -82,7 +82,7 @@ class PostController extends Controller
 
         session()->flash('post-created-message', 'Post was created :' . $post['title']);
 
-        // Triger activity log (notification)
+        // Triger notification
         event(new PostPostedEvent($post));
 
         return redirect()->route('home');
