@@ -114,6 +114,7 @@ Route::get('/ensembles/{id}', 'EnsembleController@show')->name('ensemble.show');
 Route::get('/ensembles/{id}/edit', 'EnsembleController@edit')->name('ensemble.edit');
 Route::patch('/ensembles/{id}/update', 'EnsembleController@update')->name('ensemble.update');
 Route::delete('/ensembles/{id}/delete', 'EnsembleController@destroy')->name('ensemble.destroy');
+Route::patch('/ensembles/{id}/reopen', 'EnsembleController@reopen')->name('ensemble.reopen');
 
 
 // For Ensemble Application

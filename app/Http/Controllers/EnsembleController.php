@@ -11,9 +11,9 @@ class EnsembleController extends Controller
     {
         $ensembles = Ensemble::orderBy('created_at', 'desc')->paginate(10);
 
-        $num_of_open_ensembles = Ensemble::where('status', 'open')->count();
+        $num_of_open_ensembles = Ensemble::whereNull('deleted_at')->count();
 
-        return view('ensembles.home', compact('ensembles', 'num_of_open_ensembles'));
+        return view('ensembles.index', compact('ensembles', 'num_of_open_ensembles'));
     }
 
 
@@ -139,12 +139,23 @@ class EnsembleController extends Controller
     }
 
 
-    public function destroy($id)
+    public function destroy($id) // Soft delete ensemble
     {
         $ensemble = Ensemble::findOrFail($id);
         $ensemble->delete();
 
         session()->flash('ensemble-closed-message', 'The ensemble was closed successfully. : ' . $ensemble->headline);
+
+        return back();
+    }
+
+
+    public function reopen($id) // Restore soft deleted ensemble
+    {
+        $ensemble = Ensemble::onlyTrashed()->findOrFail($id);
+        $ensemble->restore();
+
+        session()->flash('ensemble-reopened-message', 'The ensemble is open again. : ' . $ensemble->headline);
 
         return back();
     }
