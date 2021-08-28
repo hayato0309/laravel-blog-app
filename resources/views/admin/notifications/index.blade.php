@@ -7,7 +7,7 @@
     {{-- Notificationが0件の時（既読含む） --}}
     @if ($unread_notifications == NULL && $read_notifications == NULL)
 
-        <div>No notifications yet.</div>
+        <div class="text-muted">No notifications yet.</div>
 
     @else
 
@@ -20,13 +20,14 @@
                         <div class="col-md-9">
                             {{-- 新しいUserが登録した時の通知 --}}
                             <span>
-                                <i class="fas fa-user mr-2"></i>
-                                <a href="{{ route('user.show', $unread_notification->data['id']) }}">{{ $unread_notification->data['name'] }}</a>
+                                <i class="far fa-user mr-2"></i>
+                                <a href="{{ route('user.show', $unread_notification['user_id']) }}">{{ $unread_notification['user_name'] }}</a>
                                 <span> was just registered.</span>
+                                <span class="text-muted"> - {{ $unread_notification['email'] }}</span>
                             </span>
                         </div>
                         <div class="col-md-3 text-muted text-right">
-                            {{ $unread_notification->created_at }}
+                            {{ $unread_notification['created_at'] }}
                         </div>
                     </div>
                 </div>
@@ -44,13 +45,14 @@
                         <div class="col-md-9">
                             {{-- 新しいUserが登録した時の通知 --}}
                             <span>
-                                <i class="fas fa-user mr-2"></i>
-                                <a href="{{ route('user.show', $read_notification->data['id']) }}">{{ $read_notification->data['name'] }}</a>
-                                <span> was just registered.</span>
+                                <i class="far fa-user mr-2"></i>
+                                <a href="{{ route('user.show', $read_notification['user_id']) }}">{{ $read_notification['user_name'] }}</a>
+                                <span> was registered.</span>
+                                <span class="text-muted"> - {{ $read_notification['email'] }}</span>
                             </span>
                         </div>
                         <div class="col-md-3 text-muted text-right">
-                            {{ $read_notification->created_at }}
+                            {{ $read_notification['created_at'] }}
                         </div>
                     </div>
                 </div>
