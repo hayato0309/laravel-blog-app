@@ -56,9 +56,7 @@ class UserRegisteredNotification extends Notification
     public function toArray($notifiable)
     {
         return [
-            'id' => $this->user->id,
-            'name' => $this->user->name,
-            'email' => $this->user->email,
+            'user_id' => $this->user->id,
         ];
     }
 }

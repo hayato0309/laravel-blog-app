@@ -7,6 +7,7 @@ use App\User;
 use App\Post;
 use App\Role;
 use App\Inquiry;
+use Illuminate\Support\Facades\DB;
 
 class AdminController extends Controller
 {
@@ -19,13 +20,57 @@ class AdminController extends Controller
     // About notifications
     public function showNotifications()
     {
-        $unread_notifications = auth()->user()->unreadNotifications
-            ->where('type', 'App\Notifications\UserRegisteredNotification');
+        // Authユーザに紐づいている全てのNotificationを取得
+        $notifications = auth()->user()->notifications;
 
-        $read_notifications = auth()->user()->notifications
-            ->where('type', 'App\Notifications\UserRegisteredNotification')
-            ->where('read_at', '<>', NULL);
+        // 整えたNotificationデータを格納する空配列を用意
+        // 未読用
+        $unread_notifications = [];
+        // 既読用
+        $read_notifications = [];
 
+        foreach ($notifications as $notification) {
+            if (empty($notification->read_at)) {
+                // 未読用
+                switch ($notification->type) {
+
+                        // PostPostedNotificationの配列データ用意
+                    case 'App\Notifications\UserRegisteredNotification':
+                        $user_name = DB::table('users')->where('id', $notification->data['user_id'])->value('name');
+                        $email = DB::table('users')->where('id', $notification->data['user_id'])->value('email');
+
+                        array_push($unread_notifications, [
+                            'type' => 'App\Notifications\UserRegisteredNotification',
+                            'user_id' => $notification->data['user_id'],
+                            'user_name' => $user_name,
+                            'email' => $email,
+                            'created_at' => $notification->created_at
+                        ]);
+                        break;
+                }
+            } else {
+                // 既読用
+                switch ($notification->type) {
+
+                        // PostPostedNotificationの配列データ用意
+                    case 'App\Notifications\UserRegisteredNotification':
+                        $user_name = DB::table('users')->where('id', $notification->data['user_id'])->value('name');
+                        $email = DB::table('users')->where('id', $notification->data['user_id'])->value('email');
+
+                        array_push($read_notifications, [
+                            'type' => 'App\Notifications\UserRegisteredNotification',
+                            'user_id' => $notification->data['user_id'],
+                            'user_name' => $user_name,
+                            'email' => $email,
+                            'created_at' => $notification->created_at
+                        ]);
+
+                        break;
+                }
+            }
+        }
+
+        // 未読Notificationsを"既読"にする
         auth()->user()->unreadNotifications
             ->where('type', 'App\Notifications\UserRegisteredNotification')
             ->markAsRead();
