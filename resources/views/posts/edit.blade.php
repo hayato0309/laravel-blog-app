@@ -20,6 +20,14 @@
             <form action="{{ route('post.update', $post->id) }}" method="POST" enctype="multipart/form-data">
                 @csrf
                 @method('PATCH')
+
+                <div class="form-group">
+                    <label>Post type</label>
+                    <select class="form-control {{ $errors->has('post_type_id')?'is-invalid':'' }}" name="post_type_id" readonly>
+                        <option value="{{ $post->postType->name }}">{{ $post->postType->name }}</option>
+                    </select>
+                </div>
+
                 <div class="form-group">
                     <label>Title</label>
                     <input type="text" class="form-control {{ $errors->has('title')?'is-invalid':'' }}" name="title" value="{{ $post->title }}">
