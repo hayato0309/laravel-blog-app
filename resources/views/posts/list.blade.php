@@ -4,7 +4,7 @@
 
 <div class="container">
     <div class="row justify-content-center">
-        <div class="col-md-10">
+        <div class="col-md-12">
             @if(session('post-deleted-message'))
                 <div class="alert alert-danger">{{ session('post-deleted-message') }}</div>
             @endif
@@ -14,6 +14,7 @@
                 <thead>
                     <tr>
                         <th scope="col">#</th>
+                        <th scope="col">Post type</th>
                         <th scope="col">Title</th>
                         <th scope="col">Category</th>
                         <th scope="col">Likes</th>
@@ -26,6 +27,13 @@
                     @foreach ($posts as $post)
                         <tr>
                             <th scope="row">{{ $loop->iteration }}</th>
+                            <th scope="row">
+                                @if($post->postType->slug === "article")
+                                    <div><span class="badge badge-pill badge-light border border-dark"><i class="far fa-newspaper"></i> {{ $post->postType->name }}</span></div>
+                                @elseif($post->postType->slug === "question")
+                                    <div><span class="badge badge-pill badge-dark"><i class="far fa-question-circle"></i> {{ $post->postType->name }}</span></div>
+                                @endif    
+                            </th>
                             <td><a href="{{ route('post.show', $post->id) }}">{{ $post->title }}</a></td>
                             <td>
                                 @foreach ($post->categories as $category)
