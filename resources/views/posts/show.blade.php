@@ -106,57 +106,86 @@
                             <div class="col-md-11">
 
                                 @foreach($comment->replies as $reply)
-                                <div class="rounded shadow-sm p-3 mb-2 bg-white">
-                                    <div class="d-inline-block h-auto w-100 mb-1">
-                                        <img class="rounded-circle float-left mr-2" src="{{ asset('storage/'.$comment->user->avatar) }}" alt="comment-user-image" style="width:45px">
-                                        <div class="float-left">
-                                            <div><a href="{{ route('user.show', $comment->user->id) }}" class="text-body">{{ $comment->user->name }}</a></div>
-                                            <div class="text-muted">{{ $comment->created_at->diffForHumans() }}</div>
-                                        </div>
-                                        
-                                        {{-- Edit and delete buttons - Child comment --}}
-                                        @if($reply->user_id == Auth::user()->id)
-                                        <div class="text-right">
-                                            <button type="button" class="btn btn-link p-0" data-toggle="modal" data-target="#child-comment-edit-modal-{{ $reply->id }}">
-                                                <i class="far fa-edit mr-1 text-body"></i>
-                                            </button>
-                                            <button type="button" class="btn btn-link p-0" data-toggle="modal" data-target="#child-comment-delete-modal-{{ $reply->id }}">
-                                                <i class="far fa-trash-alt text-body"></i>
-                                            </button>
-                                        </div>
-                                        @endif
-                                        
-                                    </div>
-                                    <div class="border-left px-3">{{ $reply->comment }}</div>
-                                </div>
-
-                                {{-- Child comment delete modal --}}
-                                <div class="modal fade" id="child-comment-delete-modal-{{ $reply->id }}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                    <div class="modal-dialog" role="document">
-                                        <div class="modal-content">
-                                            <div class="modal-header">
-                                                <h5 class="modal-title" id="exampleModalLabel">Delete confirmation</h5>
-                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                    <span aria-hidden="true">&times;</span>
+                                    <div class="rounded shadow-sm p-3 mb-2 bg-white">
+                                        <div class="d-inline-block h-auto w-100 mb-1">
+                                            <img class="rounded-circle float-left mr-2" src="{{ asset('storage/'.$comment->user->avatar) }}" alt="comment-user-image" style="width:45px">
+                                            <div class="float-left">
+                                                <div><a href="{{ route('user.show', $comment->user->id) }}" class="text-body">{{ $comment->user->name }}</a></div>
+                                                <div class="text-muted">{{ $comment->created_at->diffForHumans() }}</div>
+                                            </div>
+                                            
+                                            {{-- Edit and delete buttons - Child comment --}}
+                                            @if($reply->user_id == Auth::user()->id)
+                                            <div class="text-right">
+                                                <button type="button" class="btn btn-link p-0" data-toggle="modal" data-target="#child-comment-edit-modal-{{ $reply->id }}">
+                                                    <i class="far fa-edit mr-1 text-body"></i>
+                                                </button>
+                                                <button type="button" class="btn btn-link p-0" data-toggle="modal" data-target="#child-comment-delete-modal-{{ $reply->id }}">
+                                                    <i class="far fa-trash-alt text-body"></i>
                                                 </button>
                                             </div>
-                                            <div class="modal-body">
-                                                <p>Are you sure you want to delete this comment?</p>
-                                                <p class="border-left px-3">{{ Str::limit($reply->comment, 200, '...') }}</p>
-                                            </div>
-                                            <div class="modal-footer">
-                                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                                <form action="{{ route('comment.destroy', $reply->id) }}" method="POST">
-                                                    @csrf
-                                                    @method('DELETE')
-                                                    <button type="submit" class="btn btn-danger-custamized">Delete</button>
+                                            @endif
+                                            
+                                        </div>
+                                        <div class="border-left px-3">{{ $reply->comment }}</div>
+                                    </div>
+
+                                    {{-- Child comment edit modal --}}
+                                    <div class="modal fade" id="child-comment-edit-modal-{{ $reply->id }}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                        <div class="modal-dialog" role="document">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h5 class="modal-title" id="exampleModalLabel">Edit the comment</h5>
+                                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                        <span aria-hidden="true">&times;</span>
+                                                    </button>
+                                                </div>
+                                                
+                                                <form action="{{ route('comment.update', $reply->id) }}" method="POST">
+                                                    <div class="modal-body">
+                                                        @csrf
+                                                        @method('PATCH')
+
+                                                        <textarea type="text" class="form-control mb-2 {{ $errors->has('updated_comment')?'is-invalid':'' }}" name="updated_comment" cols="30" rows="3" placeholder="Please write your comment.">{{ $reply->comment }}</textarea>
+                                                        @if($errors->has('updated_comment'))
+                                                            <p class="text-danger">{{ $errors->first('updated_comment') }}</p>
+                                                        @endif
+                                                    </div> 
+
+                                                    <div class="modal-footer">
+                                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>   
+                                                        <button type="submit" class="btn btn-primary">Submit</button>
+                                                    </div>
                                                 </form>
                                             </div>
                                         </div>
                                     </div>
-                                </div>
 
-
+                                    {{-- Child comment delete modal --}}
+                                    <div class="modal fade" id="child-comment-delete-modal-{{ $reply->id }}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                        <div class="modal-dialog" role="document">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h5 class="modal-title" id="exampleModalLabel">Delete confirmation</h5>
+                                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                        <span aria-hidden="true">&times;</span>
+                                                    </button>
+                                                </div>
+                                                <div class="modal-body">
+                                                    <p>Are you sure you want to delete this comment?</p>
+                                                    <p class="border-left px-3">{{ Str::limit($reply->comment, 200, '...') }}</p>
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                                    <form action="{{ route('comment.destroy', $reply->id) }}" method="POST">
+                                                        @csrf
+                                                        @method('DELETE')
+                                                        <button type="submit" class="btn btn-danger-custamized">Delete</button>
+                                                    </form>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
                                 @endforeach
 
                                 <form action="{{ route('comment.replyStore', ['post_id' => $post->id, 'comment_id' => $comment->id]) }}" method="POST">
@@ -180,7 +209,7 @@
                 </div>
 
                 {{-- Comment edit modal --}}
-                <div class="modal fade" id="edit-modal-{{ $comment->id }}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal fade" id="parent-comment-edit-modal-{{ $comment->id }}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                     <div class="modal-dialog" role="document">
                         <div class="modal-content">
                             <div class="modal-header">
@@ -195,9 +224,9 @@
                                     @csrf
                                     @method('PATCH')
 
-                                    <textarea type="text" class="form-control mb-2 {{ $errors->has('updated-content')?'is-invalid':'' }}" name="content" cols="30" rows="3" placeholder="Please write your comment.">{{ $comment->comment }}</textarea>
-                                    @if($errors->has('updated-content'))
-                                        <p class="text-danger">{{ $errors->first('updated-content') }}</p>
+                                    <textarea type="text" class="form-control mb-2 {{ $errors->has('updated_comment')?'is-invalid':'' }}" name="updated_comment" cols="30" rows="3" placeholder="Please write your comment.">{{ $comment->comment }}</textarea>
+                                    @if($errors->has('updated_content'))
+                                        <p class="text-danger">{{ $errors->first('updated_comment') }}</p>
                                     @endif
                                 </div> 
 
