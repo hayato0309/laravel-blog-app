@@ -81,7 +81,7 @@ class HomeController extends Controller
             $news_list = session()->get('news_list');
         } else {
             try {
-                $url = config('newsapi.news_api_url') . "everything?q=violinist&apiKey=" . config('newsapi.news_api_key');
+                $url = config('newsapi.news_api_url') . "everything?q=(orchestra OR violin OR violinist) &apiKey=" . config('newsapi.news_api_key');
                 $method = "GET";
                 $count = 5;
 
