@@ -6,26 +6,50 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Comment;
 use Illuminate\Support\Str;
+use App\Post;
 
 class CommentController extends Controller
 {
     public function store(Request $request, $id)
     {
-        $input = request()->validate([
-            'content' => ['required', 'max:2000'],
+        $validated = $request->validate([
+            'comment' => ['required', 'max: 2000'],
         ]);
 
-        $comment = new Comment();
-        $comment->user_id = Auth::user()->id;
-        $comment->post_id = $id;
-        $comment->content = $input['content'];
+        $comment = new Comment;
 
-        $comment->save();
+        $comment->comment = $validated['comment'];
+        $comment->user()->associate($request->user());
+
+        $post = Post::find($id);
+        $post->comments()->save($comment);
 
         session()->flash('comment-posted-message', 'Your comment was posted successfully.');
 
         return back();
     }
+
+    public function replyStore(Request $request, $post_id, $comment_id)
+    {
+        $validated = $request->validate([
+            'comment' => ['required', 'max: 2000'],
+        ]);
+
+        $reply = new Comment();
+
+        $reply->comment = $validated['comment'];
+        $reply->user()->associate($request->user());
+
+        $reply->parent_id = $comment_id;
+        $post = Post::find($post_id);
+
+        $post->comments()->save($reply);
+
+        session()->flash('comment-posted-message', 'Your comment was posted successfully.');
+
+        return back();
+    }
+
 
     public function update($id)
     {

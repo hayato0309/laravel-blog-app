@@ -10,7 +10,7 @@ use App\Post;
 class Comment extends Model
 {
     protected $fillable = [
-        'user_id', 'post_id', 'content',
+        'user_id', 'parent_id', 'comment', 'commentable_id', 'commentable_type',
     ];
 
     public function user()
@@ -18,8 +18,8 @@ class Comment extends Model
         return $this->belongsTo(User::class);
     }
 
-    public function post()
+    public function replies()
     {
-        return $this->belongsTo(Post::class);
+        return $this->hasMany(Comment::class, 'parent_id');
     }
 }

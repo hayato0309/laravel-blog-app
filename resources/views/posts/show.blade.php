@@ -87,34 +87,68 @@
                             @endif
                             
                         </div>
-                        <div class="border-left px-3">{{ $comment->content }}</div>
+                        <div class="border-left px-3">{{ $comment->comment }}</div>
                     </div>
 
                     {{-- Triger to display nested comment textarea --}}
                     <div class="text-right">
-                        <a class="btn btn-link p-0 text-body" data-toggle="collapse" href="#collapse-nested-comment-textarea-{{ $comment->id }}" role="button" aria-expanded="false" aria-controls="collapse-nested-comment-textarea-{{ $comment->id }}">
-                            <i class="fas fa-reply"></i>
+                        <a class="btn btn-link p-0 text-muted" data-toggle="collapse" href="#collapse-nested-comments-and-textarea-{{ $comment->id }}" role="button" aria-expanded="false" aria-controls="collapse-nested-comments-and-textarea-{{ $comment->id }}">
+                            <i class="fas fa-chevron-down"></i>
                         </a>
                     </div>
-                    {{-- Nested comment textarea --}}
-                    <div class="collapse row mb-3" id="collapse-nested-comment-textarea-{{ $comment->id }}">
-                        <div class="col-md-1"></div>
-                        <div class="col-md-11">
-                            <form action="" method="POST">
-                                @csrf
-                                @method('POST')
-                                <div>
-                                    <textarea type="text" class="form-control mb-1 {{ $errors->has('content')?'is-invalid':'' }}" name="content" rows="2" placeholder="Please reply the comment.">{{ old('content') }}</textarea>
-                                
-                                    @if($errors->has('content'))
-                                        <p class="text-danger">{{ $errors->first('content') }}</p>
-                                    @endif
 
-                                    <button type="submit" class="btn btn-primary">Submit</button>
+                    {{-- Collapse area - nested comments and textares --}}
+                    <div class="collapse mb-2" id="collapse-nested-comments-and-textarea-{{ $comment->id }}">
+                        
+                        {{-- Display nested comment --}}
+                        <div class="row">
+                            <div class="col-md-1"></div>
+                            <div class="col-md-11">
+
+                                @foreach($comment->replies as $reply)
+                                <div class="rounded shadow-sm p-3 mb-2 bg-white">
+                                    <div class="d-inline-block h-auto w-100 mb-1">
+                                        <img class="rounded-circle float-left mr-2" src="{{ asset('storage/'.$comment->user->avatar) }}" alt="comment-user-image" style="width:45px">
+                                        <div class="float-left">
+                                            <div><a href="{{ route('user.show', $comment->user->id) }}" class="text-body">{{ $comment->user->name }}</a></div>
+                                            <div class="text-muted">{{ $comment->created_at->diffForHumans() }}</div>
+                                        </div>
+                                        
+                                        {{-- Edit and delete buttons --}}
+                                        @if($comment->user_id == Auth::user()->id)
+                                        <div class="text-right">
+                                            <button type="button" class="btn btn-link p-0" data-toggle="modal" data-target="#edit-modal-{{ $comment->id }}">
+                                                <i class="far fa-edit mr-1 text-body"></i>
+                                            </button>
+                                            <button type="button" class="btn btn-link p-0" data-toggle="modal" data-target="#delete-modal-{{ $comment->id }}">
+                                                <i class="far fa-trash-alt text-body"></i>
+                                            </button>
+                                        </div>
+                                        @endif
+                                        
+                                    </div>
+                                    <div class="border-left px-3">{{ $reply->comment }}</div>
                                 </div>
-                            </form>
+                                @endforeach
+
+                                <form action="{{ route('comment.replyStore', ['post_id' => $post->id, 'comment_id' => $comment->id]) }}" method="POST">
+                                    @csrf
+                                    @method('POST')
+                                    <div>
+                                        <textarea type="text" class="form-control mb-1 {{ $errors->has('reply')?'is-invalid':'' }}" name="reply" rows="2" placeholder="Please reply to the comment.">{{ old('reply') }}</textarea>
+                                    
+                                        @if($errors->has('reply'))
+                                            <p class="text-danger">{{ $errors->first('reply') }}</p>
+                                        @endif
+
+                                        <button type="submit" class="btn btn-primary">Submit</button>
+                                    </div>
+                                </form>
+
+                            </div>
                         </div>
                     </div>
+
                 </div>
 
             {{-- Comment edit modal --}}
@@ -133,7 +167,7 @@
                                 @csrf
                                 @method('PATCH')
 
-                                <textarea type="text" class="form-control mb-2 {{ $errors->has('updated-content')?'is-invalid':'' }}" name="content" cols="30" rows="3" placeholder="Please write your comment.">{{ $comment->content }}</textarea>
+                                <textarea type="text" class="form-control mb-2 {{ $errors->has('updated-content')?'is-invalid':'' }}" name="content" cols="30" rows="3" placeholder="Please write your comment.">{{ $comment->comment }}</textarea>
                                 @if($errors->has('updated-content'))
                                     <p class="text-danger">{{ $errors->first('updated-content') }}</p>
                                 @endif
@@ -160,7 +194,7 @@
                         </div>
                         <div class="modal-body">
                             <p>Are you sure you want to delete this comment?</p>
-                            <p class="border-left px-3">{{ Str::limit($comment->content, 200, '...') }}</p>
+                            <p class="border-left px-3">{{ Str::limit($comment->comment, 200, '...') }}</p>
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -184,9 +218,9 @@
                 <form action="{{ route('comment.store', $post->id) }}" method="POST">
                     @csrf
                     @method('POST')
-                    <textarea type="text" class="form-control mb-2 {{ $errors->has('content')?'is-invalid':'' }}" name="content" cols="30" rows="3" placeholder="Please write your comment.">{{ old('content') }}</textarea>
-                    @if($errors->has('content'))
-                        <p class="text-danger">{{ $errors->first('content') }}</p>
+                    <textarea type="text" class="form-control mb-2 {{ $errors->has('content')?'is-invalid':'' }}" name="comment" cols="30" rows="3" placeholder="Please write your comment.">{{ old('comment') }}</textarea>
+                    @if($errors->has('comment'))
+                        <p class="text-danger">{{ $errors->first('comment') }}</p>
                     @endif
                     <button type="submit" class="btn btn-primary">Submit</button>
                 </form>
