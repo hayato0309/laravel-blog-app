@@ -54,12 +54,14 @@ class CommentController extends Controller
     public function update($id)
     {
         $input = request()->validate([
-            'content' => ['required', 'max:2000'],
+            'updated_comment' => ['required', 'max:2000'],
         ]);
 
         $comment = Comment::findOrFail($id);
 
-        $comment->update($input);
+        $comment->comment = $input['updated_comment'];
+
+        $comment->update();
 
         session()->flash('comment-updated-message', 'Your comment was updated successfully.');
 
