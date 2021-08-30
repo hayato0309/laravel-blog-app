@@ -19,7 +19,7 @@ class PostController extends Controller
     {
         $post = Post::findOrFail($id);
 
-        $comments = Comment::where('post_id', $id)->orderBy('created_at', 'desc')->get();
+        $comments = $post->comments()->where('parent_id', NULL)->orderBy('created_at', 'desc')->get();
 
         $likesCount = $post->loadCount('likes')->likes_count;
 
