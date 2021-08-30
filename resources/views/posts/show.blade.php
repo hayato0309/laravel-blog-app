@@ -93,7 +93,8 @@
                     {{-- Triger to display nested comment textarea --}}
                     <div class="text-right">
                         <a class="btn btn-link p-0 text-muted" data-toggle="collapse" href="#collapse-nested-comments-and-textarea-{{ $comment->id }}" role="button" aria-expanded="false" aria-controls="collapse-nested-comments-and-textarea-{{ $comment->id }}">
-                            <i class="fas fa-chevron-down"></i>
+                            <i class="far fa-comment"></i>
+                            <span>{{ $comment->replies->count() }}</span>
                         </a>
                     </div>
 
