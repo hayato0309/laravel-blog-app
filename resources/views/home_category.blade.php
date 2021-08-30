@@ -37,7 +37,7 @@
                 <div class="alert alert-success">{{ session('post-created-message') }}</div>
             @endif
             <div>
-                @foreach ($posts as $post)
+                @forelse ($posts as $post)
                     <div class="card mb-3 border-0 shadow-sm w-100">
                         <div class="row no-gutters">
                             <div class="col-md-3">
@@ -82,7 +82,9 @@
                             </div>
                         </div>
                     </div>
-                @endforeach
+                @empty
+                    <div class="text-muted">No posts yet.</div>
+                @endforelse
                 {{ $posts->appends(Request::only('post_search'))->links() }}
             </div>
         </div>
