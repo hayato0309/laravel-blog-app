@@ -121,4 +121,8 @@ Route::group(['middleware' => ['auth', 'verified']], function () {
 
     // For Ensemble Application
     Route::post('/ensembles/{id}/ensemble_application/store', 'EnsembleApplicationController@store')->name('ensembleApplication.store');
+
+
+    // For Chat
+    Route::get('/chat', 'ChatController@index')->name('chat');
 });
