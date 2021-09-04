@@ -82,10 +82,10 @@
                             <td>{{ $ensemble->deadline }}</td>
                             <td>{{ $ensemble->created_at }}</td>
                             <td>
-                                @if(empty($ensemble->deleted_at))
-                                    <div>Open</div>
-                                @else
+                                @if($ensemble->trashed())
                                     <div class="text-danger">Closed</div>
+                                @else
+                                    <div>Open</div>
                                 @endif
                             </td>
                             <td>

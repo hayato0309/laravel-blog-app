@@ -22,12 +22,10 @@
                     <h1 class="col-md-10 mb-4">{{ $ensemble->headline }}</h1>
 
                     <div class="col-md-2 text-right">
-                        @if($ensemble->status === "open")
-                            <h5><span class="badge badge-pill badge-primary text-white border px-3 py-2">{{ Str::upper($ensemble->status) }}</span></h5>
-                        @elseif($ensemble->status === "canceled")
-                            <h5><span class="badge badge-pill badge-danger text-white border px-3 py-2">{{ Str::upper($ensemble->status) }}</span></h5>
-                        @elseif($ensemble->status === "close")
-                            <h5><span class="badge badge-pill badge-dark text-white border px-3 py-2">{{ Str::upper($ensemble->status) }}</span></h5>
+                        @if($ensemble->trashed())
+                            <h5><span class="badge badge-pill badge-dark text-white border px-3 py-2">Close</span></h5>
+                        @else
+                            <h5><span class="badge badge-pill badge-primary text-white border px-3 py-2">Open</span></h5>
                         @endif
                     </div>
 

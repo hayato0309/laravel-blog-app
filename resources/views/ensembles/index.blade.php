@@ -23,7 +23,16 @@
                 @forelse($ensembles as $ensemble)
                     <a href="{{ route('ensemble.show', $ensemble->id) }}" class="text-body">
                         <div class="card float-left border-0 shadow-sm ml-4 mb-4 p-4" style="width: 47%">
-                            <h5>{{ $ensemble->headline }}</h5>
+                            <div class="row">
+                                <h5 class="col-md-9">{{ $ensemble->headline }}</h5>
+                                <div class="col-md-3 text-right">
+                                    @if($ensemble->trashed())
+                                        <div><span class="badge badge-pill badge-dark text-white border px-3 py-2">Close</span></div>
+                                    @else
+                                        <div><span class="badge badge-pill badge-primary text-white border px-3 py-2">Open</span></div>
+                                    @endif
+                                </div>
+                            </div>
                             <div class="text-muted mb-2">{{ $ensemble->introduction }}</div>
                             <div><i class="fab fa-itunes-note mr-2"></i>{{ $ensemble->piece }}</div>
                             <div><i class="far fa-user mr-2"></i>{{ $ensemble->composer }}</div>
