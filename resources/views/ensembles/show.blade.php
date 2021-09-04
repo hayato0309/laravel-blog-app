@@ -8,6 +8,8 @@
 
             @if(session('applied-to-ensemble-message'))
                 <div class="alert alert-success">{{ session('applied-to-ensemble-message') }}</div>
+            @elseif(session('comment-posted-message'))
+                <div class="alert alert-success">{{ session('comment-posted-message') }}</div>
             @endif
 
             {{-- Breadcrumb list --}}
@@ -192,18 +194,45 @@
 
             </div>
 
+            {{-- Comments display area --}}
+            @foreach($comments as $comment)
+                <div class="rounded shadow-sm p-3 bg-white">
+                    <div class="d-inline-block h-auto w-100 mb-1">
+                        <img class="rounded-circle float-left mr-2" src="{{ asset('storage/'.$comment->user->avatar) }}" alt="comment-user-image" style="width:45px">
+                        <div class="float-left">
+                            <div><a href="{{ route('user.show', $comment->user->id) }}" class="text-body">{{ $comment->user->name }}</a></div>
+                            <div class="text-muted">{{ $comment->created_at->diffForHumans() }}</div>
+                        </div>
+                        
+                        {{-- Edit and delete buttons - Parent comment --}}
+                        @if($comment->user_id == Auth::user()->id)
+                        <div class="text-right">
+                            <button type="button" class="btn btn-link p-0" data-toggle="modal" data-target="#parent-comment-edit-modal-{{ $comment->id }}">
+                                <i class="far fa-edit mr-1 text-body"></i>
+                            </button>
+                            <button type="button" class="btn btn-link p-0" data-toggle="modal" data-target="#parent-comment-delete-modal-{{ $comment->id }}">
+                                <i class="far fa-trash-alt text-body"></i>
+                            </button>
+                        </div>
+                        @endif
+                        
+                    </div>
+                    <div class="border-left px-3">{{ $comment->comment }}</div>
+                </div>
+            @endforeach
+
             {{-- Comments textarea --}}
             <div>
                 <div class="text-muted text-right">
                     <i class="far fa-comment-alt"></i>
                     <span>Comment</span>
                 </div>
-                <form action="" method="POST">
+                <form action="{{ route('comment.storeCommentForEnsemble', ['ensemble_id' => $ensemble->id]) }}" method="POST">
                     @csrf
                     @method('POST')
-                    <textarea type="text" class="form-control mb-2 {{ $errors->has('content')?'is-invalid':'' }}" name="content" cols="30" rows="3" placeholder="Please write your comment.">{{ old('content') }}</textarea>
-                    @if($errors->has('content'))
-                        <p class="text-danger">{{ $errors->first('content') }}</p>
+                    <textarea type="text" class="form-control mb-2 {{ $errors->has('comment')?'is-invalid':'' }}" name="comment" cols="30" rows="3" placeholder="Please write your comment.">{{ old('comment') }}</textarea>
+                    @if($errors->has('comment'))
+                        <p class="text-danger">{{ $errors->first('comment') }}</p>
                     @endif
                     <button type="submit" class="btn btn-primary">Submit</button>
                 </form>
