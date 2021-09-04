@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 use App\User;
 use App\EnsembleApplication;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use App\Comment;
 
 class Ensemble extends Model
 {
@@ -37,5 +38,10 @@ class Ensemble extends Model
     public function ensembleApplications()
     {
         return $this->hasMany(EnsembleApplication::class);
+    }
+
+    public function comments()
+    {
+        return $this->morphMany(Comment::class, 'commentable');
     }
 }

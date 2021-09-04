@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Auth;
 use App\Comment;
 use Illuminate\Support\Str;
 use App\Post;
+use App\Ensemble;
 
 class CommentController extends Controller
 {
@@ -28,6 +29,7 @@ class CommentController extends Controller
 
         return back();
     }
+
 
     public function replyStore(Request $request, $post_id, $comment_id)
     {
@@ -51,6 +53,29 @@ class CommentController extends Controller
     }
 
 
+    public function storeCommentForEnsemble(Request $request, $ensemble_id)
+    {
+        $validated = $request->validate([
+            'comment' => ['required', 'max: 2000'],
+        ]);
+
+        $comment = new Comment();
+
+        $comment->comment = $validated['comment'];
+        $comment->user()->associate($request->user());
+
+        $comment->parent_id = $ensemble_id;
+
+        $ensemble = Ensemble::find($ensemble_id);
+
+        $ensemble->comments()->save($comment);
+
+        session()->flash('comment-posted-message', 'Your comment was posted successfully.');
+
+        return back();
+    }
+
+
     public function update($id)
     {
         $input = request()->validate([
@@ -67,6 +92,7 @@ class CommentController extends Controller
 
         return back();
     }
+
 
     public function destroy($id)
     {

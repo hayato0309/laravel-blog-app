@@ -90,10 +90,12 @@ Route::group(['middleware' => ['auth', 'verified']], function () {
 
 
     // For Comment
-    Route::post('/posts/{id}/comment', 'CommentController@store')->name('comment.store');
+    Route::post('/posts/{id}/comment/store', 'CommentController@store')->name('comment.store');
     Route::patch('/posts/{id}/comment/update', 'CommentController@update')->name('comment.update');
     Route::delete('/comment/{id}/comment/delete', 'CommentController@destroy')->name('comment.destroy');
     Route::post('/posts/{post_id}/comments/{comment_id}/store', 'CommentController@replyStore')->name('comment.replyStore');
+
+    Route::post('/ensembles/{ensemble_id}/comments/store', 'CommentController@storeCommentForEnsemble')->name('comment.storeCommentForEnsemble');
 
 
     // For Notification

@@ -209,7 +209,7 @@
 
                 </div>
 
-                {{-- Comment edit modal --}}
+                {{-- Parent comment edit modal --}}
                 <div class="modal fade" id="parent-comment-edit-modal-{{ $comment->id }}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                     <div class="modal-dialog" role="document">
                         <div class="modal-content">
