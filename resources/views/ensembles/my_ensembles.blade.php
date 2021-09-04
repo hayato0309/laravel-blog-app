@@ -22,6 +22,7 @@
                         <th scope="col">Applications</th>
                         <th scope="col">Dealine</th>
                         <th scope="col">Created at</th>
+                        <th scope="col">Status</th>
                         <th scope="col"></th>
                     </tr>
                 </thead>

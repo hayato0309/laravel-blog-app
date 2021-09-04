@@ -170,24 +170,24 @@
                         @method('POST')
                         <div>
                             <label for="instrument">What is your instrument?</label>
-                            <input type="text" class="form-control mb-2" name="instrument" {{ $ensemble->status !== "open" ? "disabled" : "" }}>
+                            <input type="text" class="form-control mb-2" name="instrument" {{ $ensemble->trashed() ? "disabled" : "" }}>
                             @if($errors->has('recording_url'))
                                 <p class="text-danger">{{ $errors->first('recording_url') }}</p>
                             @endif
 
                             <label for="recording_url">Recording URL (e.g. Google Drive)</label>
-                            <textarea type="text" class="form-control mb-2 {{ $errors->has('content')?'is-invalid':'' }}" name="recording_url" rows="2" placeholder="Please input the URL for the recording URL." {{ $ensemble->status !== "open" ? "disabled" : "" }}>{{ old('recording_url') }}</textarea>
+                            <textarea type="text" class="form-control mb-2 {{ $errors->has('content')?'is-invalid':'' }}" name="recording_url" rows="2" placeholder="Please input the URL for the recording URL." {{ $ensemble->trashed() ? "disabled" : "" }}>{{ old('recording_url') }}</textarea>
                             @if($errors->has('recording_url'))
                                 <p class="text-danger">{{ $errors->first('recording_url') }}</p>
                             @endif
 
                             <label for="notes">Notes</label>
-                            <textarea type="text" class="form-control mb-2 {{ $errors->has('content')?'is-invalid':'' }}" name="notes" rows="2" placeholder="Please input here if you have some notes." {{ $ensemble->status !== "open" ? "disabled" : "" }}>{{ old('notes') }}</textarea>
+                            <textarea type="text" class="form-control mb-2 {{ $errors->has('content')?'is-invalid':'' }}" name="notes" rows="2" placeholder="Please input here if you have some notes." {{ $ensemble->trashed() ? "disabled" : "" }}>{{ old('notes') }}</textarea>
                             @if($errors->has('notes'))
                                 <p class="text-danger">{{ $errors->first('notes') }}</p>
                             @endif
 
-                            <button type="submit" class="btn btn-primary" {{ $ensemble->status !== "open" ? "disabled" : "" }}>Submit</button>
+                            <button type="submit" class="btn btn-primary" {{ $ensemble->trashed() ? "disabled" : "" }}>Submit</button>
                         </div>
                     </form>
                 </div>
@@ -203,11 +203,11 @@
                 <form action="" method="POST">
                     @csrf
                     @method('POST')
-                    <textarea type="text" class="form-control mb-2 {{ $errors->has('content')?'is-invalid':'' }}" name="content" cols="30" rows="3" placeholder="Please write your comment." {{ $ensemble->status !== "open" ? "disabled" : "" }}>{{ old('content') }}</textarea>
+                    <textarea type="text" class="form-control mb-2 {{ $errors->has('content')?'is-invalid':'' }}" name="content" cols="30" rows="3" placeholder="Please write your comment.">{{ old('content') }}</textarea>
                     @if($errors->has('content'))
                         <p class="text-danger">{{ $errors->first('content') }}</p>
                     @endif
-                    <button type="submit" class="btn btn-primary" {{ $ensemble->status !== "open" ? "disabled" : "" }}>Submit</button>
+                    <button type="submit" class="btn btn-primary">Submit</button>
                 </form>
             </div>
             
