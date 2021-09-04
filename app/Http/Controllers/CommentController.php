@@ -119,7 +119,7 @@ class CommentController extends Controller
         $comment = Comment::findOrFail($id);
         $comment->delete();
 
-        session()->flash('comment-deleted-message', 'Comment was deleted successfully.: ' . Str::limit($comment->content, 50, '...'));
+        session()->flash('comment-deleted-message', 'Comment was deleted successfully. : ' . Str::limit($comment->comment, 50, '...'));
 
         return back();
     }

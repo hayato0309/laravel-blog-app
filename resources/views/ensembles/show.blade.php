@@ -240,10 +240,10 @@
                             @foreach($comment->replies as $reply)
                                 <div class="rounded shadow-sm p-3 mb-2 bg-white">
                                     <div class="d-inline-block h-auto w-100 mb-1">
-                                        <img class="rounded-circle float-left mr-2" src="{{ asset('storage/'.$comment->user->avatar) }}" alt="comment-user-image" style="width:45px">
+                                        <img class="rounded-circle float-left mr-2" src="{{ asset('storage/'.$reply->user->avatar) }}" alt="reply-user-image" style="width:45px">
                                         <div class="float-left">
-                                            <div><a href="{{ route('user.show', $comment->user->id) }}" class="text-body">{{ $comment->user->name }}</a></div>
-                                            <div class="text-muted">{{ $comment->created_at->diffForHumans() }}</div>
+                                            <div><a href="{{ route('user.show', $reply->user->id) }}" class="text-body">{{ $reply->user->name }}</a></div>
+                                            <div class="text-muted">{{ $reply->created_at->diffForHumans() }}</div>
                                         </div>
                                         
                                         {{-- Edit and delete buttons - Child comment --}}
@@ -261,10 +261,37 @@
                                     </div>
                                     <div class="border-left px-3">{{ $reply->comment }}</div>
                                 </div>
+
+
+                                {{-- Child comment delete modal --}}
+                                <div class="modal fade" id="child-comment-delete-modal-{{ $reply->id }}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                    <div class="modal-dialog" role="document">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h5 class="modal-title" id="exampleModalLabel">Delete confirmation</h5>
+                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                    <span aria-hidden="true">&times;</span>
+                                                </button>
+                                            </div>
+                                            <div class="modal-body">
+                                                <p>Are you sure you want to delete this comment?</p>
+                                                <p class="border-left px-3">{{ Str::limit($reply->comment, 200, '...') }}</p>
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                                <form action="{{ route('comment.destroy', $reply->id) }}" method="POST">
+                                                    @csrf
+                                                    @method('DELETE')
+                                                    <button type="submit" class="btn btn-danger-custamized">Delete</button>
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
                             @endforeach
 
 
-                            {{-- Nested comment text area --}}
+                            {{-- Nested comment textarea --}}
                             <form action="{{ route('comment.replyStoreForEnsemble', ['ensemble_id' => $ensemble->id, 'comment_id' => $comment->id]) }}" method="POST">
                                 @csrf
                                 @method('POST')
