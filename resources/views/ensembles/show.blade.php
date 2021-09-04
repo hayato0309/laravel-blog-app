@@ -222,6 +222,67 @@
                     <div class="border-left px-3">{{ $comment->comment }}</div>
                 </div>
 
+                {{-- Triger to display nested comment textarea --}}
+                <div class="text-right">
+                    <a class="btn btn-link p-0 text-muted" data-toggle="collapse" href="#collapse-nested-comments-and-textarea-{{ $comment->id }}" role="button" aria-expanded="false" aria-controls="collapse-nested-comments-and-textarea-{{ $comment->id }}">
+                        <i class="far fa-comment"></i>
+                        <span>{{ $comment->replies->count() }}</span>
+                    </a>
+                </div>
+
+                {{-- Collapse area - Nested comments and textares --}}
+                <div class="collapse mb-2" id="collapse-nested-comments-and-textarea-{{ $comment->id }}">
+
+                    <div class="row">
+                        <div class="col-md-1"></div>
+                        <div class="col-md-11">
+
+                            @foreach($comment->replies as $reply)
+                                <div class="rounded shadow-sm p-3 mb-2 bg-white">
+                                    <div class="d-inline-block h-auto w-100 mb-1">
+                                        <img class="rounded-circle float-left mr-2" src="{{ asset('storage/'.$comment->user->avatar) }}" alt="comment-user-image" style="width:45px">
+                                        <div class="float-left">
+                                            <div><a href="{{ route('user.show', $comment->user->id) }}" class="text-body">{{ $comment->user->name }}</a></div>
+                                            <div class="text-muted">{{ $comment->created_at->diffForHumans() }}</div>
+                                        </div>
+                                        
+                                        {{-- Edit and delete buttons - Child comment --}}
+                                        @if($reply->user_id == Auth::user()->id)
+                                        <div class="text-right">
+                                            <button type="button" class="btn btn-link p-0" data-toggle="modal" data-target="#child-comment-edit-modal-{{ $reply->id }}">
+                                                <i class="far fa-edit mr-1 text-body"></i>
+                                            </button>
+                                            <button type="button" class="btn btn-link p-0" data-toggle="modal" data-target="#child-comment-delete-modal-{{ $reply->id }}">
+                                                <i class="far fa-trash-alt text-body"></i>
+                                            </button>
+                                        </div>
+                                        @endif
+                                        
+                                    </div>
+                                    <div class="border-left px-3">{{ $reply->comment }}</div>
+                                </div>
+                            @endforeach
+
+
+                            {{-- Nested comment text area --}}
+                            <form action="{{ route('comment.replyStoreForEnsemble', ['ensemble_id' => $ensemble->id, 'comment_id' => $comment->id]) }}" method="POST">
+                                @csrf
+                                @method('POST')
+                                <div>
+                                    <textarea type="text" class="form-control mb-1 {{ $errors->has('comment')?'is-invalid':'' }}" name="comment" rows="2" placeholder="Please reply to the comment.">{{ old('reply') }}</textarea>
+                                
+                                    @if($errors->has('comment'))
+                                        <p class="text-danger">{{ $errors->first('comment') }}</p>
+                                    @endif
+
+                                    <button type="submit" class="btn btn-primary">Submit</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+
+                </div>
+
                 {{-- Parent comment edit modal --}}
                 <div class="modal fade" id="parent-comment-edit-modal-{{ $comment->id }}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                     <div class="modal-dialog" role="document">
@@ -281,13 +342,13 @@
 
             @endforeach
 
-            {{-- Comments textarea --}}
+            {{-- Parent comments textarea --}}
             <div>
                 <div class="text-muted text-right">
                     <i class="far fa-comment-alt"></i>
                     <span>Comment</span>
                 </div>
-                <form action="{{ route('comment.storeCommentForEnsemble', ['ensemble_id' => $ensemble->id]) }}" method="POST">
+                <form action="{{ route('comment.storeForEnsemble', ['ensemble_id' => $ensemble->id]) }}" method="POST">
                     @csrf
                     @method('POST')
                     <textarea type="text" class="form-control mb-2 {{ $errors->has('comment')?'is-invalid':'' }}" name="comment" cols="30" rows="3" placeholder="Please write your comment.">{{ old('comment') }}</textarea>
