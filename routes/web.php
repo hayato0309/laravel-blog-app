@@ -125,4 +125,6 @@ Route::group(['middleware' => ['auth', 'verified']], function () {
 
     // For Chat
     Route::get('/chat', 'ChatController@index')->name('chat');
+    Route::post('/chat/store', 'ChatController@store')->name('chat.store');
+    Route::get('/result/ajax', 'ChatController@getMessages')->name('chat.getMessages');
 });
