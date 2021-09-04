@@ -10,6 +10,8 @@
                 <div class="alert alert-success">{{ session('applied-to-ensemble-message') }}</div>
             @elseif(session('comment-posted-message'))
                 <div class="alert alert-success">{{ session('comment-posted-message') }}</div>
+            @elseif(session('comment-deleted-message'))
+                <div class="alert alert-danger">{{ session('comment-deleted-message') }}</div>
             @endif
 
             {{-- Breadcrumb list --}}
@@ -219,6 +221,33 @@
                     </div>
                     <div class="border-left px-3">{{ $comment->comment }}</div>
                 </div>
+
+                {{-- Parent comment delete modal --}}
+                <div class="modal fade" id="parent-comment-delete-modal-{{ $comment->id }}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="exampleModalLabel">Delete confirmation</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                <p>Are you sure you want to delete this comment?</p>
+                                <p class="border-left px-3">{{ Str::limit($comment->comment, 200, '...') }}</p>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                <form action="{{ route('comment.destroy', $comment->id) }}" method="POST">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button type="submit" class="btn btn-danger-custamized">Delete</button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
             @endforeach
 
             {{-- Comments textarea --}}

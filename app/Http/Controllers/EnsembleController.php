@@ -10,7 +10,7 @@ class EnsembleController extends Controller
 {
     public function home()
     {
-        $ensembles = Ensemble::orderBy('created_at', 'desc')->paginate(10);
+        $ensembles = Ensemble::withTrashed()->orderBy('created_at', 'desc')->paginate(10);
 
         $num_of_open_ensembles = Ensemble::whereNull('deleted_at')->count();
 
@@ -129,9 +129,11 @@ class EnsembleController extends Controller
 
     public function show($id)
     {
-        $ensemble = Ensemble::findOrFail($id);
+        $ensemble = Ensemble::withTrashed()->findOrFail($id);
 
-        return view('ensembles.show', compact('ensemble'));
+        $comments = $ensemble->comments;
+
+        return view('ensembles.show', compact('ensemble', 'comments'));
     }
 
 
