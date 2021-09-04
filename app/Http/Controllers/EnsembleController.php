@@ -131,7 +131,7 @@ class EnsembleController extends Controller
     {
         $ensemble = Ensemble::withTrashed()->findOrFail($id);
 
-        $comments = $ensemble->comments;
+        $comments = $ensemble->comments()->where('parent_id', NULL)->orderBy('created_at', 'desc')->get();
 
         return view('ensembles.show', compact('ensemble', 'comments'));
     }

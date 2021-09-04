@@ -53,7 +53,7 @@ class CommentController extends Controller
     }
 
 
-    public function storeCommentForEnsemble(Request $request, $ensemble_id)
+    public function storeForEnsemble(Request $request, $ensemble_id)
     {
         $validated = $request->validate([
             'comment' => ['required', 'max: 2000'],
@@ -64,11 +64,31 @@ class CommentController extends Controller
         $comment->comment = $validated['comment'];
         $comment->user()->associate($request->user());
 
-        $comment->parent_id = $ensemble_id;
-
         $ensemble = Ensemble::find($ensemble_id);
 
         $ensemble->comments()->save($comment);
+
+        session()->flash('comment-posted-message', 'Your comment was posted successfully.');
+
+        return back();
+    }
+
+
+    public function replyStoreForEnsemble(Request $request, $ensemble_id, $comment_id)
+    {
+        $validated = $request->validate([
+            'comment' => ['required', 'max: 2000'],
+        ]);
+
+        $reply = new Comment();
+
+        $reply->comment = $validated['comment'];
+        $reply->user()->associate($request->user());
+
+        $reply->parent_id = $comment_id;
+        $ensemble = Ensemble::find($ensemble_id);
+
+        $ensemble->comments()->save($reply);
 
         session()->flash('comment-posted-message', 'Your comment was posted successfully.');
 
