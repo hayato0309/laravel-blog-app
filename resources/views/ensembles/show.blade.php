@@ -10,6 +10,8 @@
                 <div class="alert alert-success">{{ session('applied-to-ensemble-message') }}</div>
             @elseif(session('comment-posted-message'))
                 <div class="alert alert-success">{{ session('comment-posted-message') }}</div>
+            @elseif(session('comment-updated-message'))
+                <div class="alert alert-success">{{ session('comment-updated-message') }}</div>
             @elseif(session('comment-deleted-message'))
                 <div class="alert alert-danger">{{ session('comment-deleted-message') }}</div>
             @endif
@@ -262,6 +264,36 @@
                                     <div class="border-left px-3">{{ $reply->comment }}</div>
                                 </div>
 
+                                {{-- Child comment edit modal --}}
+                                <div class="modal fade" id="child-comment-edit-modal-{{ $reply->id }}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                    <div class="modal-dialog" role="document">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h5 class="modal-title" id="exampleModalLabel">Edit the comment</h5>
+                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                    <span aria-hidden="true">&times;</span>
+                                                </button>
+                                            </div>
+                                            
+                                            <form action="{{ route('comment.update', $reply->id) }}" method="POST">
+                                                <div class="modal-body">
+                                                    @csrf
+                                                    @method('PATCH')
+
+                                                    <textarea type="text" class="form-control mb-2 {{ $errors->has('updated_comment')?'is-invalid':'' }}" name="updated_comment" cols="30" rows="3" placeholder="Please write your comment.">{{ $reply->comment }}</textarea>
+                                                    @if($errors->has('updated_comment'))
+                                                        <p class="text-danger">{{ $errors->first('updated_comment') }}</p>
+                                                    @endif
+                                                </div> 
+
+                                                <div class="modal-footer">
+                                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>   
+                                                    <button type="submit" class="btn btn-primary">Submit</button>
+                                                </div>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
 
                                 {{-- Child comment delete modal --}}
                                 <div class="modal fade" id="child-comment-delete-modal-{{ $reply->id }}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
