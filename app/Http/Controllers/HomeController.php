@@ -35,34 +35,15 @@ class HomeController extends Controller
     public function index(Request $request)
     {
         $categories = Category::orderBy('slug', 'asc')->get();
-
-        // Count articles and questions for the specific category
-        $post_types = PostType::all();
-
-        foreach ($categories as $category) {
-            $count_for_each_post_type = [];
-
-            foreach ($post_types as $post_type) {
-                $num_of_posts = $category->posts->where('post_type_id', '=', $post_type->id)->count();
-                array_push($count_for_each_post_type, ['name' => $post_type->name, 'num_of_posts' => $num_of_posts]);
-            }
-
-            $category->count_for_each_post_type = $count_for_each_post_type;
-        }
+        $categories = Category::countForEachPostType($categories); // 各カテゴリに属するPostの中に、ArticleとQuestionが何件あるのか取得
 
         $posts = Post::orderBy('created_at', 'desc')->paginate(10);
 
-        foreach ($posts as $post) {
-            $post['likesCount'] = $post->loadCount('likes')->likes_count;
+        $user = auth()->user();
 
-            $like = new Like();
-            $user_id = Auth::user()->id;
-            $post_id = $post->id;
-            if ($like->likeExists($user_id, $post_id)) {
-                $post['isLiked'] = true;
-            } else {
-                $post['isLiked'] = false;
-            }
+        foreach ($posts as $post) {
+            $post = Post::countLikes($post, $user); // ポストのLike数をカウントし、"likesCount"キーで配列に追加
+            $post = Post::likeExists($post, $user); // Auth UserがポストをすでにLikeしたかどうかを確認
         }
 
         // Get search keyword

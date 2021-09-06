@@ -18,26 +18,18 @@ class PostController extends Controller
     public function show($id)
     {
         $post = Post::findOrFail($id);
+        $user = auth()->user();
+
+        $post = Post::countLikes($post, $user); // ポストのLike数をカウントし、"likesCount"キーで配列に追加
+        $post = Post::likeExists($post, $user); // Auth UserがポストをすでにLikeしたかどうかを確認
 
         $comments = $post->comments()->where('parent_id', NULL)->orderBy('created_at', 'desc')->get();
-
-        $likesCount = $post->loadCount('likes')->likes_count;
-
-        // Checking if the post is already liked by the Auth user or not.
-        $like = new Like();
-        $user_id = Auth::user()->id;
-        $post_id = $id;
-        if ($like->likeExists($user_id, $post_id)) {
-            $isLiked = true;
-        } else {
-            $isLiked = false;
-        }
 
         // Getting categories for the post
         $category = new Category();
         $categories = $category->getCategoriesForPost($post);
 
-        return view('posts.show', compact('post', 'comments', 'likesCount', 'isLiked', 'categories'));
+        return view('posts.show', compact('post', 'comments', 'categories'));
     }
 
     public function list()
@@ -141,70 +133,55 @@ class PostController extends Controller
 
     public function like($id)
     {
-        $user_id = Auth::user()->id;
-        $post_id = $id;
+        $user = auth()->user();
+        $post = Post::findOrFail($id);
 
         $like = new Like();
 
-        if ($like->likeExists($user_id, $post_id)) {
+        $post = $post->likeExists($post, $user);
+
+        if ($post['isLiked']) {
             // Already liked => Remove Like
-            $like = Like::where('user_id', '=', $user_id)->where('post_id', '=', $post_id)->delete();
+            $like = Like::where('user_id', '=', $user->id)->where('post_id', '=', $post->id)->delete();
         } else {
             // Not yet like => Add Like
-            $like->user_id = Auth::user()->id;
-            $like->post_id = $id;
+            $like->user_id = $user->id;
+            $like->post_id = $post->id;
             $like->save();
         }
 
-        $post = Post::findOrFail($post_id);
         session()->flash('removed-like-post-message', 'Removed like from the post.: ' . $post->title);
 
         return back();
     }
 
-    // Display the posts only for the selected category on home page
+
+    // 選択されたCategoryを持つPostのみを表示
     public function categoryPost($id, Request $request)
     {
+        $categories = Category::orderBy('slug', 'asc')->get();
+        $categories = Category::countForEachPostType($categories); // 各カテゴリに属するPostの中に、ArticleとQuestionが何件あるのか取得
+
         $category_selected = Category::findOrFail($id);
 
-        $posts = $category_selected->posts()->orderBy('created_at', 'desc')->paginate(10);
+        $posts = $category_selected->posts()->orderBy('created_at', 'desc')->paginate(10); // 選択されたCategoryを持つPostのみを取得
+
+        $user = auth()->user();
 
         foreach ($posts as $post) {
-            $post['likesCount'] = $post->loadCount('likes')->likes_count;
-
-            $like = new Like();
-            $user_id = Auth::user()->id;
-            $post_id = $post->id;
-            if ($like->likeExists($user_id, $post_id)) {
-                $post['isLiked'] = true;
-            } else {
-                $post['isLiked'] = false;
-            }
+            $post = Post::countLikes($post, $user); // ポストのLike数をカウントし、"likesCount"キーで配列に追加
+            $post = Post::likeExists($post, $user); // Auth UserがポストをすでにLikeしたかどうかを確認
         }
 
-        $categories = Category::orderBy('slug', 'asc')->get();
+        //　作業メモ：countLikesとlikeExistsはメソッド内でLoopにせず、コントローラでLoopする。
 
+        // カテゴリが選択されていたらカードに色を付けるための処理
         foreach ($categories as $category) {
             if ($category->id === $category_selected->id) {
                 $category->selected = true;
             } else {
                 $category->selected = false;
             }
-        }
-
-
-        // Count articles and questions for the specific category
-        $post_types = PostType::all();
-
-        foreach ($categories as $category) {
-            $count_for_each_post_type = [];
-
-            foreach ($post_types as $post_type) {
-                $num_of_posts = $category->posts->where('post_type_id', '=', $post_type->id)->count();
-                array_push($count_for_each_post_type, ['name' => $post_type->name, 'num_of_posts' => $num_of_posts]);
-            }
-
-            $category->count_for_each_post_type = $count_for_each_post_type;
         }
 
 

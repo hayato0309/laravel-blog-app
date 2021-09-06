@@ -36,16 +36,16 @@
                 <div class="mb-4">{{ $post->content }}</div>
                 <div class="text-right mb-4">
                     <div class="d-inline mr-3">
-                        @if($isLiked)
+                        @if($post['isLiked'])
                             <a href="{{ route('post.like', $post->id) }}" class="text-decoration-none">
                                 <i class="fas fa-heart d-inline text-danger"></i>
                             </a>
-                            <span class="text-danger">{{ $likesCount }}</span>
+                            <span class="text-danger">{{ $post['likesCount'] }}</span>
                         @else
                             <a href="{{ route('post.like', $post->id) }}" class="text-decoration-none">
                                 <i class="far fa-heart d-inline text-muted"></i>
                             </a>
-                            <span class="text-muted">{{ $likesCount }}</span>
+                            <span class="text-muted">{{ $post['likesCount'] }}</span>
                         @endif
                     </div>
                     <div class="d-inline text-muted">{{ $post->created_at->diffForHumans() }} by <a href="{{ route('user.show', $post->user->id) }}" class="text-muted">{{ $post->user->name }}</a></div>
