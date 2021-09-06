@@ -48,4 +48,26 @@ class Post extends Model
     {
         return $this->belongsToMany(Ensemble::class);
     }
+
+
+    public static function countLikes($post)
+    {
+        $post['likesCount'] = $post->likes()->count();
+
+        return $post;
+    }
+
+
+    public static function likeExists($post, $user)
+    {
+        $existingLike = Like::where('post_id', '=', $post->id)->where('user_id', '=', $user->id)->get();
+
+        if ($existingLike->isNotEmpty()) {
+            $post['isLiked'] = true;
+        } else {
+            $post['isLiked'] = false;
+        }
+
+        return $post;
+    }
 }
