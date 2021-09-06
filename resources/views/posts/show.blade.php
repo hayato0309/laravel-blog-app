@@ -21,13 +21,13 @@
                 <a href="#" class="text-body">{{ $post->title }}</a>
             </div>
             
-            <div class="mb-3">
+            <div class="mb-1 p-4 bg-white rounded shadow-sm">
                 <div class="row">
                     <h1 class="col-md-10 mb-4">{{ $post->title }}</h1>
 
                     <div class="col-md-2 text-right">
                         @if($post->postType->slug === "article")
-                            <h5><span class="badge badge-pill badge-light border border-dark px-3 py-2"><i class="far fa-newspaper"></i> {{ $post->postType->name }}</span></h5>
+                            <h5><span class="badge badge-pill badge-white border border-dark px-3 py-2"><i class="far fa-newspaper"></i> {{ $post->postType->name }}</span></h5>
                         @elseif($post->postType->slug === "question")
                             <h5><span class="badge badge-pill badge-dark px-3 py-2"><i class="far fa-question-circle"></i> {{ $post->postType->name }}</span></h5>
                         @endif
@@ -61,6 +61,23 @@
                         <div class="badge badge-pill badge-secondary px-2 py-1">{{ $category->name }}</div>
                     @endforeach
                 </div>
+            </div>
+
+            {{-- Comments textarea --}}
+            <div class="mb-2">
+                <div class="text-muted text-right">
+                    <i class="far fa-comment-alt"></i>
+                    <span>Comment</span>
+                </div>
+                <form action="{{ route('comment.store', $post->id) }}" method="POST">
+                    @csrf
+                    @method('POST')
+                    <textarea type="text" class="form-control mb-1 {{ $errors->has('content')?'is-invalid':'' }}" name="comment" cols="30" rows="2" placeholder="Please write your comment.">{{ old('comment') }}</textarea>
+                    @if($errors->has('comment'))
+                        <p class="text-danger">{{ $errors->first('comment') }}</p>
+                    @endif
+                    <button type="submit" class="btn btn-primary">Submit</button>
+                </form>
             </div>
             
             {{-- Comments display area --}}
@@ -268,22 +285,6 @@
 
             @endforeach
 
-            {{-- Comments textarea --}}
-            <div>
-                <div class="text-muted text-right">
-                    <i class="far fa-comment-alt"></i>
-                    <span>Comment</span>
-                </div>
-                <form action="{{ route('comment.store', $post->id) }}" method="POST">
-                    @csrf
-                    @method('POST')
-                    <textarea type="text" class="form-control mb-2 {{ $errors->has('content')?'is-invalid':'' }}" name="comment" cols="30" rows="3" placeholder="Please write your comment.">{{ old('comment') }}</textarea>
-                    @if($errors->has('comment'))
-                        <p class="text-danger">{{ $errors->first('comment') }}</p>
-                    @endif
-                    <button type="submit" class="btn btn-primary">Submit</button>
-                </form>
-            </div>
         </div>
     </div>
 </div>

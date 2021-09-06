@@ -23,7 +23,7 @@
                 <a href="#" class="text-body">{{ $ensemble->headline }}</a>
             </div>
             
-            <div class="mb-3 p-4 bg-white rounded shadow-sm">
+            <div class="mb-1 p-4 bg-white rounded shadow-sm">
                 <div class="row">
                     <h1 class="col-md-10 mb-4">{{ $ensemble->headline }}</h1>
 
@@ -196,6 +196,23 @@
                     </form>
                 </div>
 
+            </div>
+
+            {{-- Parent comments textarea --}}
+            <div class="mb-2">
+                <div class="text-muted text-right">
+                    <i class="far fa-comment-alt"></i>
+                    <span>Comment</span>
+                </div>
+                <form action="{{ route('comment.storeForEnsemble', ['ensemble_id' => $ensemble->id]) }}" method="POST">
+                    @csrf
+                    @method('POST')
+                    <textarea type="text" class="form-control mb-1 {{ $errors->has('comment')?'is-invalid':'' }}" name="comment" cols="30" rows="2" placeholder="Please write your comment.">{{ old('comment') }}</textarea>
+                    @if($errors->has('comment'))
+                        <p class="text-danger">{{ $errors->first('comment') }}</p>
+                    @endif
+                    <button type="submit" class="btn btn-primary">Submit</button>
+                </form>
             </div>
 
             {{-- Comments display area --}}
@@ -400,24 +417,6 @@
                 </div>
 
             @endforeach
-
-            {{-- Parent comments textarea --}}
-            <div>
-                <div class="text-muted text-right">
-                    <i class="far fa-comment-alt"></i>
-                    <span>Comment</span>
-                </div>
-                <form action="{{ route('comment.storeForEnsemble', ['ensemble_id' => $ensemble->id]) }}" method="POST">
-                    @csrf
-                    @method('POST')
-                    <textarea type="text" class="form-control mb-2 {{ $errors->has('comment')?'is-invalid':'' }}" name="comment" cols="30" rows="3" placeholder="Please write your comment.">{{ old('comment') }}</textarea>
-                    @if($errors->has('comment'))
-                        <p class="text-danger">{{ $errors->first('comment') }}</p>
-                    @endif
-                    <button type="submit" class="btn btn-primary">Submit</button>
-                </form>
-            </div>
-            
             
         </div>
     </div>
