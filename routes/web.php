@@ -15,9 +15,14 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Auth::routes(['verify' => true]);
+Auth::routes();
+// Auth::routes(['verify' => true]);
+// Email認証機能を一時停止中（当プロジェクト確認の際に手間なので）
+// RegisterControllerに記載のイベントもコメントアウト中
+// 下のRoute::groupからも'verified'を削除
 
-Route::group(['middleware' => ['auth', 'verified']], function () {
+// Route::group(['middleware' => ['auth', 'verified']], function () {
+Route::group(['middleware' => ['auth']], function () {
     Route::get('/home', 'HomeController@index')->name('home');
 
     // For User
