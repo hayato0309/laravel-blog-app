@@ -71,7 +71,9 @@ class RegisterController extends Controller
             'password' => Hash::make($data['password']),
         ]);
 
-        event(new UserRegisteredEvent($user));
+        // event(new UserRegisteredEvent($user));
+        // Email認証機能を一時停止中（当プロジェクト確認の際に手間なので）
+        // web.phpの'verified' middlewareもコメントアウト中
 
         return $user;
     }
