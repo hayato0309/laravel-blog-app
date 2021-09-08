@@ -8,7 +8,8 @@ use App\User;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
-use App\Events\UserRegisteredEvent;
+// use App\Events\UserRegisteredEvent;
+use Mail;
 
 class RegisterController extends Controller
 {
@@ -74,6 +75,12 @@ class RegisterController extends Controller
         // event(new UserRegisteredEvent($user));
         // Email認証機能を一時停止中（当プロジェクト確認の際に手間なので）
         // web.phpの'verified' middlewareもコメントアウト中
+
+        // 登録が完了したらメールを送信する機能
+        Mail::send('emails.register_confirmation', ['name' => $user->name], function ($message) use ($user) {
+            $message->to($user->email, $user->name)
+                ->subject('Thank you for registering! - ' . config('app.name'));
+        });
 
         return $user;
     }
