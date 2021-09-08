@@ -10,7 +10,7 @@
                 @csrf
                 <div class="form-group">
                     <label>Post type</label>
-                    <select class="form-control {{ $errors->has('post_type_id')?'is-invalid':'' }}" name="post_type_id">
+                    <select class="form-control {{ $errors->has('post_type')?'is-invalid':'' }}" name="post_type">
                         <option value="">-</option>
 
                         @foreach ($post_types as $post_type)
@@ -20,13 +20,13 @@
                     </select>
                     
                     @if($errors->has('post_type'))
-                        <p class="text-danger">{{ $errors->first('post_type_id') }}</p>
+                        <p class="text-danger">{{ $errors->first('post_type') }}</p>
                     @endif
                 </div>
 
                 <div class="form-group">
                     <label>Title</label>
-                    <input type="text" class="form-control {{ $errors->has('title')?'is-invalid':'' }}" name="title" placeholder="Please write the title / question." value="">
+                    <input type="text" class="form-control {{ $errors->has('title')?'is-invalid':'' }}" name="title" placeholder="Please write the title / question." value="{{ old('title') }}">
                     
                     @if($errors->has('title'))
                         <p class="text-danger">{{ $errors->first('title') }}</p>
@@ -35,7 +35,7 @@
 
                 <div class="form-group">
                     <label>Content</label>
-                    <textarea type="text" class="form-control {{ $errors->has('content')?'is-invalid':'' }}" name="content" cols="30" rows="10" placeholder="Please write the content." value=""></textarea>
+                    <textarea type="text" class="form-control {{ $errors->has('content')?'is-invalid':'' }}" name="content" cols="30" rows="10" placeholder="Please write the content.">{{ old('content') }}</textarea>
                     
                     @if($errors->has('content'))
                         <p class="text-danger">{{ $errors->first('content') }}</p>

@@ -49,7 +49,7 @@ class PostController extends Controller
     public function store()
     {
         $input = request()->validate([
-            'post_type_id' => ['required'],
+            'post_type' => ['required'],
             'title' => ['required', 'max:255'],
             'content' => ['required', 'max:2000'],
             'post_image' => ['file', 'image', 'max:1024'],
@@ -58,7 +58,7 @@ class PostController extends Controller
 
         $post = new Post();
         $post->user_id = Auth::user()->id;
-        $post->post_type_id = $input['post_type_id'];
+        $post->post_type_id = $input['post_type'];
         $post->title = $input['title'];
         $post->content = $input['content'];
 

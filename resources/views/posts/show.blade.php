@@ -4,7 +4,7 @@
 
 <div class="container">
     <div class="row justify-content-center">
-        <div class="col-md-8">
+        <div class="col-md-9">
 
             @if(session('comment-posted-message'))
                 <div class="alert alert-success">{{ session('comment-posted-message') }}</div>
