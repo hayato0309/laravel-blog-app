@@ -30,7 +30,7 @@
         <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm fixed-top py-2">
             <div class="container-fluid">
                 <a class="navbar-brand" href="{{ route('home') }}">
-                    Askpert
+                    {{ config('app.name') }}
                 </a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
                     <span class="navbar-toggler-icon"></span>
@@ -132,7 +132,7 @@
         <footer class="container-fluid text-white bg-dark w-100 p-3">
             <div class="row mb-2">
                 <h5 class="col-md-4 text-center m-0">
-                    <a href="{{ route('home') }}" class="text-white">Askpert</a>
+                    <a href="{{ route('home') }}" class="text-white">{{ config('app.name') }}</a>
                 </h5>
                 <div class="col-md-4 text-center">
                     <a href="#" class="text-white"><i class="fab fa-facebook mx-2"></i></a>
