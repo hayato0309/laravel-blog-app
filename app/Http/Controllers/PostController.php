@@ -126,7 +126,7 @@ class PostController extends Controller
         $post = Post::findOrFail($id);
         $post->delete();
 
-        session()->flash('post-deleted-message', 'Post was deleted successfully.: ' . $post->title);
+        session()->flash('post-deleted-message', 'Post was deleted successfully. : ' . $post->title);
 
         return back();
     }
@@ -150,7 +150,7 @@ class PostController extends Controller
             $like->save();
         }
 
-        session()->flash('removed-like-post-message', 'Removed like from the post.: ' . $post->title);
+        session()->flash('removed-like-post-message', 'Removed like from the post. : ' . $post->title);
 
         return back();
     }
@@ -204,26 +204,8 @@ class PostController extends Controller
 
     public function favoritePost(Request $request)
     {
-        $posts = Post::all();
+        $favorite_posts = auth()->user()->favoritePosts()->paginate(10);
 
-        $likes = auth()->user()->likes()->get();
-
-        $liked_posts = [];
-
-        foreach ($likes as $like) {
-            array_push($liked_posts, $like->post);
-        }
-
-        $liked_posts = collect($liked_posts);
-
-        $liked_posts = new LengthAwarePaginator(
-            $liked_posts->forPage($request->page, 10),
-            count($liked_posts),
-            10,
-            $request->page,
-            array('path' => $request->url())
-        );
-
-        return view('posts.favorite', compact('liked_posts'));
+        return view('posts.favorite', compact('favorite_posts'));
     }
 }

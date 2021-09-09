@@ -58,6 +58,18 @@ class User extends Authenticatable implements MustVerifyEmail
         return $this->hasMany(Like::class);
     }
 
+    public function favoritePosts()
+    {
+        return $this->hasManyThrough(
+            Post::class, // 仲介するModel
+            Like::class, // 最終的に取得したいデータのModel
+            'user_id',
+            'id',
+            'id',
+            'post_id'
+        );
+    }
+
     public function follows()
     {
         return $this->belongsToMany(Follow::class);

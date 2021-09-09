@@ -22,7 +22,7 @@
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach ($liked_posts as $post)
+                        @foreach ($favorite_posts as $post)
                             <tr>
                                 <th scope="row">{{ $loop->iteration }}</th>
                                 <td><a href="{{ route('post.show', $post->id) }}">{{ $post->title }}</a></td>
@@ -72,7 +72,7 @@
                         @endforeach
                     </tbody>
                 </table>
-            {{ $liked_posts->links() }}
+            {{ $favorite_posts->links() }}
         </div>
     </div>
 </div>
