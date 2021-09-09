@@ -37,7 +37,7 @@
 
                 <div class="form-group">
                     <label>Name</label>
-                    <input type="text" class="form-control {{ $errors->has('name')?'is-invalid':'' }}" name="name" value="{{ old('name',$user->name) }}">
+                    <input type="text" class="form-control {{ $errors->has('name')?'is-invalid':'' }}" name="name" value="{{ old('name',$user->name) }}" required>
                     
                     @if($errors->has('name'))
                         <p class="text-danger">{{ $errors->first('name') }}</p>
@@ -46,7 +46,7 @@
                 
                 <div class="form-group">
                     <label>Email address</label>
-                    <input type="email" class="form-control {{ $errors->has('email')?'is-invalid':'' }}" name="email" value="{{ old('email',$user->email) }}">
+                    <input type="email" class="form-control {{ $errors->has('email')?'is-invalid':'' }}" name="email" value="{{ old('email',$user->email) }}" required>
                     
                     @if($errors->has('email'))
                         <p class="text-danger">{{ $errors->first('email') }}</p>

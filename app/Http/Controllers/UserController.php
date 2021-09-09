@@ -67,8 +67,8 @@ class UserController extends Controller
             'name' => ['required', 'string', 'max:30', 'alpha_dash'],
             'avatar' => ['file', 'image', 'max:1024'],
             'email' => ['required', 'email', 'max:50'],
-            'greeting' => ['required', 'string', 'max:130'],
-            'interests' => ['required', 'string', 'max:170'],
+            'greeting' => ['max:130'],
+            'interests' => ['max:170'],
         ]);
 
         $user = User::findOrFail($id);
