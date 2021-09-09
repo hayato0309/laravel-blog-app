@@ -22,16 +22,9 @@ class UserController extends Controller
 
         $posts = Post::where('user_id', '=', $user->id)->orderBy('created_at', 'desc')->paginate(5);
 
-        // Getting all posts of the user
+        // AuthユーザがそのポストをLikeしているか確認し、$post['isLiked']にブール値を格納
         foreach ($posts as $post) {
-            $like = new Like();
-            $user_id = Auth::user()->id;
-            $post_id = $post->id;
-            if ($like->likeExists($user_id, $post_id)) {
-                $post['isLiked'] = true;
-            } else {
-                $post['isLiked'] = false;
-            }
+            Post::likeExists($post, $user);
         }
 
         // Checking if Auth user is already following the user
