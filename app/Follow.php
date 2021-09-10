@@ -8,7 +8,7 @@ use App\User;
 class Follow extends Model
 {
     protected $fillable = [
-        'following_id', 'follower_id'
+        'following_id', 'followed_id'
     ];
 
     public function users()
@@ -16,9 +16,9 @@ class Follow extends Model
         return $this->belongsToMany(User::class);
     }
 
-    public function followingExists($following_id, $follower_id)
+    public function followingExists($following_id, $followed_id)
     {
-        $existingFollow = Follow::where('following_id', '=', $following_id)->where('follower_id', '=', $follower_id)->get();
+        $existingFollow = Follow::where('following_id', '=', $following_id)->where('followed_id', '=', $followed_id)->get();
 
         if ($existingFollow->isNotEmpty()) {
             return true;
