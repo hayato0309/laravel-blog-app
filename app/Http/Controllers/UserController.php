@@ -30,25 +30,27 @@ class UserController extends Controller
         // Checking if Auth user is already following the user
         $follow = new Follow();
         $following_id = Auth::user()->id;
-        $follower_id = $id;
-        if ($follow->followingExists($following_id, $follower_id)) {
+        $followed_id = $id;
+        if ($follow->followingExists($following_id, $followed_id)) {
             $isFollowing = true;
         } else {
             $isFollowing = false;
         }
 
-        // Get following users
+        // 表示しているProfileページのユーザに紐づく全ての"following"ユーザを取得（Authをフォローしている）
         $followings = $user->followings()->get();
 
+        // それらのユーザをAuthもフォローしているかどうかの確認
         foreach ($followings as $following) {
-            $following['followingInModal'] = $follow->followingExists($following_id, $following['id']);
+            $following['auth_is_following'] = $follow->followingExists($following_id, $following['id']);
         }
 
-        // Get follower users
+        // 表示しているProfileページのユーザに紐づく全ての"followed"ユーザを取得（Authにフォローされている/Authがフォローしている）
         $followers = $user->followers()->get();
 
+        // それらのユーザをAuthもフォローしているかどうかの確認
         foreach ($followers as $follower) {
-            $follower['followerInModal'] = $follow->followingExists($following_id, $follower['id']);
+            $follower['auth_is_following'] = $follow->followingExists($following_id, $follower['id']);
         }
 
         return view('users.show', compact('user', 'posts', 'isFollowing', 'followings', 'followers'));
@@ -118,19 +120,19 @@ class UserController extends Controller
     public function follow($id)
     {
         $following_id = Auth::user()->id;
-        $follower_id = $id;
+        $followed_id = $id;
 
         $follow = new Follow();
 
-        if ($follow->followingExists($following_id, $follower_id)) {
+        if ($follow->followingExists($following_id, $followed_id)) {
             // Already following => Remove following
-            $follow = Follow::where('following_id', '=', $following_id)->where('follower_id', '=', $follower_id)->delete();
+            $follow = Follow::where('following_id', '=', $following_id)->where('followed_id', '=', $followed_id)->delete();
         } else {
             // No following yet => Record new following
             $follow->following_id = $following_id;
-            $follow->follower_id = $follower_id;
+            $follow->followed_id = $followed_id;
 
-            event(new UserFollowedEvent(User::find($follower_id)));
+            event(new UserFollowedEvent(User::find($followed_id)));
 
             $follow->save();
         }

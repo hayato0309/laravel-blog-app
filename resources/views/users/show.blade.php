@@ -78,7 +78,7 @@
                             <div class="col-sm-3 d-flex align-items-center justify-content-end">
                                 {{-- Follow button --}}
                                 @if($following->id != Auth::user()->id)
-                                    @if($following['followingInModal'])
+                                    @if($following['auth_is_following'])
                                         <a href="{{ route('user.follow', $following->id) }}" class="btn btn-outline-primary btn-sm active">Following</a>
                                     @else
                                         <a href="{{ route('user.follow', $following->id) }}" class="btn btn-outline-primary btn-sm">Follow</a>
@@ -117,7 +117,7 @@
                             <div class="col-sm-3 d-flex align-items-center justify-content-end">
                                 {{-- Follow button --}}
                                 @if($follower->id != Auth::user()->id)
-                                    @if($follower['followerInModal'])
+                                    @if($follower['auth_is_following'])
                                         <a href="{{ route('user.follow', $follower->id) }}" class="btn btn-outline-primary btn-sm active">Following</a>
                                     @else
                                         <a href="{{ route('user.follow', $follower->id) }}" class="btn btn-outline-primary btn-sm">Follow</a>

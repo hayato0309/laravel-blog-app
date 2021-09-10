@@ -77,12 +77,12 @@ class User extends Authenticatable implements MustVerifyEmail
 
     public function followings()
     {
-        return $this->belongsToMany(User::class, 'follows', 'following_id', 'follower_id'); // LaravelのNaming conventionに沿っていないため、第2~4の引数が必要。
+        return $this->belongsToMany(User::class, 'follows', 'following_id', 'followed_id'); // LaravelのNaming conventionに沿っていないため、第2~4の引数が必要。
     }
 
     public function followers()
     {
-        return $this->belongsToMany(User::class, 'follows', 'follower_id', 'following_id'); // LaravelのNaming conventionに沿っていないため、第2~4の引数が必要。
+        return $this->belongsToMany(User::class, 'follows', 'followed_id', 'following_id'); // LaravelのNaming conventionに沿っていないため、第2~4の引数が必要。
     }
 
     public function roles()
