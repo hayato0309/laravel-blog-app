@@ -95,12 +95,14 @@
         {{-- Right sidebar --}}
         <div class="col-md-3 p-3">
             <div class="rounded bg-white p-3 mb-3">
-                <form action="{{ route('home') }}" method="GET" class="form-inline mb-3">
+                <form action="{{ route('home') }}" method="GET">
                     @csrf
-                    <div class="form-group mr-2">
-                        <input type="search" class="form-control" name="post_search" value="{{ isset($post_search) ? $post_search : '' }}">
+                    <div class="input-group">
+                        <input type="text" name="post_search" class="form-control" value="{{ isset($post_search) ? $post_search : '' }}">
+                        <div class="input-group-append">
+                            <button class="btn btn-dark" type="submit"><i class="fas fa-search"></i></button>
+                        </div>
                     </div>
-                    <button type="submit" class="btn btn-secondary"><i class="fas fa-search"></i></button>
                 </form>
             </div>
             <div class="rounded bg-white p-3">
