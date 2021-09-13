@@ -13,10 +13,25 @@ class AdminController extends Controller
 {
     public function index()
     {
-        $num_of_users = User::all()->count();
-        $num_of_posts = Post::all()->count();
+        $num_of_total_users = User::all()->count();
+        $num_of_total_posts = Post::all()->count();
 
-        return view('admin.index', compact('num_of_users', 'num_of_posts'));
+        $periods = [1, 7, 31, 365]; // User数、Post数を調べる期間を入れた配列
+
+        $num_of_posts_per_period = []; // 期間ごとの連想配列を作るようの空配列
+        $num_of_users_per_period = []; // 期間ごとの連想配列を作るようの空配列
+
+        foreach ($periods as $period) {
+            $start_date = date('Y-m-d', strtotime('-' . ($period - 1) . ' day')); // 計測を開始する日付。periods配列の数字をそのまま使うと1日分多いのでマイナス1している
+            
+            $num_of_users = User::where('created_at', '>=', $start_date)->count();
+            $num_of_users_per_period[$period] = $num_of_users;
+
+            $num_of_posts = Post::where('created_at', '>=', $start_date)->count();
+            $num_of_posts_per_period[$period] = $num_of_posts;
+        }
+
+        return view('admin.index', compact('num_of_total_users', 'num_of_total_posts', 'num_of_users_per_period', 'num_of_posts_per_period'));
     }
 
 

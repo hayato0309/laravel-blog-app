@@ -8,9 +8,9 @@
             </div>
             <div class="d-flex flex-row">
                 <h5 class="mr-3">Users</h5 class="mr-3">
-                <h5 class="mr-3">{{ $num_of_users }}</h5 class="mr-3">
+                <h5 class="mr-3">{{ $num_of_total_users }}</h5 class="mr-3">
                 <h5 class="mr-3">Posts</h5 class="mr-3">
-                <h5 class="mr-3">{{ $num_of_posts }}</h5 class="mr-3">
+                <h5 class="mr-3">{{ $num_of_total_posts }}</h5 class="mr-3">
             </div>
         </div>
         <div class="mb-5">
@@ -27,25 +27,17 @@
                 </tr>
                 <tr>
                     <td>Users</td>
-                    <td>1</td>
-                    <td>+10%</td>
-                    <td>2</td>
-                    <td>+10%</td>
-                    <td>3</td>
-                    <td>+10%</td>
-                    <td>4</td>
-                    <td>+10%</td>
+                    @foreach($num_of_users_per_period as $num_of_users)
+                        <td>{{ $num_of_users }}</td>
+                        <td>+10%</td>
+                    @endforeach
                 </tr>
                 <tr>
                     <td>Posts</td>
-                    <td>1</td>
-                    <td>+10%</td>
-                    <td>2</td>
-                    <td>+10%</td>
-                    <td>3</td>
-                    <td>+10%</td>
-                    <td>4</td>
-                    <td>+10%</td>
+                    @foreach($num_of_posts_per_period as $num_of_posts)
+                        <td>{{ $num_of_posts }}</td>
+                        <td>+10%</td>
+                    @endforeach
                 </tr>
             </table>
         </div>
