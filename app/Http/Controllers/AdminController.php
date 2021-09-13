@@ -13,7 +13,10 @@ class AdminController extends Controller
 {
     public function index()
     {
-        return view('admin.index');
+        $num_of_users = User::all()->count();
+        $num_of_posts = Post::all()->count();
+
+        return view('admin.index', compact('num_of_users', 'num_of_posts'));
     }
 
 

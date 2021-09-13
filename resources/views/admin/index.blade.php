@@ -8,9 +8,9 @@
             </div>
             <div class="d-flex flex-row">
                 <h5 class="mr-3">Users</h5 class="mr-3">
-                <h5 class="mr-3">123</h5 class="mr-3">
+                <h5 class="mr-3">{{ $num_of_users }}</h5 class="mr-3">
                 <h5 class="mr-3">Posts</h5 class="mr-3">
-                <h5 class="mr-3">123</h5 class="mr-3">
+                <h5 class="mr-3">{{ $num_of_posts }}</h5 class="mr-3">
             </div>
         </div>
         <div class="mb-5">
