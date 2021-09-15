@@ -46,8 +46,7 @@
             <div class="card-deck">
                 <div class="card border-0 shadow-sm px-3">
                     <div class="card-body text-center">
-                        <h5>Popular users Top5</h5>
-                        <div class="small text-muted mb-3">*Based on the number of followers</div>
+                        <h5 class="mb-3">Popular users Top5</h5>
 
                         @foreach($popular_users_top5 as $popular_user)
                             <div class="row d-flex justify-content-between mb-2">
@@ -65,8 +64,7 @@
                 </div>
                 <div class="card border-0 shadow-sm px-3">
                     <div class="card-body text-center">
-                        <h5>Contributors Top5</h5>
-                        <div class="small text-muted mb-3">*Based on the number of posts</div>
+                        <h5 class="mb-3">Contributors Top5</h5>
 
                         @foreach($contributors_top5 as $contributor)
                             <div class="row d-flex justify-content-between mb-2">
@@ -83,8 +81,7 @@
                 </div>
                 <div class="card border-0 shadow-sm px-3">
                     <div class="card-body text-center">
-                        <h5>Popular posts Top5</h5>
-                        <div class="small text-muted mb-3">*Based on the number of likes</div>
+                        <h5 class="mb-3">Popular posts Top5</h5>
 
                         @foreach($popular_posts_top5 as $popular_post)
                             <div class="row d-flex justify-content-between mb-2">
@@ -95,10 +92,17 @@
                         @endforeach
                     </div>
                 </div>
-                <div class="card border-0 shadow-sm">
+                <div class="card border-0 shadow-sm px-3">
                     <div class="card-body text-center">
-                        <h5>Ensembles Top5</h5>
-                        <div class="small text-muted">*Based on the number of participants</div>
+                        <h5 class="mb-3">Ensembles Top5</h5>
+
+                        @foreach($popular_ensembles_top5 as $ensemble)
+                            <div class="row d-flex justify-content-between mb-2">
+                                <div>{{ $loop->iteration }}</div>
+                                <div><a href="{{ route('ensemble.show', $ensemble->id) }}" class="text-body">{{ Str::limit($ensemble->headline, 12, '...') }}</a></div>
+                                <div>{{ $ensemble->ensemble_applications_count }} <span class="small"> applications</span></div>
+                            </div>
+                        @endforeach
                     </div>
                 </div>
             </div>
