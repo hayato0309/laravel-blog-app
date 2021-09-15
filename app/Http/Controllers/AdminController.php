@@ -8,6 +8,7 @@ use App\Post;
 use App\Role;
 use App\Inquiry;
 use Illuminate\Support\Facades\DB;
+use App\Ensemble;
 
 class AdminController extends Controller
 {
@@ -40,7 +41,10 @@ class AdminController extends Controller
         // Likeの多いPost Top5
         $popular_posts_top5 = Post::withCount('likes')->orderBy('likes_count', 'desc')->take(5)->get();
 
-        return view('admin.index', compact('num_of_total_users', 'num_of_total_posts', 'num_of_users_per_period', 'num_of_posts_per_period', 'popular_users_top5', 'contributors_top5', 'popular_posts_top5'));
+        // Applicationの多いEnsemble Top5
+        $popular_ensembles_top5 = Ensemble::withCount('ensembleApplications')->orderBy('ensemble_applications_count', 'desc')->take(5)->get();
+
+        return view('admin.index', compact('num_of_total_users', 'num_of_total_posts', 'num_of_users_per_period', 'num_of_posts_per_period', 'popular_users_top5', 'contributors_top5', 'popular_posts_top5', 'popular_ensembles_top5'));
     }
 
 
