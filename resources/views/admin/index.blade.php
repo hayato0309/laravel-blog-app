@@ -56,17 +56,29 @@
                                     <img class="rounded-circle" src="{{ asset('storage/'.$popular_user->avatar) }}" alt="avatar" style="width: 25px;">
                                 </div>
                                 
-                                <div>{{ $popular_user->name }}</div>
+                                <div>{{ Str::limit($popular_user->name, 12, '...') }}</div>
                                 <div>{{ $popular_user->followers_count }} <span class="small"> followers</span></div>
                             </div>
                         @endforeach
 
                     </div>
                 </div>
-                <div class="card border-0 shadow-sm">
+                <div class="card border-0 shadow-sm px-3">
                     <div class="card-body text-center">
-                        <h5>Contributers Top5</h5>
-                        <div class="small text-muted">*Based on the number of posts</div>
+                        <h5>Contributors Top5</h5>
+                        <div class="small text-muted mb-4">*Based on the number of posts</div>
+
+                        @foreach($contributors_top5 as $contributor)
+                            <div class="row d-flex justify-content-between mb-2">
+                                <div>
+                                    <span class="mr-2">{{ $loop->iteration }}</span>
+                                    <img class="rounded-circle" src="{{ asset('storage/'.$contributor->avatar) }}" alt="avatar" style="width: 25px;">
+                                </div>
+                                
+                                <div>{{ Str::limit($contributor->name, 12, '...') }}</div>
+                                <div>{{ $contributor->posts_count }} <span class="small"> posts</span></div>
+                            </div>
+                        @endforeach
                     </div>
                 </div>
                 <div class="card border-0 shadow-sm">

@@ -34,7 +34,10 @@ class AdminController extends Controller
         // Followerの多いUser Top5
         $popular_users_top5 = User::withCount('followers')->orderBy('followers_count', 'desc')->take(5)->get();
 
-        return view('admin.index', compact('num_of_total_users', 'num_of_total_posts', 'num_of_users_per_period', 'num_of_posts_per_period', 'popular_users_top5'));
+        // Postの多いUser Top5
+        $contributors_top5 = User::withCount('posts')->orderBy('posts_count', 'desc')->take(5)->get();
+
+        return view('admin.index', compact('num_of_total_users', 'num_of_total_posts', 'num_of_users_per_period', 'num_of_posts_per_period', 'popular_users_top5', 'contributors_top5'));
     }
 
 
