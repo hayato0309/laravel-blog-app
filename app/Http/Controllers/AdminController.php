@@ -31,7 +31,10 @@ class AdminController extends Controller
             $num_of_posts_per_period[$period] = $num_of_posts;
         }
 
-        return view('admin.index', compact('num_of_total_users', 'num_of_total_posts', 'num_of_users_per_period', 'num_of_posts_per_period'));
+        // Followerの多いUser Top5
+        $popular_users_top5 = User::withCount('followers')->orderBy('followers_count', 'desc')->take(5)->get();
+
+        return view('admin.index', compact('num_of_total_users', 'num_of_total_posts', 'num_of_users_per_period', 'num_of_posts_per_period', 'popular_users_top5'));
     }
 
 
