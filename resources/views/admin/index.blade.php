@@ -56,7 +56,7 @@
                                     <img class="rounded-circle" src="{{ asset('storage/'.$popular_user->avatar) }}" alt="avatar" style="width: 25px;">
                                 </div>
                                 
-                                <div>{{ Str::limit($popular_user->name, 12, '...') }}</div>
+                                <div><a href="{{ route('user.show', $popular_user->id) }}" class="text-body">{{ Str::limit($popular_user->name, 12, '...') }}</a></div>
                                 <div>{{ $popular_user->followers_count }} <span class="small"> followers</span></div>
                             </div>
                         @endforeach
@@ -66,7 +66,7 @@
                 <div class="card border-0 shadow-sm px-3">
                     <div class="card-body text-center">
                         <h5>Contributors Top5</h5>
-                        <div class="small text-muted mb-4">*Based on the number of posts</div>
+                        <div class="small text-muted mb-3">*Based on the number of posts</div>
 
                         @foreach($contributors_top5 as $contributor)
                             <div class="row d-flex justify-content-between mb-2">
@@ -75,16 +75,24 @@
                                     <img class="rounded-circle" src="{{ asset('storage/'.$contributor->avatar) }}" alt="avatar" style="width: 25px;">
                                 </div>
                                 
-                                <div>{{ Str::limit($contributor->name, 12, '...') }}</div>
+                                <div><a href="{{ route('user.show', $contributor->id) }}" class="text-body">{{ Str::limit($contributor->name, 12, '...') }}</a></div>
                                 <div>{{ $contributor->posts_count }} <span class="small"> posts</span></div>
                             </div>
                         @endforeach
                     </div>
                 </div>
-                <div class="card border-0 shadow-sm">
+                <div class="card border-0 shadow-sm px-3">
                     <div class="card-body text-center">
                         <h5>Popular posts Top5</h5>
-                        <div class="small text-muted">*Based on the number of likes</div>
+                        <div class="small text-muted mb-3">*Based on the number of likes</div>
+
+                        @foreach($popular_posts_top5 as $popular_post)
+                            <div class="row d-flex justify-content-between mb-2">
+                                <div>{{ $loop->iteration }}</div>
+                                <div><a href="{{ route('post.show', $popular_post->id) }}" class="text-body">{{ Str::limit($popular_post->title, 12, '...') }}</a></div>
+                                <div>{{ $popular_post->likes_count }} <span class="small"> likes</span></div>
+                            </div>
+                        @endforeach
                     </div>
                 </div>
                 <div class="card border-0 shadow-sm">
