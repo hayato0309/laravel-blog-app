@@ -27,16 +27,16 @@
                 </tr>
                 <tr>
                     <td>Users</td>
-                    @foreach($num_of_users_per_period as $num_of_users)
-                        <td>{{ $num_of_users }}</td>
-                        <td>+10%</td>
+                    @foreach($users_per_period as $users)
+                        <td>{{ $users[0] }}</td>
+                        <td>{{ $users[1] }} %</td>
                     @endforeach
                 </tr>
                 <tr>
                     <td>Posts</td>
-                    @foreach($num_of_posts_per_period as $num_of_posts)
-                        <td>{{ $num_of_posts }}</td>
-                        <td>+10%</td>
+                    @foreach($posts_per_period as $posts)
+                        <td>{{ $posts[0] }}</td>
+                        <td>{{ $posts[1] }} %</td>
                     @endforeach
                 </tr>
             </table>
