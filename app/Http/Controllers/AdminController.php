@@ -9,6 +9,7 @@ use App\Role;
 use App\Inquiry;
 use Illuminate\Support\Facades\DB;
 use App\Ensemble;
+use Carbon\Carbon;
 
 class AdminController extends Controller
 {
@@ -19,17 +20,36 @@ class AdminController extends Controller
 
         $periods = [1, 7, 31, 365]; // User数、Post数を調べる期間を入れた配列
 
-        $num_of_posts_per_period = []; // 期間ごとの連想配列を作るようの空配列
-        $num_of_users_per_period = []; // 期間ごとの連想配列を作るようの空配列
-
         foreach ($periods as $period) {
-            $start_date = date('Y-m-d', strtotime('-' . ($period - 1) . ' day')); // 計測を開始する日付。periods配列の数字をそのまま使うと1日分多いのでマイナス1している
-            
-            $num_of_users = User::where('created_at', '>=', $start_date)->count();
-            $num_of_users_per_period[$period] = $num_of_users;
+            $current_period_from = date('Y-m-d' . ' 00:00:00', strtotime('-' . ($period - 1) . ' day')); // 計測を開始する日付。periods配列の数字をそのまま使うと1日分多く引いてしまうのでさらにマイナス1している
+            $previous_period_from = date('Y-m-d' . ' 00:00:00', strtotime('-' . ($period * 2 -1) . ' day')); // 古い期間の計測開始日
+            $previous_period_until = date('Y-m-d' . ' 23:59:59', strtotime('-' . ($period) . ' day')); // 古い期間の計測終了日
 
-            $num_of_posts = Post::where('created_at', '>=', $start_date)->count();
-            $num_of_posts_per_period[$period] = $num_of_posts;
+            // 新しい期間と古い期間の新規User数の取得
+            $num_of_users_current_period = User::where('created_at', '>=', $current_period_from)->count(); // 新しい（当）期間中の新規User数の取得
+            $num_of_users_previous_period = User::whereBetween('created_at', [$previous_period_from, $previous_period_until])->count(); // 古い期間中の新規User数の取得
+            
+            // Userの増加率の計算
+            if($num_of_users_previous_period === 0) {
+                $users_increase_rate = "-";
+            } else {
+                $users_increase_rate = sprintf('%+.1f', round(($num_of_users_current_period / $num_of_users_previous_period - 1), 3) * 100);
+            }
+
+            $users_per_period[$period] = [$num_of_users_current_period, $users_increase_rate];
+
+            // 新しい期間と古い期間の新規Post数の取得
+            $num_of_posts_current_period = Post::where('created_at', '>=', $current_period_from)->count(); // 新しい（当）期間中の新規Post数の取得
+            $num_of_posts_previous_period = Post::whereBetween('created_at', [$previous_period_from, $previous_period_until])->count(); // 古い期間中の新規Post数の取得
+            
+            // Postの増加率の計算
+            if($num_of_posts_previous_period === 0) {
+                $posts_increase_rate = "-";
+            } else {
+                $posts_increase_rate = sprintf('%+.1f', round(($num_of_posts_current_period / $num_of_posts_previous_period - 1), 3) * 100);
+            }
+
+            $posts_per_period[$period] = [$num_of_posts_current_period, $posts_increase_rate];
         }
 
         // Followerの多いUser Top5
@@ -44,7 +64,7 @@ class AdminController extends Controller
         // Applicationの多いEnsemble Top5
         $popular_ensembles_top5 = Ensemble::withCount('ensembleApplications')->orderBy('ensemble_applications_count', 'desc')->take(5)->get();
 
-        return view('admin.index', compact('num_of_total_users', 'num_of_total_posts', 'num_of_users_per_period', 'num_of_posts_per_period', 'popular_users_top5', 'contributors_top5', 'popular_posts_top5', 'popular_ensembles_top5'));
+        return view('admin.index', compact('num_of_total_users', 'num_of_total_posts', 'users_per_period', 'posts_per_period', 'popular_users_top5', 'contributors_top5', 'popular_posts_top5', 'popular_ensembles_top5'));
     }
 
 
