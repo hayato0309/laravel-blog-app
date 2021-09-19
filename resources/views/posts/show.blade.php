@@ -51,7 +51,20 @@
                     <div class="d-inline text-muted">{{ $post->created_at->diffForHumans() }} by <a href="{{ route('user.show', $post->user->id) }}" class="text-muted">{{ $post->user->name }}</a></div>
                 </div>
                 @if($post->post_image != "images/post_image.png")
-                    <img class="rounded mb-4" src="{{ asset('storage/'.$post->post_image) }}" alt="avatar" style="width:30%">
+                    {{-- 画像をクリックすると拡大画像をモーダルで表示 --}}
+                    <img class="rounded mb-4" src="{{ asset('storage/'.$post->post_image) }}" alt="avatar" data-toggle="modal" data-target="#post_image_modal" style="width:30%; cursor: pointer;">
+
+                    {{-- 画像を拡大表示するためのモーダル --}}
+                    <div class="modal fade bd-example-modal-lg" id="post_image_modal" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+                        <div class="modal-dialog modal-lg">
+                          <div class="modal-content">
+                            <button type="button" class="close text-right" data-dismiss="modal" aria-label="Close">
+                                <span class="mr-2" aria-hidden="true">&times;</span>
+                            </button>
+                            <img class="rounded-bottom" src="{{ asset('storage/'.$post->post_image) }}" alt="avatar">
+                          </div>
+                        </div>
+                    </div>
                 @else
                     <div class="text-muted mb-4">* This post has no image.</div>
                 @endif
