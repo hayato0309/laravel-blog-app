@@ -47,6 +47,7 @@
                 <div class="card border-0 shadow-sm px-3">
                     <div class="card-body text-center">
                         <h5 class="mb-3">Popular users Top5</h5>
+                        <hr>
 
                         @foreach($popular_users_top5 as $popular_user)
                             <div class="row d-flex justify-content-between mb-2">
@@ -65,6 +66,7 @@
                 <div class="card border-0 shadow-sm px-3">
                     <div class="card-body text-center">
                         <h5 class="mb-3">Contributors Top5</h5>
+                        <hr>
 
                         @foreach($contributors_top5 as $contributor)
                             <div class="row d-flex justify-content-between mb-2">
@@ -82,6 +84,7 @@
                 <div class="card border-0 shadow-sm px-3">
                     <div class="card-body text-center">
                         <h5 class="mb-3">Popular posts Top5</h5>
+                        <hr>
 
                         @foreach($popular_posts_top5 as $popular_post)
                             <div class="row d-flex justify-content-between mb-2">
@@ -95,7 +98,8 @@
                 <div class="card border-0 shadow-sm px-3">
                     <div class="card-body text-center">
                         <h5 class="mb-3">Ensembles Top5</h5>
-
+                        <hr>
+                        
                         @foreach($popular_ensembles_top5 as $ensemble)
                             <div class="row d-flex justify-content-between mb-2">
                                 <div>{{ $loop->iteration }}</div>
