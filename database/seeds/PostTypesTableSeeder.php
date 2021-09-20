@@ -15,14 +15,14 @@ class PostTypesTableSeeder extends Seeder
             [
                 'name' => 'Article',
                 'slug' => 'article',
-                'created_at' => date('Y-m-d H:i:s'),
-                'updated_at' => date('Y-m-d H:i:s'),
+                'created_at' => now(),
+                'updated_at' => now(),
             ],
             [
                 'name' => 'Question',
                 'slug' => 'question',
-                'created_at' => date('Y-m-d H:i:s'),
-                'updated_at' => date('Y-m-d H:i:s'),
+                'created_at' => now(),
+                'updated_at' => now(),
             ],
         ]);
     }
