@@ -37,7 +37,7 @@ class CategoriesTableSeeder extends Seeder
                 'updated_at' => date('Y-m-d H:i:s'),
             ],
             [
-                'name' => 'Beethove',
+                'name' => 'Beethoven',
                 'slug' => 'beethoven',
                 'created_at' => date('Y-m-d H:i:s'),
                 'updated_at' => date('Y-m-d H:i:s'),
