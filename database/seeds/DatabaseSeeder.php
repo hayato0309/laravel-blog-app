@@ -17,6 +17,7 @@ class DatabaseSeeder extends Seeder
         $this->call(RolesTableSeeder::class);
 
         // factory
-        factory(App\User::class, 5)->create();
+        factory(App\User::class, 20)->create(); // PostFactory内でもUserFactoryをコールしているので、このFactoryは合計2回コールされる
+        factory(App\Post::class, 20)->create();
     }
 }
