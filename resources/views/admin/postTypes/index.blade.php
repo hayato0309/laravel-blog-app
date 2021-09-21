@@ -33,6 +33,7 @@
             <tr>
                 <th scope="col">#</th>
                 <th scope="col">Name</th>
+                <th scope="col">Posts</th>
                 <th scope="col">Created at</th>
                 <th scope="col"></th>
                 <th scope="col"></th>
@@ -43,6 +44,7 @@
                 <tr>
                     <th scope="row">{{ $loop->iteration }}</th>
                     <td>{{ $post_type->name }}</td>
+                    <td>{{ $post_type->posts()->count() }}</td>
                     <td>{{ $post_type->created_at }}</td>
                     <td>
                         <!-- Button trigger modal for updating category -->
