@@ -55,6 +55,8 @@
                                                 <div><span class="badge badge-pill badge-white border border-dark px-2 py-1"><i class="far fa-newspaper"></i> {{ $post->postType->name }}</span></div>
                                             @elseif($post->postType->slug === "question")
                                                 <div><span class="badge badge-pill badge-dark px-2 py-1"><i class="far fa-question-circle"></i> {{ $post->postType->name }}</span></div>
+                                            @else
+                                                <div><span class="badge badge-pill badge-secondary px-2 py-1"><i class="fas fa-square"></i> {{ $post->postType->name }}</span></div>
                                             @endif
                                         </div>
                                     </div>

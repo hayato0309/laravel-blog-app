@@ -52,6 +52,8 @@
                                             <div><span class="badge badge-pill badge-white border border-dark px-2 py-1"><i class="far fa-newspaper"></i> {{ $post->postType->name }}</span></div>
                                         @elseif($post->postType->slug === "question")
                                             <div><span class="badge badge-pill badge-dark px-2 py-1"><i class="far fa-question-circle"></i> {{ $post->postType->name }}</span></div>
+                                        @else 
+                                            <div><span class="badge badge-pill badge-secondary px-2 py-1"><i class="fas fa-square"></i> {{ $post->postType->name }}</span></div>
                                         @endif
                                     </div>
                                 </div>
@@ -92,12 +94,14 @@
         {{-- Right sidebar --}}
         <div class="col-md-3 p-3">
             <div class="rounded bg-white p-3 mb-3">
-                <form action="{{ route('post.categoryPost', $category->id) }}" method="GET" class="form-inline mb-3">
+                <form action="{{ route('post.categoryPost', $category->id) }}" method="GET">
                     {{-- @csrf --}}
-                    <div class="form-group mr-2">
-                        <input type="search" class="form-control" name="post_search" value="{{ isset($post_search) ? $post_search : '' }}">
+                    <div class="input-group">
+                        <input type="text" name="post_search" class="form-control" value="{{ isset($post_search) ? $post_search : '' }}">
+                        <div class="input-group-append">
+                            <button class="btn btn-dark" type="submit"><i class="fas fa-search"></i></button>
+                        </div>
                     </div>
-                    <button type="submit" class="btn btn-secondary"><i class="fas fa-search"></i></button>
                 </form>
             </div>
             <div class="rounded bg-white p-3">
