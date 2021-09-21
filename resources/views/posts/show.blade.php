@@ -23,13 +23,15 @@
             
             <div class="mb-1 p-4 bg-white rounded shadow-sm">
                 <div class="row">
-                    <h1 class="col-md-10 mb-4">{{ $post->title }}</h1>
+                    <h1 class="col-md-9 mb-4">{{ $post->title }}</h1>
 
-                    <div class="col-md-2 text-right">
+                    <div class="col-md-3 text-right">
                         @if($post->postType->slug === "article")
                             <h5><span class="badge badge-pill badge-white border border-dark px-3 py-2"><i class="far fa-newspaper"></i> {{ $post->postType->name }}</span></h5>
                         @elseif($post->postType->slug === "question")
                             <h5><span class="badge badge-pill badge-dark px-3 py-2"><i class="far fa-question-circle"></i> {{ $post->postType->name }}</span></h5>
+                        @else 
+                            <h5><span class="badge badge-pill badge-secondary px-3 py-2"><i class="fas fa-square"></i> {{ $post->postType->name }}</span></h5>
                         @endif
                     </div>
                 </div>
