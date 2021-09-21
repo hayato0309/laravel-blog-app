@@ -18,7 +18,7 @@ class PostTypeController extends Controller
     public function store()
     {
         $input = request()->validate([
-            'name' => ['required', 'min:3', 'max:30', 'unique:post_types'],
+            'name' => ['required', 'min:3', 'max:10', 'unique:post_types'],
         ]);
 
         $post_type = new PostType();
@@ -33,11 +33,11 @@ class PostTypeController extends Controller
     }
 
     public function update($id)
-    {   
+    {
         $input = request()->validate([
-            'name' => ['required', 'min:3', 'max:30', 'unique:categories'],
+            'name' => ['required', 'min:3', 'max:10', 'unique:categories'],
         ]);
-        
+
         $post_type = PostType::findOrFail($id);
         $post_type->name = $input['name'];
         $post_type->update();
@@ -53,7 +53,7 @@ class PostTypeController extends Controller
         $post_type->delete();
 
         session()->flash('post-type-deleted-message', 'Post type was deleted successfully. : ' . $post_type->name);
-        
+
         return back();
     }
 }
