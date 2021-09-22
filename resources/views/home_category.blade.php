@@ -13,6 +13,12 @@
             </div>
 
             <div class="p-3 bg-white rounded">
+                <a href="{{ route('home') }}" class="text-body">
+                    <div class="card p-3 mb-2 border-0 shadow-sm">
+                        <div>Show all categories' posts</div>
+                    </div>
+                </a>
+
                 @foreach($categories as $category)
                     <a href="{{ route('post.categoryPost', $category->id) }}" class="text-body">
                         <div class="card p-3 mb-2 border-0 shadow-sm {{ $category->selected ? 'selected' : '' }}">
