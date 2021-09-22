@@ -50,13 +50,13 @@ class CategoriesTableSeeder extends Seeder
             ],
             [
                 'name' => 'Hilary Hahn',
-                'slug' => 'hilary_hahn',
+                'slug' => 'hilary-hahn',
                 'created_at' => now(),
                 'updated_at' => now(),
             ],
             [
                 'name' => 'Ray Chen',
-                'slug' => 'ray_chen',
+                'slug' => 'ray-chen',
                 'created_at' => now(),
                 'updated_at' => now(),
             ],
