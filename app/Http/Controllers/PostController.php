@@ -53,7 +53,7 @@ class PostController extends Controller
             'title' => ['required', 'max:255'],
             'content' => ['required', 'max:2000'],
             'post_image' => ['file', 'image', 'max:1024'],
-            'categories' => ['required'],
+            'categories' => ['required', 'array', 'max:3'],
         ]);
 
         $post = new Post();
