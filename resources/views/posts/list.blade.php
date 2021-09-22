@@ -32,6 +32,8 @@
                                     <div><span class="badge badge-pill badge-light border border-dark"><i class="far fa-newspaper"></i> {{ $post->postType->name }}</span></div>
                                 @elseif($post->postType->slug === "question")
                                     <div><span class="badge badge-pill badge-dark"><i class="far fa-question-circle"></i> {{ $post->postType->name }}</span></div>
+                                @else 
+                                    <div><span class="badge badge-pill badge-secondary"><i class="fas fa-square"></i> {{ $post->postType->name }}</span></div>
                                 @endif    
                             </th>
                             <td><a href="{{ route('post.show', $post->id) }}">{{ $post->title }}</a></td>
