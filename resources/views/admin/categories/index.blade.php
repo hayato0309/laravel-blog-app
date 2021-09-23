@@ -10,23 +10,36 @@
     @endif
 
     <h1 class="mb-4">Category list</h1>
-
-    <form action="{{ route('admin.categoryStore') }}" method="POST" class="mb-4">
-        @csrf
-        <div class="row">
-            <div class="col">
-                <input type="text" class="form-control {{$errors->has('name')?'is-invalid':''}}" name="name" placeholder="Name">
-
-                @if($errors->has('name'))
-                    <p class="text-danger">{{$errors->first('name')}}</p>
-                @endif
-            </div>
-
-            <div class="col">
-                <button type="submit" class="btn btn-primary">Submit</button>
-            </div>
+    
+    <div class="row mb-4">
+        <div class="col">
+            <form action="{{ route('admin.categoryStore') }}" method="POST">
+                @csrf
+                <div class="input-group">
+                    <input type="text" name="name" class="form-control {{$errors->has('name')?'is-invalid':''}}" placeholder="Category name">
+                    @if($errors->has('name'))
+                        <p class="text-danger">{{ $errors->first('name') }}</p>
+                    @endif
+        
+                    <div class="input-group-append">
+                        <button class="btn btn-primary" type="submit">Submit</button>
+                    </div>
+                </div>
+            </form>
         </div>
-    </form>
+    
+        <div class="col">
+            <form action="{{ route('home') }}" method="GET">
+                @csrf
+                <div class="input-group">
+                    <input type="text" name="post_search" class="form-control" value="{{ isset($post_search) ? $post_search : '' }}" placeholder="Search keyword">
+                    <div class="input-group-append">
+                        <button class="btn btn-dark" type="submit"><i class="fas fa-search"></i></button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
 
     <table class="table table-hover">
         <thead>
