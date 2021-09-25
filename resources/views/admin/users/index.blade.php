@@ -9,6 +9,24 @@
 
     <h1 class="mb-4">User list</h1>
 
+    <div class="row mb-4">
+        <div class="col-sm-5">
+            <form action="{{ route('admin.users') }}" method="GET">
+                @csrf
+                <div class="input-group">
+                    <input type="text" name="user_search" class="form-control" value="{{ isset($user_search) ? $user_search : '' }}" placeholder="Search by name">
+                    <div class="input-group-append">
+                        <button class="btn btn-dark" type="submit"><i class="fas fa-search"></i></button>
+                    </div>
+                </div>
+            </form>
+        </div>
+
+        <div class="col-sm-2">
+            <a href="{{ route('admin.users') }}" class="btn btn-outline-dark">Clear the keyword</a>
+        </div>
+    </div>
+
     <table class="table table-hover">
         <thead>
             <tr>
