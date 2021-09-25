@@ -22,15 +22,15 @@ class AdminController extends Controller
 
         foreach ($periods as $period) {
             $current_period_from = date('Y-m-d' . ' 00:00:00', strtotime('-' . ($period - 1) . ' day')); // 計測を開始する日付。periods配列の数字をそのまま使うと1日分多く引いてしまうのでさらにマイナス1している
-            $previous_period_from = date('Y-m-d' . ' 00:00:00', strtotime('-' . ($period * 2 -1) . ' day')); // 古い期間の計測開始日
+            $previous_period_from = date('Y-m-d' . ' 00:00:00', strtotime('-' . ($period * 2 - 1) . ' day')); // 古い期間の計測開始日
             $previous_period_until = date('Y-m-d' . ' 23:59:59', strtotime('-' . ($period) . ' day')); // 古い期間の計測終了日
 
             // 新しい期間と古い期間の新規User数の取得
             $num_of_users_current_period = User::where('created_at', '>=', $current_period_from)->count(); // 新しい（当）期間中の新規User数の取得
             $num_of_users_previous_period = User::whereBetween('created_at', [$previous_period_from, $previous_period_until])->count(); // 古い期間中の新規User数の取得
-            
+
             // Userの増加率の計算
-            if($num_of_users_previous_period === 0) {
+            if ($num_of_users_previous_period === 0) {
                 $users_increase_rate = "-";
             } else {
                 $users_increase_rate = sprintf('%+.1f', round(($num_of_users_current_period / $num_of_users_previous_period - 1), 3) * 100);
@@ -41,9 +41,9 @@ class AdminController extends Controller
             // 新しい期間と古い期間の新規Post数の取得
             $num_of_posts_current_period = Post::where('created_at', '>=', $current_period_from)->count(); // 新しい（当）期間中の新規Post数の取得
             $num_of_posts_previous_period = Post::whereBetween('created_at', [$previous_period_from, $previous_period_until])->count(); // 古い期間中の新規Post数の取得
-            
+
             // Postの増加率の計算
-            if($num_of_posts_previous_period === 0) {
+            if ($num_of_posts_previous_period === 0) {
                 $posts_increase_rate = "-";
             } else {
                 $posts_increase_rate = sprintf('%+.1f', round(($num_of_posts_current_period / $num_of_posts_previous_period - 1), 3) * 100);
@@ -176,12 +176,19 @@ class AdminController extends Controller
 
 
     // About users
-    public function showUsers()
+    public function showUsers(Request $request)
     {
         $users = User::withTrashed()->orderBy('name', 'asc')->paginate(10);
 
-        $roles = Role::all();
+        $user_search = $request->input('user_search');
 
+        if (!empty($user_search)) {
+            $query = User::query();
+            $query->withTrashed()->where('name', 'like', '%' . $user_search . '%');
+            $users = $query->paginate(10);
+        }
+
+        $roles = Role::all();
         $role = new Role();
 
         foreach ($users as $user) {
