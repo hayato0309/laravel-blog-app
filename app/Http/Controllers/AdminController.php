@@ -198,7 +198,7 @@ class AdminController extends Controller
             $user->current_role_ids = $current_role_ids;
         }
 
-        return view('admin.users.index', compact('users', 'roles'));
+        return view('admin.users.index', compact('user_search', 'users', 'roles'));
     }
 
     public function updateRoles(Request $request, $id)
