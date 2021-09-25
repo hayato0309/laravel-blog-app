@@ -5,14 +5,25 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Category;
 use Illuminate\Support\Str;
+use Symfony\Component\VarDumper\VarDumper;
 
 class CategoryController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
         $categories = Category::orderBy('name', 'asc')->paginate(10);
 
-        return view('admin.categories.index', compact('categories'));
+        // search keywardを取得
+        $category_search = Str::lower($request->input('category_search'));
+
+        if (!empty($category_search)) {
+            // queryインスタンスを作る
+            $query = Category::query();
+            $query->where('slug', 'like', '%' . $category_search . '%');
+
+            $categories = $query->paginate(10);
+        }
+        return view('admin.categories.index', compact('category_search', 'categories'));
     }
 
     public function store()
