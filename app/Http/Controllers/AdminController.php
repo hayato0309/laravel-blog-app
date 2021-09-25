@@ -231,9 +231,18 @@ class AdminController extends Controller
 
 
     // About posts
-    public function showPosts()
+    public function showPosts(Request $request)
     {
         $posts = Post::withTrashed()->orderBy('created_at', 'desc')->paginate(10);
+
+        $post_search = $request->input('post_search');
+
+        if (!empty($post_search)) {
+            $query = Post::query();
+            $query->withTrashed()->where('title', 'like', '%' . $post_search . '%');
+
+            $posts = $query->paginate(10);
+        }
 
         return view('admin.posts.index', compact('posts'));
     }
