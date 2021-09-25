@@ -9,6 +9,24 @@
 
     <h1 class="mb-4">Post list</h1>
 
+    <div class="row mb-4">
+        <div class="col-sm-5">
+            <form action="{{ route('admin.posts') }}" method="GET">
+                @csrf
+                <div class="input-group">
+                    <input type="text" name="post_search" class="form-control" value="{{ isset($post_search) ? $post_search : '' }}" placeholder="Search by name">
+                    <div class="input-group-append">
+                        <button class="btn btn-dark" type="submit"><i class="fas fa-search"></i></button>
+                    </div>
+                </div>
+            </form>
+        </div>
+
+        <div class="col-sm-2">
+            <a href="{{ route('admin.posts') }}" class="btn btn-outline-dark">Clear the keyword</a>
+        </div>
+    </div>
+
     <table class="table table-hover">
         <thead>
             <tr>
