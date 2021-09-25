@@ -17,14 +17,13 @@
                 @csrf
                 <div class="input-group">
                     <input type="text" name="name" class="form-control {{$errors->has('name')?'is-invalid':''}}" placeholder="Category name">
-                    @if($errors->has('name'))
-                        <p class="text-danger">{{ $errors->first('name') }}</p>
-                    @endif
-        
                     <div class="input-group-append">
                         <button class="btn btn-primary" type="submit">Submit</button>
                     </div>
                 </div>
+                @if($errors->has('name'))
+                    <p class="text-danger">{{ $errors->first('name') }}</p>
+                @endif
             </form>
         </div>
     

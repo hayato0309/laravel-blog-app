@@ -10,23 +10,24 @@
     @endif
 
     <h1 class="mb-4">Post type list</h1>
-
-    <form action="{{ route('admin.postTypeStore') }}" method="POST" class="mb-4">
-        @csrf
-        <div class="row">
-            <div class="col">
-                <input type="text" class="form-control {{$errors->has('name')?'is-invalid':''}}" name="name" placeholder="Name">
-
+    
+    <div class="row mb-4">
+        <div class="col-sm-5">
+            <form action="{{ route('admin.postTypeStore') }}" method="POST">
+                @csrf
+                <div class="input-group">
+                    <input type="text" name="name" class="form-control {{$errors->has('name')?'is-invalid':''}}" placeholder="Post type name">
+                    <div class="input-group-append">
+                        <button class="btn btn-primary" type="submit">Submit</button>
+                    </div>
+                </div>
                 @if($errors->has('name'))
                     <p class="text-danger">{{$errors->first('name')}}</p>
                 @endif
-            </div>
-
-            <div class="col">
-                <button type="submit" class="btn btn-primary">Submit</button>
-            </div>
+            </form>
         </div>
-    </form>
+    </div>
+
 
     <table class="table table-hover">
         <thead>
