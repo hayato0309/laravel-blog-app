@@ -244,7 +244,7 @@ class AdminController extends Controller
             $posts = $query->paginate(10);
         }
 
-        return view('admin.posts.index', compact('posts'));
+        return view('admin.posts.index', compact('post_search', 'posts'));
     }
 
     public function unhidePost($id)
