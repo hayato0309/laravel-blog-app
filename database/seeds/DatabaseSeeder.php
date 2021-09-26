@@ -19,5 +19,8 @@ class DatabaseSeeder extends Seeder
         // factory
         factory(App\User::class, 20)->create(); // PostFactory内でもUserFactoryをコールしているので、このFactoryは合計2回コールされる
         factory(App\Post::class, 20)->create();
+
+        // Userデータが作られた後に実行する
+        $this->call(EnsemblesTableSeeder::class);
     }
 }
