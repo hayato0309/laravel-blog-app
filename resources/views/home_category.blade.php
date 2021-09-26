@@ -109,7 +109,7 @@
                         </div>
                     </div>
                 </form>
-                <a href="{{ route('post.categoryPost', $category_selected->id) }}" class="btn btn-outline-dark btn-sm">Clear search keyword</a>
+                <a href="{{ route('post.categoryPost', $category_selected->id) }}" class="btn btn-outline-dark btn-sm btn-block">Clear search keyword</a>
             </div>
             <div class="rounded bg-white p-3">
                 <h5 class="mb-3">Recent news</h5>

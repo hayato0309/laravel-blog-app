@@ -103,7 +103,7 @@
         {{-- Right sidebar --}}
         <div class="col-md-3 p-3">
             <div class="rounded bg-white p-3 mb-3">
-                <form action="{{ route('home') }}" method="GET">
+                <form action="{{ route('home') }}" method="GET" class="mb-2">
                     @csrf
                     <div class="input-group">
                         <input type="text" name="post_search" class="form-control" value="{{ isset($post_search) ? $post_search : '' }}">
@@ -112,6 +112,7 @@
                         </div>
                     </div>
                 </form>
+                <a href="{{ route('home') }}" class="btn btn-outline-dark btn-sm btn-block">Clear search keyword</a>
             </div>
             <div class="rounded bg-white p-3">
                 <h5 class="mb-3">Recent news</h5>
