@@ -196,7 +196,7 @@ class PostController extends Controller
         // Get news from session
         $news_list = session()->get('news_list');
 
-        return view('home_category', compact('categories', 'posts', 'news_list'));
+        return view('home_category', compact('categories', 'category_selected', 'posts', 'post_search', 'news_list'));
     }
 
     public function favoritePost(Request $request)
