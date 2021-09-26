@@ -185,15 +185,12 @@ class PostController extends Controller
         }
 
 
-        // Get search keyword
+        // Search keywordを取得
         $post_search = $request->input('post_search');
-        // Create query instance
-        $query = Post::query();
 
-        // When there is a category search keyword
+        // Search keywordがある場合
         if (!empty($post_search)) {
-            $query->where('title', 'like', '%' . $post_search . '%');
-            $posts = $query->paginate(10);
+            $posts = $category_selected->posts()->orderBy('created_at', 'desc')->where('title', 'like', '%' . $post_search . '%')->paginate(10);
         }
 
         // Get news from session
