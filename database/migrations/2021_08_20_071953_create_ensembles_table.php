@@ -49,7 +49,7 @@ class CreateEnsemblesTable extends Migration
             $table->integer('tambourine')->nullable();
             $table->integer('triangle')->nullable();
 
-            $table->date('deadline');
+            $table->dateTime('deadline');
             $table->text('notes')->nullable();
 
             $table->timestamps();
