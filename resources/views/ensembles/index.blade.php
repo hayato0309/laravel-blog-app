@@ -22,10 +22,10 @@
             <div class="clearfix">
                 @forelse($ensembles as $ensemble)
                     <a href="{{ route('ensemble.show', $ensemble->id) }}" class="text-body">
-                        <div class="card float-left border-0 shadow-sm ml-4 mb-4 p-4" style="width: 47%">
+                        <div class="card border-0 shadow-sm mb-3 p-4 w-100">
                             <div class="row">
-                                <h5 class="col-md-9">{{ $ensemble->headline }}</h5>
-                                <div class="col-md-3 text-right">
+                                <h5 class="col-md-10">{{ $ensemble->headline }}</h5>
+                                <div class="col-md-2 text-right">
                                     @if($ensemble->trashed())
                                         <div><span class="badge badge-pill badge-dark text-white border px-3 py-2">Close</span></div>
                                     @else
