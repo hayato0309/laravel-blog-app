@@ -10,14 +10,24 @@
     <h1 class="mb-4">User list</h1>
 
     <div class="row mb-4">
-        <div class="col-sm-5">
-            <form action="{{ route('admin.users') }}" method="GET">
+        <div class="col-sm-8">
+            <form action="{{ route('admin.users') }}" method="GET" class="form-row">
                 @csrf
-                <div class="input-group">
+                <div class="col-sm-6">
                     <input type="text" name="user_search" class="form-control" value="{{ isset($user_search) ? $user_search : '' }}" placeholder="Search by name">
-                    <div class="input-group-append">
-                        <button class="btn btn-dark" type="submit"><i class="fas fa-search"></i></button>
-                    </div>
+                </div>
+
+                <div class="col-sm-5">
+                    <select class="form-control" name="user_status">
+                        <option value="">Choose the status</option>
+                        <option value="all" {{ isset($user_status) && $user_status === 'all' ? 'selected' : '' }}>All</option>
+                        <option value="active" {{ isset($user_status) && $user_status === 'active' ? 'selected' : '' }}>Active</option>
+                        <option value="deactivated" {{ isset($user_status) && $user_status === 'deactivated' ? 'selected' : '' }}>Deactivated</option>
+                    </select>
+                </div>
+
+                <div class="col-sm-1">
+                    <button class="btn btn-dark" type="submit"><i class="fas fa-search"></i></button>
                 </div>
             </form>
         </div>
@@ -42,7 +52,7 @@
             </tr>
         </thead>
         <tbody>
-            @foreach ($users as $user)
+            @forelse ($users as $user)
                 <tr>
                     <th class="align-middle" scope="row">{{ $loop->iteration }}</th>
                     <td class="align-middle"><img src="{{ asset('storage/'.$user->avatar) }}" alt="avatar" class="rounded-circle" style="width: 35px"></td>
@@ -172,10 +182,13 @@
                                 </div>
                             </div>
                         </div>
-
                     </td>
                 </tr>
-            @endforeach
+            @empty
+                <tr>
+                    <td>No results</td>
+                </tr>
+            @endforelse
         </tbody>
         </table>
         {{ $users->links() }}
