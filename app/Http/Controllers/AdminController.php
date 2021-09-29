@@ -181,11 +181,26 @@ class AdminController extends Controller
         $users = User::withTrashed()->orderBy('name', 'asc')->paginate(10);
 
         $user_search = $request->input('user_search');
+        $user_status = $request->input('user_status');
 
         if (!empty($user_search)) {
             $query = User::query();
             $query->withTrashed()->where('name', 'like', '%' . $user_search . '%');
             $users = $query->paginate(10);
+        }
+
+        if (!empty($user_status)) {
+            if ($user_status === 'all') {
+                $users = $users;
+            } elseif ($user_status === 'active') {
+                $query = User::query();
+                $query->where('name', 'like', '%' . $user_search . '%')->where('deleted_at', NULL);
+                $users = $query->paginate(10);
+            } elseif ($user_status === 'deactivated') {
+                $query = User::query();
+                $query->onlyTrashed()->where('name', 'like', '%' . $user_search . '%');
+                $users = $query->paginate(10);
+            }
         }
 
         $roles = Role::all();
@@ -198,7 +213,7 @@ class AdminController extends Controller
             $user->current_role_ids = $current_role_ids;
         }
 
-        return view('admin.users.index', compact('user_search', 'users', 'roles'));
+        return view('admin.users.index', compact('user_search', 'user_status', 'users', 'roles'));
     }
 
     public function updateRoles(Request $request, $id)
