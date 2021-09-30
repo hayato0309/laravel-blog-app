@@ -181,26 +181,12 @@ class AdminController extends Controller
         $users = User::withTrashed()->orderBy('name', 'asc')->paginate(10);
 
         $user_search = $request->input('user_search');
-        $user_status = $request->input('user_status');
+        $role_search = $request->input('role_search');
+        $status_search = $request->input('status_search');
 
-        if (!empty($user_search)) {
-            $query = User::query();
-            $query->withTrashed()->where('name', 'like', '%' . $user_search . '%');
-            $users = $query->paginate(10);
-        }
-
-        if (!empty($user_status)) {
-            if ($user_status === 'all') {
-                $users = $users;
-            } elseif ($user_status === 'active') {
-                $query = User::query();
-                $query->where('name', 'like', '%' . $user_search . '%')->where('deleted_at', NULL);
-                $users = $query->paginate(10);
-            } elseif ($user_status === 'deactivated') {
-                $query = User::query();
-                $query->onlyTrashed()->where('name', 'like', '%' . $user_search . '%');
-                $users = $query->paginate(10);
-            }
+        // どれか1つでも検索ワードがある場合は、filterUsersForAdmin関数に渡す
+        if (!empty($user_search) || !empty($role_search) || !empty($status_search)) {
+            $users = User::filterUsersForAdmin($user_search, $role_search, $status_search);
         }
 
         $roles = Role::all();
@@ -213,7 +199,7 @@ class AdminController extends Controller
             $user->current_role_ids = $current_role_ids;
         }
 
-        return view('admin.users.index', compact('user_search', 'user_status', 'users', 'roles'));
+        return view('admin.users.index', compact('user_search', 'role_search', 'status_search', 'users', 'roles'));
     }
 
     public function updateRoles(Request $request, $id)

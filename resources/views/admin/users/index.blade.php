@@ -10,19 +10,27 @@
     <h1 class="mb-4">User list</h1>
 
     <div class="row mb-4">
-        <div class="col-sm-8">
+        <div class="col-sm-10">
             <form action="{{ route('admin.users') }}" method="GET" class="form-row">
                 @csrf
-                <div class="col-sm-6">
+                <div class="col-sm-5">
                     <input type="text" name="user_search" class="form-control" value="{{ isset($user_search) ? $user_search : '' }}" placeholder="Search by name">
                 </div>
 
-                <div class="col-sm-5">
-                    <select class="form-control" name="user_status">
+                <div class="col-sm-3">
+                    <select class="form-control" name="role_search">
+                        <option value="">Choose the role</option>
+                        @foreach ($roles as $role)
+                            <option value="{{ $role->slug }}" {{ isset($role_search) && $role_search === $role->slug ? 'selected' : '' }}>{{ $role->name }}</option>
+                        @endforeach
+                    </select>
+                </div>
+
+                <div class="col-sm-3">
+                    <select class="form-control" name="status_search">
                         <option value="">Choose the status</option>
-                        <option value="all" {{ isset($user_status) && $user_status === 'all' ? 'selected' : '' }}>All</option>
-                        <option value="active" {{ isset($user_status) && $user_status === 'active' ? 'selected' : '' }}>Active</option>
-                        <option value="deactivated" {{ isset($user_status) && $user_status === 'deactivated' ? 'selected' : '' }}>Deactivated</option>
+                        <option value="active" {{ isset($status_search) && $status_search === 'active' ? 'selected' : '' }}>Active</option>
+                        <option value="deactivated" {{ isset($status_search) && $status_search === 'deactivated' ? 'selected' : '' }}>Deactivated</option>
                     </select>
                 </div>
 
@@ -32,7 +40,7 @@
             </form>
         </div>
 
-        <div class="col-sm-2">
+        <div class="col-sm-2 text-right">
             <a href="{{ route('admin.users') }}" class="btn btn-outline-dark">Clear the keyword</a>
         </div>
     </div>
