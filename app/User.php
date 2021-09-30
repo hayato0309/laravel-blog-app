@@ -104,4 +104,76 @@ class User extends Authenticatable implements MustVerifyEmail
     {
         return $this->hasMany(Message::class);
     }
+
+    static function filterUsersForAdmin($user_search, $role_search, $status_search)
+    {
+        $query = User::query();
+
+        if (!empty($user_search) && empty($role_search) && empty($status_search)) {
+            $query->withTrashed()->where('name', 'like', '%' . $user_search . '%');
+        }
+
+        if (empty($user_search) && !empty($role_search) && empty($status_search)) {
+            $query->withTrashed()->whereHas('roles', function ($query) use ($role_search) {
+                $query->where('slug', $role_search);
+            });
+        }
+
+        if (empty($user_search) && empty($role_search) && !empty($status_search)) {
+            if ($status_search === 'active') {
+                $query->where('deleted_at', NULL);
+            } elseif ($status_search === 'deactivated') {
+                $query->onlyTrashed();
+            }
+        }
+
+        if (!empty($user_search) && !empty($role_search) && empty($status_search)) {
+            $query->withTrashed()
+                ->where('name', 'like', '%' . $user_search . '%')
+                ->whereHas('roles', function ($query) use ($role_search) {
+                    $query->where('slug', $role_search);
+                });
+        }
+
+        if (empty($user_search) && !empty($role_search) && !empty($status_search)) {
+            if ($status_search === 'active') {
+                $query->where('deleted_at', NULL)
+                    ->whereHas('roles', function ($query) use ($role_search) {
+                        $query->where('slug', $role_search);
+                    });
+            } elseif ($status_search === 'deactivated') {
+                $query->onlyTrashed()
+                    ->whereHas('roles', function ($query) use ($role_search) {
+                        $query->where('slug', $role_search);
+                    });
+            }
+        }
+
+        if (!empty($user_search) && empty($role_search) && !empty($status_search)) {
+            if ($status_search === 'active') {
+                $query->where('name', 'like', '%' . $user_search . '%')->where('deleted_at', NULL);
+            } elseif ($status_search === 'deactivated') {
+                $query->onlyTrashed()->where('name', 'like', '%' . $user_search . '%');
+            }
+        }
+
+        if (!empty($user_search) && !empty($role_search) && !empty($status_search)) {
+            if ($status_search === 'active') {
+                $query->where('name', 'like', '%' . $user_search . '%')
+                    ->whereHas('roles', function ($query) use ($role_search) {
+                        $query->where('slug', $role_search);
+                    })
+                    ->where('deleted_at', NULL);
+            } elseif ($status_search === 'deactivated') {
+                $query->where('name', 'like', '%' . $user_search . '%')
+                    ->whereHas('roles', function ($query) use ($role_search) {
+                        $query->where('slug', $role_search);
+                    })
+                    ->onlyTrashed();
+            }
+        }
+
+        $users = $query->paginate(10);
+        return $users;
+    }
 }
