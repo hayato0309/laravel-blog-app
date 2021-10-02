@@ -4,6 +4,7 @@ namespace App\Providers;
 
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Facades\Gate;
+use Illuminate\Support\Facades\Schema;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -25,6 +26,8 @@ class AppServiceProvider extends ServiceProvider
     public function boot()
     {
         // $this->registerPolicies();
+
+        Schema::defaultStringLength(191); // To avoid errors with InnoDB in Heroku
 
         Gate::define('isAdmin', function ($user) {
             foreach ($user->roles->all() as $role) {
