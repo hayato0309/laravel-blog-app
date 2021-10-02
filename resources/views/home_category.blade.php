@@ -21,7 +21,7 @@
 
                 @foreach($categories as $category)
                     <a href="{{ route('post.categoryPost', $category->id) }}" class="text-body">
-                        <div class="card p-3 mb-2 border-0 shadow-sm {{ $category->selected ? 'selected' : '' }}">
+                        <div class="card p-3 mb-2 border-0 shadow-sm {{ $category->selected ? 'navy-background' : '' }}">
                             <h5>{{ $category->name }}</h5>
                             <div clas="d-flex">
                                 @foreach($category->count_for_each_post_type as $count_post)                            
