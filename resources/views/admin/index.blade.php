@@ -11,6 +11,8 @@
                 <h5 class="mr-3">{{ $num_of_total_users }}</h5 class="mr-3">
                 <h5 class="mr-3">Posts</h5 class="mr-3">
                 <h5 class="mr-3">{{ $num_of_total_posts }}</h5 class="mr-3">
+                <h5 class="mr-3">Ensembles</h5 class="mr-3">
+                <h5 class="mr-3">{{ $num_of_total_ensembles }}</h5 class="mr-3">
             </div>
         </div>
         <div class="mb-5">
