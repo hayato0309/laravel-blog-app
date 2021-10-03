@@ -17,6 +17,7 @@ class AdminController extends Controller
     {
         $num_of_total_users = User::all()->count();
         $num_of_total_posts = Post::all()->count();
+        $num_of_total_ensembles = Ensemble::all()->count();
 
         $periods = [1, 7, 31, 365]; // User数、Post数を調べる期間を入れた配列
 
@@ -64,7 +65,7 @@ class AdminController extends Controller
         // Applicationの多いEnsemble Top5
         $popular_ensembles_top5 = Ensemble::withCount('ensembleApplications')->orderBy('ensemble_applications_count', 'desc')->take(5)->get();
 
-        return view('admin.index', compact('num_of_total_users', 'num_of_total_posts', 'users_per_period', 'posts_per_period', 'popular_users_top5', 'contributors_top5', 'popular_posts_top5', 'popular_ensembles_top5'));
+        return view('admin.index', compact('num_of_total_users', 'num_of_total_posts', 'num_of_total_ensembles', 'users_per_period', 'posts_per_period', 'popular_users_top5', 'contributors_top5', 'popular_posts_top5', 'popular_ensembles_top5'));
     }
 
 
