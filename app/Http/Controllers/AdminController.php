@@ -26,6 +26,7 @@ class AdminController extends Controller
             $previous_period_from = date('Y-m-d' . ' 00:00:00', strtotime('-' . ($period * 2 - 1) . ' day')); // 古い期間の計測開始日
             $previous_period_until = date('Y-m-d' . ' 23:59:59', strtotime('-' . ($period) . ' day')); // 古い期間の計測終了日
 
+
             // 新しい期間と古い期間の新規User数の取得
             $num_of_users_current_period = User::where('created_at', '>=', $current_period_from)->count(); // 新しい（当）期間中の新規User数の取得
             $num_of_users_previous_period = User::whereBetween('created_at', [$previous_period_from, $previous_period_until])->count(); // 古い期間中の新規User数の取得
@@ -39,6 +40,7 @@ class AdminController extends Controller
 
             $users_per_period[$period] = [$num_of_users_current_period, $users_increase_rate];
 
+
             // 新しい期間と古い期間の新規Post数の取得
             $num_of_posts_current_period = Post::where('created_at', '>=', $current_period_from)->count(); // 新しい（当）期間中の新規Post数の取得
             $num_of_posts_previous_period = Post::whereBetween('created_at', [$previous_period_from, $previous_period_until])->count(); // 古い期間中の新規Post数の取得
@@ -51,6 +53,20 @@ class AdminController extends Controller
             }
 
             $posts_per_period[$period] = [$num_of_posts_current_period, $posts_increase_rate];
+
+
+            // 新しい期間と古い期間の新規Post数の取得
+            $num_of_ensembles_current_period = Ensemble::where('created_at', '>=', $current_period_from)->count(); // 新しい（当）期間中の新規Post数の取得
+            $num_of_ensembles_previous_period = Ensemble::whereBetween('created_at', [$previous_period_from, $previous_period_until])->count(); // 古い期間中の新規Post数の取得
+
+            // Postの増加率の計算
+            if ($num_of_ensembles_previous_period === 0) {
+                $ensembles_increase_rate = "-";
+            } else {
+                $ensembles_increase_rate = sprintf('%+.1f', round(($num_of_ensembles_current_period / $num_of_ensembles_previous_period - 1), 3) * 100);
+            }
+
+            $ensembles_per_period[$period] = [$num_of_ensembles_current_period, $ensembles_increase_rate];
         }
 
         // Followerの多いUser Top5
@@ -65,7 +81,7 @@ class AdminController extends Controller
         // Applicationの多いEnsemble Top5
         $popular_ensembles_top5 = Ensemble::withCount('ensembleApplications')->orderBy('ensemble_applications_count', 'desc')->take(5)->get();
 
-        return view('admin.index', compact('num_of_total_users', 'num_of_total_posts', 'num_of_total_ensembles', 'users_per_period', 'posts_per_period', 'popular_users_top5', 'contributors_top5', 'popular_posts_top5', 'popular_ensembles_top5'));
+        return view('admin.index', compact('num_of_total_users', 'num_of_total_posts', 'num_of_total_ensembles', 'users_per_period', 'posts_per_period', 'ensembles_per_period', 'popular_users_top5', 'contributors_top5', 'popular_posts_top5', 'popular_ensembles_top5'));
     }
 
 
