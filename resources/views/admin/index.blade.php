@@ -41,6 +41,13 @@
                         <td>{{ $posts[1] }} %</td>
                     @endforeach
                 </tr>
+                <tr>
+                    <td>Ensembles</td>
+                    @foreach($ensembles_per_period as $ensembles)
+                        <td>{{ $ensembles[0] }}</td>
+                        <td>{{ $ensembles[1] }} %</td>
+                    @endforeach
+                </tr>
             </table>
         </div>
         <div>
