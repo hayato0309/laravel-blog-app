@@ -106,7 +106,7 @@
                 <form action="{{ route('home') }}" method="GET" class="mb-2">
                     @csrf
                     <div class="input-group">
-                        <input type="text" name="post_search" class="form-control" value="{{ isset($post_search) ? $post_search : '' }}">
+                        <input type="text" name="post_search" class="form-control" value="{{ isset($post_search) ? $post_search : '' }}" placeholder="Search">
                         <div class="input-group-append">
                             <button class="btn btn-dark" type="submit"><i class="fas fa-search"></i></button>
                         </div>
